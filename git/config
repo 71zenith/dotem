@@ -1,0 +1,62 @@
+[alias]
+  a = "add -v"
+  b = "rebase -i"
+  ba = "rebase --abort"
+  bc = "rebase --continue"
+  c = "commit -m"
+  ca = "commit --amend"
+  cd = "clone --depth=1"
+  cl = "clone"
+  cm = "checkout master"
+  cn = "commit --amend --no-edit"
+  co = "checkout"
+  d = "diff"
+  dc = "diff --cached"
+  l = "log"
+  lp = "log -p"
+  ls = "log --stat"
+  m = "merge"
+  p = "push -v"
+  pf = "push -v --force-with-lease"
+  pl = "pull --rebase"
+  q = "stash"
+  qa = "stash apply"
+  qc = "stash clear"
+  r = "restore"
+  rs = "restore --staged"
+  s = "status"
+
+[branch]
+  autoSetupMerge = true
+
+[core]
+  whitespace = "trailing-space,space-before-tab"
+
+[diff]
+  colorMoved = "default"
+  external = "difft --color auto --background dark --display inline"
+
+[merge]
+  conflictStyle = "diff3"
+
+[pull]
+  ff = "only"
+
+[push]
+  autoSetupRemote = true
+  default = "current"
+  followTags = true
+
+[rebase]
+  autoSquash = true
+  autoStash = true
+
+[url "https://github.com/"]
+  insteadOf = "github:"
+
+[url "ssh://git@github.com/"]
+  pushInsteadOf = "github:"
+
+[user]
+  email = "71zenith@proton.me"
+  name = "zen"

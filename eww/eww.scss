@@ -1,0 +1,16 @@
+* {
+  all: unset;
+  margin: 20px;
+  background-color: rgba(0,0,0,0);
+  font-family: "Battle Andy", "Rampart One", "Typo_Deco", "Itim";
+}
+.btn1 {
+  font-size: 46px;
+  &:hover {
+    font-size: 50px;
+  }
+}
+.btn2 {
+  font-size: 36px;
+  color: #82cfff;
+}

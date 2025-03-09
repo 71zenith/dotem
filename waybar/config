@@ -1,0 +1,74 @@
+[
+  {
+    "layer": "top",
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["image#cover", "mpris"],
+    "modules-right": [
+      "network", "custom/separator",
+      "pulseaudio", "custom/separator",
+      "clock", "custom/separator",
+      "privacy", "tray"
+    ],
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "1": "一", "2": "二", "3": "三", "4": "四",
+        "5": "五", "6": "六", "7": "七", "8": "八",
+        "music": ""
+      },
+      "on-scroll-down": "hyprctl dispatch workspace r+1",
+      "on-scroll-up": "hyprctl dispatch workspace r-1",
+      "persistent-workspaces": {
+        "1": [], "2": [], "3": [], "4": [],
+        "5": [], "6": [], "7": [], "8": [],
+        "special:music": []
+      },
+      "show-special": true
+    },
+    "hyprland/window": {
+      "icon": true,
+      "format": "{}",
+      "rewrite": { ".*": "" }
+    },
+    "image#cover": {
+      "on-click": "pkill nsxiv || nsxiv /tmp/cover.jpg",
+      "path": "/tmp/cover.jpg",
+      "signal": 8,
+      "size": 30
+    },
+    "mpris": {
+      "format": "{title} • {artist}",
+      "format-paused": "<i>{title} • {artist}</i>",
+      "max-length": 100,
+      "on-scroll-down": "playerctld unshift",
+      "on-scroll-up": "playerctld shift"
+    },
+    "custom/separator": {
+      "format": "|"
+    },
+    "clock": {
+      "format": "{:%a %d %b %H:%M}",
+      "tooltip-format": "<tt>{calendar}</tt>"
+    },
+    "network": {
+      "fixed-width": 20,
+      "format-ethernet": "{bandwidthUpBytes} {bandwidthDownBytes}",
+      "interface": "enp7s0",
+      "interval": 1,
+      "min-width": 20
+    },
+    "privacy": {
+      "icon-size": 16,
+      "icon-spacing": 0,
+      "on-click": "pkill glava"
+    },
+    "pulseaudio": {
+      "format": "{volume}%",
+      "format-muted": "{volume}%",
+      "on-click": "pulsemixer --toggle-mute",
+      "on-scroll-down": "pulsemixer --change-volume -5",
+      "on-scroll-up": "pulsemixer --change-volume +5"
+    },
+    "tray": { "spacing": 10 },
+  }
+]

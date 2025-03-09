@@ -1,0 +1,24 @@
+add_newline = false
+format = "$directory$git_branch$git_state$git_status$character"
+right_format = "$cmd_duration"
+scan_timeout = 10
+
+[character]
+error_symbol = "[λ](#ff7eb6)"
+success_symbol = "[λ](#ee5396)"
+vimcmd_symbol = "[Λ](#ee5396)"
+
+[cmd_duration]
+format = "#3ddbd9"
+
+[git_branch]
+style = "#ee5396"
+
+[git_state]
+style = "#42be65"
+
+[directory]
+style = "#33b1ff"
+
+[git_status]
+style = "#33b1ff"

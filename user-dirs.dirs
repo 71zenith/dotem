@@ -1,0 +1,6 @@
+XDG_DOWNLOAD_DIR="/home/zen/dl"
+XDG_DESKTOP_DIR="/home/zen/dl/desk"
+XDG_DOCUMENTS_DIR="/home/zen/dl/dox"
+XDG_MUSIC_DIR="/home/zen/dl/music"
+XDG_PICTURES_DIR="/home/zen/dl/pix"
+XDG_VIDEOS_DIR="/home/zen/dl/vid"

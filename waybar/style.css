@@ -1,0 +1,43 @@
+* {
+  font-family: "M Plus Code Latin";
+  font-size: 18px;
+  border-radius: 0;
+  transition: background-color .1s;
+}
+
+window#waybar, tooltip {
+  background-color: transparent;
+}
+
+#workspaces button {
+  padding: 0 5px;
+}
+
+#workspaces button.empty { color: #393939; }
+
+#workspaces button.active {
+  border-bottom: 2.5px solid #33b1ff;
+}
+
+#custom-separator {
+  color: #393939;
+}
+
+#clock,
+#mpris,
+#network,
+#privacy,
+#image,
+#window,
+#pulseaudio,
+#tray {
+  color: #f2f4f8;
+  padding: 0 6px;
+  margin: 2px 0;
+}
+
+.modules-right, .modules-left, .modules-center {
+  background-color: #161616;
+  border: 2px solid #262626;
+  margin: 5px 5px 0px 5px;
+}

@@ -1,0 +1,6 @@
+[ui.window.box]
+height = 400
+width = 600
+orientation = "vertical"
+spacing = 10
+scroll.overlay_scrolling = false

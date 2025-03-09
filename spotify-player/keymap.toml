@@ -1,0 +1,39 @@
+[[keymaps]]
+command = "PreviousPage"
+key_sequence = "esc"
+
+[[keymaps]]
+command = "ClosePopup"
+key_sequence = "q"
+
+[[keymaps]]
+command = "Repeat"
+key_sequence = "R"
+
+[[keymaps]]
+command = "Shuffle"
+key_sequence = "S"
+
+[[keymaps]]
+command = "Quit"
+key_sequence = "C-c"
+
+[[keymaps]]
+command = "SeekForward"
+key_sequence = "L"
+
+[[keymaps]]
+command = "SeekBackward"
+key_sequence = "H"
+
+[[keymaps]]
+command = "PageSelectPreviousOrScrollUp"
+key_sequence = "C-u"
+
+[[keymaps]]
+command = "PageSelectNextOrScrollDown"
+key_sequence = "C-d"
+
+[[keymaps]]
+command = "LikedTrackPage"
+key_sequence = "g o"

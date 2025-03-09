@@ -1,0 +1,5 @@
+ignoreErrors: true
+player: mpris
+mpris:
+  players:
+  - spotify_player

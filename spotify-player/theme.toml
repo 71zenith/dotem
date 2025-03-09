@@ -1,0 +1,60 @@
+[[themes]]
+name = "oxocarbon"
+
+[themes.component_style.block_title]
+fg = "White"
+modifiers = ["Italic", "Bold"]
+
+[themes.component_style.current_playing]
+fg = "Red"
+modifiers = ["Bold"]
+
+[themes.component_style.like]
+fg = "BrightBlack"
+modifiers = ["Bold"]
+
+[themes.component_style.page_desc]
+fg = "White"
+modifiers = ["Bold", "Italic"]
+
+[themes.component_style.playback_album]
+fg = "Cyan"
+
+[themes.component_style.playback_artists]
+fg = "Blue"
+
+[themes.component_style.playback_metadata]
+fg = "White"
+modifiers = ["Italic"]
+
+[themes.component_style.playback_progress_bar]
+fg = "White"
+modifiers = ["Bold", "Italic"]
+
+[themes.component_style.playback_track]
+fg = "Blue"
+modifiers = ["Italic"]
+
+[themes.component_style.playlist_desc]
+fg = "White"
+modifiers = ["Bold", "Italic"]
+
+[themes.component_style.secondary_row]
+bg = "BrightBlack"
+
+[themes.component_style.selection]
+fg = "Red"
+modifiers = ["Bold", "Reversed"]
+
+[themes.component_style.table_header]
+fg = "White"
+modifiers = ["Bold", "Italic"]
+
+[themes.palette]
+black = "#161616"
+bright_black = "#262626"
+blue = "#33b1ff"
+foreground = "#525252"
+cyan = "#3ddbd9"
+red = "#ff7eb6"
+white = "#dde1e6"
