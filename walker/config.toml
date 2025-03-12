@@ -1,6 +1,0 @@
-theme = "oxocarbon"
-
-[[plugins]]
-name = "epub"
-parser = "kv"
-src = "~/.config/scripts/epub.sh"

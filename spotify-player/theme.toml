@@ -18,7 +18,7 @@ fg = "White"
 modifiers = ["Bold", "Italic"]
 
 [themes.component_style.playback_album]
-fg = "Cyan"
+fg = "Blue"
 
 [themes.component_style.playback_artists]
 fg = "Blue"
@@ -28,7 +28,7 @@ fg = "White"
 modifiers = ["Italic"]
 
 [themes.component_style.playback_progress_bar]
-fg = "White"
+fg = "Red"
 modifiers = ["Bold", "Italic"]
 
 [themes.component_style.playback_track]

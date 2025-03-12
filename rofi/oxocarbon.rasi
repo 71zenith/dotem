@@ -1,0 +1,73 @@
+* {
+    font: "M PLUS 2 12";
+    active: #33b1ff;
+    background: rgba(22, 22, 22, 0.950000);
+    background-alt: #262626;
+    border-radius: 0px;
+    foreground: #ffffff;
+    selected: #ff7eb6;
+}
+
+window {
+    location:                    center;
+    width:                       600px;
+    background-color:            @background;
+}
+
+mainbox {
+    spacing:                     5px;
+    padding:                     5px;
+    border:                      2px solid;
+    border-color:                @background-alt;
+    background-color:            transparent;
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+textbox {
+    background-color:            @background-alt;
+    padding:                     4px;
+    text-color:                  @active;
+}
+
+inputbar {
+    spacing:                     8px;
+    padding:                     8px;
+    border:                      2px solid;
+    border-color:                @active;
+    background-color:            @background;
+    text-color:                  @foreground;
+    children:                    [ "entry" ];
+}
+
+entry {
+    background-color:            inherit;
+    text-color:                  inherit;
+    placeholder:                 "Search";
+    placeholder-color:           @background-alt;
+}
+
+listview {
+    lines:                       8;
+    background-color:            transparent;
+}
+
+element {
+    spacing:                     10px;
+    padding:                     5px;
+    background-color:            transparent;
+    text-color:                  @foreground;
+}
+element selected.normal {
+    border:                      2px solid;
+    background-color:            @selected;
+    text-color:                  @background;
+}
+element-icon {
+    background-color:            transparent;
+    size:                        32px;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+}

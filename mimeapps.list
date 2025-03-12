@@ -1,8 +1,8 @@
 [Default Applications]
-application/*=org.pwmt.zathura.desktop
-audio/*=mpv.desktop
-image/*=nsxiv.desktop
-inode/*=org.gnome.Nautilus.desktop
-video/*=mpv.desktop
-text/*=emacs.desktop
-x-scheme-handler/*=zen.desktop
+audio=mpv.desktop
+image=nsxiv.desktop
+inode=thunar.desktop
+video=mpv.desktop
+text/plain=emacs.desktop
+x-scheme-handler/http=zen.desktop
+x-scheme-handler/https=zen.desktop

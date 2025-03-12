@@ -378,3 +378,7 @@
       default-input-method "japanese"
       display-time-format "%a %d %b %H:%M"
       calendar-week-start-day 1)
+
+(add-to-list 'load-path (locate-user-emacs-file "simpc-mode"))
+(require 'simpc-mode)
+(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))

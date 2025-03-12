@@ -1,0 +1,8 @@
+configuration {
+    modi: "drun,window";
+    combi-modes: "drun,window";
+    show-icons: true;
+    sidebar-mode: true;
+    terminal: "footclient";
+}
+@theme "oxocarbon"

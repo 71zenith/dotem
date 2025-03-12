@@ -1,4 +1,5 @@
 status is-interactive; and begin
+fish_vi_key_bindings
 
 alias c clear
 alias g git
@@ -7,7 +8,7 @@ alias ko pkill
 alias ls eza
 alias du dust
 alias ns nsxiv
-alias nv nvim
+alias nv emacs
 alias pm pulsemixer
 alias cat 'bat -p -P'
 alias cp 'xcp -vr'
@@ -35,5 +36,10 @@ set -U fish_cursor_replace_one underscore
 set -U fish_cursor_replace underscore
 
 set -gx PATH ~/.config/scripts $PATH
+set -gx MANPAGER "less -R --use-color -Dd+m -Du+b -DP+g -DE+c -DW+y"
+set -gx MANROFFOPT "-P -c"
+set -gx LESS "-R --use-color"
+set -gx DIRENV_LOG_FORMAT
+
 
 end

@@ -9,7 +9,7 @@ success_symbol = "[λ](#ee5396)"
 vimcmd_symbol = "[Λ](#ee5396)"
 
 [cmd_duration]
-format = "#3ddbd9"
+style = "#3ddbd9"
 
 [git_branch]
 style = "#ee5396"
