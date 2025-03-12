@@ -3,8 +3,15 @@
   inputs,
   ...
 }: {
+  nixpkgs.overlays = [
+    (self: super: {
+      mpv = super.mpv.override {
+        scripts = with self.mpvScripts; [ mpris uosc ];
+      };
+    })
+  ];
   environment.systemPackages = with pkgs; [
-    hyprland
+    (hyprland.override {enableXWayland = true;})
     foot
     waybar
     git
@@ -27,6 +34,8 @@
     blueman
     fishPlugins.autopair
     fishPlugins.puffer
+
+    xorg.xrdb
 
     (papirus-icon-theme.override {color = "teal";})
     phinger-cursors

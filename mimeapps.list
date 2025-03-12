@@ -6,3 +6,4 @@ video=mpv.desktop
 text/plain=emacs.desktop
 x-scheme-handler/http=zen.desktop
 x-scheme-handler/https=zen.desktop
+x-scheme-handler/discord=vesktop.desktop

@@ -34,7 +34,6 @@
 
 [diff]
   colorMoved = "default"
-  external = "difft --color auto --background dark --display inline"
 
 [merge]
   conflictStyle = "diff3"

@@ -1,5 +1,10 @@
 status is-interactive; and begin
+
 fish_vi_key_bindings
+
+
+abbr -a ts --set-cursor "nix shell --impure nixpkgs#%"
+abbr -a rs --set-cursor "nix run --impure nixpkgs#%"
 
 alias c clear
 alias g git
@@ -29,6 +34,7 @@ fzf --fish | source
 zoxide init fish --cmd cd | source
 starship init fish | source
 direnv hook fish | source
+spotify_player generate fish | source
 
 set -U fish_greeting
 set -U fish_cursor_insert line
@@ -40,6 +46,5 @@ set -gx MANPAGER "less -R --use-color -Dd+m -Du+b -DP+g -DE+c -DW+y"
 set -gx MANROFFOPT "-P -c"
 set -gx LESS "-R --use-color"
 set -gx DIRENV_LOG_FORMAT
-
 
 end

@@ -5,10 +5,9 @@ menu() {
 }
 act() {
     [ -z "$1" ] && exit 1
-    [ "$1" = "$2" ] && sudo systemctl stop "$1"
-    [ -n "$2" ] && sudo systemctl stop "$2"
-    sudo systemctl start "$1"
-    exit 0
+    [ "$1" = "$2" ] && sudo systemctl stop "$1" && exit 0
+    [ -n "$2" ] && sudo systemctl stop "$2" && exit 0
+    sudo systemctl start "$1" && exit 0
 }
 
 if [ -z "$(sudo wg)" ]; then
