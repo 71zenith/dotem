@@ -2,7 +2,6 @@ status is-interactive; and begin
 
 fish_vi_key_bindings
 
-
 abbr -a ts --set-cursor "nix shell --impure nixpkgs#%"
 abbr -a rs --set-cursor "nix run --impure nixpkgs#%"
 
@@ -16,11 +15,12 @@ alias ns nsxiv
 alias nv emacs
 alias pm pulsemixer
 alias cat 'bat -p -P'
+alias up "nh os update"
 alias cp 'xcp -vr'
 alias rm 'rm -Ivr'
 alias mkdir 'mkdir -pv'
 alias mv 'mv -iv'
-alias df 'duf -hide special'
+alias df 'duf -hide special -style ascii'
 alias f 'free -h'
 alias fd 'fd -p -i'
 alias s 'sudo systemctl'

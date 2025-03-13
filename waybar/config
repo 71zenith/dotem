@@ -60,7 +60,6 @@
     "privacy": {
       "icon-size": 16,
       "icon-spacing": 0,
-      "on-click": "pkill glava"
     },
     "pulseaudio": {
       "format": "{volume}%",

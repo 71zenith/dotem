@@ -29,12 +29,6 @@
 [branch]
   autoSetupMerge = true
 
-[core]
-  whitespace = "trailing-space,space-before-tab"
-
-[diff]
-  colorMoved = "default"
-
 [merge]
   conflictStyle = "diff3"
 

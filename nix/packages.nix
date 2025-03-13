@@ -11,31 +11,32 @@
     })
   ];
   environment.systemPackages = with pkgs; [
-    (hyprland.override {enableXWayland = true;})
+    hyprland
     foot
     waybar
-    git
-    spotify-player
+    rofi-wayland
     xdg-desktop-portal-hyprland
     xdg-desktop-portal-gtk
-    kdePackages.xdg-desktop-portal-kde
     eww
-    mpv
+
+    spotify-player
     sptlrx
     btop
-    rofi-wayland
     bat
     direnv
     eza
     zoxide
     fzf
     starship
-    zathura
-    blueman
     fishPlugins.autopair
     fishPlugins.puffer
 
-    xorg.xrdb
+    zathura
+    mpv
+    blueman
+
+    stow
+    git
 
     (papirus-icon-theme.override {color = "teal";})
     phinger-cursors
@@ -100,6 +101,7 @@
     brave
 
     libnotify
+    xorg.xrdb
     man-pages
     man-pages-posix
 

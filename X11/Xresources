@@ -1,8 +1,4 @@
-Xcursor.size: 32
-Xcursor.theme: phinger-cursors-light
-bar.background: #393939
-bar.font: M PLUS 2 13
-bar.foreground: #33b1ff
-mark.background: #ee5396
-window.background: #393939
-window.foreground: #dde1e6
+*background: #161616
+*foreground: #f2f4f8
+Nsxiv.mark.foreground: #33b1ff
+Nsxiv.bar.font: M PLUS 2 25
