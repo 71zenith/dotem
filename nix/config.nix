@@ -45,6 +45,8 @@
       log-lines = 50;
       http-connections = 50;
     };
+    nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+    registry.nixpkgs.flake = inputs.nixpkgs;
     gc.automatic = true;
     optimise.automatic = true;
   };

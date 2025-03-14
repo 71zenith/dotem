@@ -15,7 +15,7 @@ alias ns nsxiv
 alias nv emacs
 alias pm pulsemixer
 alias cat 'bat -p -P'
-alias up "nh os update"
+alias up "nh os switch"
 alias cp 'xcp -vr'
 alias rm 'rm -Ivr'
 alias mkdir 'mkdir -pv'

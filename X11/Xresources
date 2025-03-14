@@ -2,3 +2,5 @@
 *foreground: #f2f4f8
 Nsxiv.mark.foreground: #33b1ff
 Nsxiv.bar.font: M PLUS 2 25
+Xcursor.size: 32
+Xcursor.theme: phinger-cursors-light

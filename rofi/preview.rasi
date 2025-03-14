@@ -1,0 +1,20 @@
+@theme "oxocarbon"
+icon-current-entry {
+  size: 50%;
+  padding: 10px;
+  background-color: inherit;
+}
+listview-split {
+  background-color: transparent;
+  orientation: horizontal;
+  children: [listview,icon-current-entry];
+}
+mainbox {
+  children: [inputbar,listview-split];
+}
+configuration {
+  filebrowser {
+    directory: "/home/zen/assets/active";
+    command: "swww img -f Mitchell -t any --transition-fps 75 --transition-duration 2";
+  }
+}
