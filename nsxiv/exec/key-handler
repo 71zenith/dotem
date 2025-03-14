@@ -1,0 +1,13 @@
+#!/bin/sh
+while read file; do
+    case "$1" in
+        "s") swww img -f Mitchell -t any --transition-fps 75 --transition-duration 2 "$file"
+             ;;
+        "c") mime=$(file --mime-type -bL "$file") 
+             wl-copy -t $mime < "$file"
+             ;;
+        "z") setsid gimp "$file"
+             ;;
+    esac
+done
+
