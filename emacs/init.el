@@ -198,6 +198,7 @@
 ;;; Lang Support
 (use-package nix-mode :ensure t :defer t)
 (use-package zig-mode :ensure t :defer t :custom (zig-format-on-save nil))
+(use-package glsl-mode :ensure t :defer t)
 
 (use-package cider :ensure t :defer t
   :hook (clojure-mode . cider-mode))

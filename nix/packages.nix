@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: {
+{pkgs, inputs, ...}: {
   nixpkgs.overlays = [
     (self: super: {
       mpv = super.mpv.override {
@@ -15,30 +11,39 @@
     noto-fonts-emoji
   ];
   environment.systemPackages = with pkgs; [
-    hyprland
     foot
     waybar
-    rofi-wayland
+    eww
+    (rofi-wayland.override {plugins = [pkgs.rofi-calc];})
+    zathura
+    mpv
+    blueman
+
+    grimblast
+    cliphist
+    wl-clipboard
+    swww
     eww
 
     spotify-player
     sptlrx
     btop
-    bat
-    direnv
-    eza
-    zoxide
-    fzf
     starship
-    fishPlugins.autopair
-    fishPlugins.puffer
+    dust
+    duf
+    fzf
+    eza
+    bat
 
-    zathura
-    mpv
-    blueman
-
+    direnv
+    zoxide
     stow
     git
+    fd
+    ripgrep
+    xcp
+    fishPlugins.autopair
+    fishPlugins.puffer
 
     adw-gtk3
     (papirus-icon-theme.override {color = "teal";})
@@ -51,25 +56,13 @@
     ffmpeg
     imagemagick
 
-    dust
-    duf
-    fd
-    file
-    ripgrep
-    xcp
-
     gcc
+    file
     xdg-utils
     timg
     playerctl
     translate-shell
     pulsemixer
-
-    grimblast
-    cliphist
-    wl-clipboard
-    swww
-    eww
 
     microfetch
     nurl
@@ -112,6 +105,7 @@
     leiningen
     zls
 
+    neovim
     emacs30-pgtk
     emacs-lsp-booster
   ];

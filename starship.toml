@@ -7,18 +7,20 @@ scan_timeout = 10
 error_symbol = "[λ](#ff7eb6)"
 success_symbol = "[λ](#ee5396)"
 vimcmd_symbol = "[Λ](#ee5396)"
+vimcmd_replace_one_symbol = "[Λ](#82cfff)"
+vimcmd_visual_symbol = "[Λ](#42be65)"
 
 [cmd_duration]
 style = "#3ddbd9"
+
+[directory]
+style = "#33b1ff"
 
 [git_branch]
 style = "#ee5396"
 
 [git_state]
 style = "#42be65"
-
-[directory]
-style = "#33b1ff"
 
 [git_status]
 style = "#33b1ff"

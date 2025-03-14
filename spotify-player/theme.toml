@@ -44,7 +44,7 @@ bg = "BrightBlack"
 
 [themes.component_style.selection]
 fg = "Red"
-modifiers = ["Bold", "Reversed"]
+modifiers = ["Reversed"]
 
 [themes.component_style.table_header]
 fg = "White"

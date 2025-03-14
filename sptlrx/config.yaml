@@ -1,5 +1,3 @@
-ignoreErrors: true
 player: mpris
 mpris:
-  players:
-  - spotify_player
+  players: [spotify_player]

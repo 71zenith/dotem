@@ -1,6 +1,6 @@
 (defwindow lyrics
     :monitor 0
-    :geometry (geometry :y "70px" :anchor "bottom center")
+    :geometry (geometry :y "90px" :anchor "bottom center")
     :stacking "bg"
     (lyr))
 
@@ -13,14 +13,12 @@
 (defwidget lyr []
   (box :spacing 0
        (button :class "btn1"
-               :css "button {color: ${col}; &:hover {color: #33b1ff;}}"
-               (label :text lyr))))
+               (label :text ly))))
 
 (defwidget rom []
   (box :spacing 0
        (button :class "btn2"
-               (label :text romaji))))
+               (label :text ro))))
 
-(defvar col "#ee5396")
-(deflisten lyr "sptlrx pipe")
-(deflisten romaji "romaji.sh")
+(deflisten ly "sptlrx pipe")
+(deflisten ro "romaji.sh")

@@ -1,7 +1,7 @@
 * {
     font: "Kollektif 12";
     active: #33b1ff;
-    background: rgba(22, 22, 22, 0.950000);
+    background: rgba(22, 22, 22, 0.9);
     background-alt: #262626;
     border-radius: 0px;
     foreground: #ffffff;

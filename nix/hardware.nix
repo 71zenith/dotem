@@ -13,7 +13,6 @@
       };
       videoDrivers = ["nvidia"];
     };
-
     pipewire = {
       enable = true;
       alsa.enable = true;
@@ -21,17 +20,16 @@
       lowLatency.enable = true;
     };
   };
+  zramSwap.enable = true;
   hardware = {
     bluetooth = {
       enable = true;
       powerOnBoot = true;
     };
-
     graphics = {
       enable = true;
       enable32Bit = true;
     };
-
     nvidia = {
       modesetting.enable = true;
       open = true;

@@ -2,13 +2,13 @@
   all: unset;
   margin: 20px;
   background-color: rgba(0,0,0,0);
-  font-family: "Battle Andy", "Rampart One", "Typo_Deco", "Itim";
+  font-family: "Battle Andy", "Natsume";
 }
 .btn1 {
-  font-size: 46px;
-  &:hover {font-size: 50px;}
+    font-size: 70px;
+    color: #ee5396;
 }
 .btn2 {
-  font-size: 40px;
+  font-size: 50px;
   color: #82cfff;
 }
