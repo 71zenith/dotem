@@ -1,6 +1,8 @@
 [Default Applications]
 audio=mpv.desktop
-image=nsxiv.desktop
+image/png=nsxiv.desktop
+image/jpeg=nsxiv.desktop
+image/webp=nsxiv.desktop
 inode=thunar.desktop
 video=mpv.desktop
 text/plain=emacs.desktop

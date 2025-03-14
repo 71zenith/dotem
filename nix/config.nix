@@ -1,4 +1,4 @@
-{
+ {
   pkgs,
   config,
   inputs,
@@ -69,7 +69,7 @@
       enable = true;
       settings = {
         default_session = {
-          command = "Hyprland";
+          command = "uwsm start default";
           user = "zen";
         };
       };
@@ -84,6 +84,7 @@
   };
   systemd.coredump.extraConfig = "Storage=none";
   environment = {
+    sessionVariables.PATH = ["/home/zen/.config/scripts"];
     pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
     variables.FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
   };
@@ -100,7 +101,10 @@
   };
   programs = {
     fish.enable = true;
-    hyprland.enable = true;
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
     steam = {
       enable = true;
       protontricks.enable = true;

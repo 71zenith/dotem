@@ -10,13 +10,15 @@
       };
     })
   ];
+  fonts.packages = with pkgs; [
+    nerd-fonts.symbols-only
+    noto-fonts-emoji
+  ];
   environment.systemPackages = with pkgs; [
     hyprland
     foot
     waybar
     rofi-wayland
-    xdg-desktop-portal-hyprland
-    xdg-desktop-portal-gtk
     eww
 
     spotify-player
@@ -38,10 +40,9 @@
     stow
     git
 
+    adw-gtk3
     (papirus-icon-theme.override {color = "teal";})
     phinger-cursors
-    nerd-fonts.symbols-only
-    noto-fonts-emoji
 
     aria2
     curl

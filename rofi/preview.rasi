@@ -14,7 +14,7 @@ mainbox {
 }
 configuration {
   filebrowser {
-    directory: "/home/zen/assets/active";
+    directory: "/home/zen/shr/walls";
     command: "swww img -f Mitchell -t any --transition-fps 75 --transition-duration 2";
   }
 }

@@ -18,22 +18,22 @@ fg = "White"
 modifiers = ["Bold", "Italic"]
 
 [themes.component_style.playback_album]
-fg = "Blue"
+fg = "BrightCyan"
 
 [themes.component_style.playback_artists]
-fg = "Blue"
+fg = "BrightCyan"
 
 [themes.component_style.playback_metadata]
-fg = "White"
+fg = "Blue"
+modifiers = ["Italic"]
+
+[themes.component_style.playback_track]
+fg = "BrightCyan"
 modifiers = ["Italic"]
 
 [themes.component_style.playback_progress_bar]
 fg = "Red"
 modifiers = ["Bold", "Italic"]
-
-[themes.component_style.playback_track]
-fg = "Blue"
-modifiers = ["Italic"]
 
 [themes.component_style.playlist_desc]
 fg = "White"
@@ -55,6 +55,7 @@ black = "#161616"
 bright_black = "#262626"
 blue = "#33b1ff"
 foreground = "#525252"
+bright_cyan = "#82cfff"
 cyan = "#3ddbd9"
 red = "#ff7eb6"
 white = "#dde1e6"
