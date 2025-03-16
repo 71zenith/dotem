@@ -1,5 +1,6 @@
 [
   {
+    "output": "HDMI-A-1",
     "layer": "top",
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["image#cover", "mpris"],

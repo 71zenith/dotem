@@ -50,6 +50,10 @@ modifiers = ["Reversed"]
 fg = "White"
 modifiers = ["Bold", "Italic"]
 
+[themes.component_style.lyrics_played]
+fg = "Red"
+modifiers = ["Italic"]
+
 [themes.palette]
 black = "#161616"
 bright_black = "#262626"
