@@ -77,7 +77,7 @@
     calibre
     vesktop
     qbittorrent
-    xfce.thunar
+    nemo-with-extensions
     qalculate-qt
     nsxiv
 
