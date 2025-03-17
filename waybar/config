@@ -5,6 +5,7 @@
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["image#cover", "mpris"],
     "modules-right": [
+      "temperature", "custom/separator",
       "network", "custom/separator",
       "pulseaudio", "custom/separator",
       "clock", "custom/separator",
@@ -44,6 +45,9 @@
     },
     "custom/separator": {
       "format": "|"
+    },
+    "temperature" : {
+      "hwmon-path": "/sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon0/temp1_input"
     },
     "clock": {
       "format": "{:%a %d %b %H:%M}",

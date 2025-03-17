@@ -1,8 +1,4 @@
-{
-  config,
-  inputs,
-  ...
-}: {
+{config, inputs, ...}: {
   imports = [inputs.nix-gaming.nixosModules.pipewireLowLatency];
   services = {
     xserver = {

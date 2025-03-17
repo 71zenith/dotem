@@ -1,5 +1,5 @@
 {pkgs, inputs, ...}: {
-  nixpkgs.overlays = [
+  nixpkgs.averlays = [
     (self: super: {
       mpv = super.mpv.override {
         scripts = with self.mpvScripts; [ mpris uosc ];
@@ -11,6 +11,8 @@
     noto-fonts-emoji
   ];
   environment.systemPackages = with pkgs; [
+    inputs.zen-browser.packages."${system}".default
+
     foot
     waybar
     eww
@@ -90,9 +92,6 @@
     # mgba
     # snes9x-gtk
     # pcsx2
-
-    inputs.zen-browser.packages."${system}".default
-    brave
 
     libnotify
     xorg.xrdb

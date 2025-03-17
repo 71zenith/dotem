@@ -28,7 +28,7 @@
 (use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
 
 ;;; Evil Mode
-(use-package evil :ensure t :defer t
+(use-package evil :ensure t
   :init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
@@ -36,13 +36,14 @@
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
-(use-package evil-collection :ensure t :defer t
+(use-package evil-collection :ensure t
+  :diminish evil-collection-unimpaired-mode
   :hook ((after-init . evil-collection-init)))
 
-(use-package evil-surround :ensure t :defer t
+(use-package evil-surround :ensure t
   :hook (after-init . global-evil-surround-mode))
 
-(use-package evil-commentary :ensure t :defer t
+(use-package evil-commentary :ensure t
   :diminish evil-commentary-mode
   :hook (after-init . evil-commentary-mode))
 
@@ -379,3 +380,7 @@
       default-input-method "japanese"
       display-time-format "%a %d %b %H:%M"
       calendar-week-start-day 1)
+
+(use-package server
+  :ensure nil :defer t
+  :config (unless (server-running-p) (server-start)))

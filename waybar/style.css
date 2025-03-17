@@ -1,5 +1,5 @@
 * {
-  font-family: "Kollektif";
+  font-family: "Kollektif", "Natsume", "Cafe24 Dongdong OTF";
   font-size: 17px;
   border-radius: 0;
   transition: background-color .1s;
@@ -25,6 +25,7 @@ window#waybar {
 
 #clock,
 #mpris,
+#temperature,
 #network,
 #privacy,
 #image,

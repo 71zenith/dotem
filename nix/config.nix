@@ -1,9 +1,4 @@
- {
-  pkgs,
-  config,
-  inputs,
-  ...
-}: {
+ {pkgs, config, inputs, ...}: {
   imports = [
     ./boot.nix
     ./hardware.nix
