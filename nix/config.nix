@@ -77,6 +77,7 @@
   };
   systemd.coredump.extraConfig = "Storage=none";
   environment = {
+    etc.anime4k.source = pkgs.anime4k;
     sessionVariables.PATH = ["/home/zen/.config/scripts"];
     pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
     variables.FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";

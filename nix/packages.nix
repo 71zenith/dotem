@@ -1,5 +1,5 @@
 {pkgs, inputs, ...}: {
-  nixpkgs.averlays = [
+  nixpkgs.overlays = [
     (self: super: {
       mpv = super.mpv.override {
         scripts = with self.mpvScripts; [ mpris uosc ];
@@ -93,7 +93,6 @@
     # snes9x-gtk
     # pcsx2
 
-    libnotify
     xorg.xrdb
     man-pages
     man-pages-posix
