@@ -1,10 +1,9 @@
 [Default Applications]
-audio=mpv.desktop
+application/epub+zip=org.pwmt.zathura-ps.desktop
 image/png=nsxiv.desktop
 image/jpeg=nsxiv.desktop
 image/webp=nsxiv.desktop
 inode/directory=nemo.desktop
-video=mpv.desktop
 text/plain=emacs.desktop
 x-scheme-handler/http=zen.desktop
 x-scheme-handler/https=zen.desktop

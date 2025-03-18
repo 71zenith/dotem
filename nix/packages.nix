@@ -15,7 +15,6 @@
 
     foot
     waybar
-    eww
     (rofi-wayland.override {plugins = [pkgs.rofi-calc];})
     zathura
     mpv
@@ -25,10 +24,8 @@
     cliphist
     wl-clipboard
     swww
-    eww
 
     spotify-player
-    sptlrx
     btop
     starship
     dust

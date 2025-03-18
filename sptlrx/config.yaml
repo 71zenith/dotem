@@ -1,3 +1,0 @@
-player: mpris
-mpris:
-  players: [spotify_player]
