@@ -25,7 +25,7 @@ require("lazy").setup({
       config = function()
         vim.cmd("colorscheme oxocarbon")
       end
-    }
+    },
   },
   checker = { enabled = true },
 })
