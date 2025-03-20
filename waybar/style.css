@@ -32,12 +32,12 @@ window#waybar {
 #window,
 #pulseaudio,
 #tray {
-  color: #f2f4f8;
   padding: 0 6px;
   margin: 2px 0;
 }
 
 tooltip, .modules-right, .modules-left, .modules-center {
+  color: #f2f4f8;
   background-color: #161616;
   border: 2px solid #262626;
   margin: 5px 5px 0px 5px;

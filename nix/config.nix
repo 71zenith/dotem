@@ -37,6 +37,7 @@
     settings = {
       experimental-features = ["nix-command" "flakes"];
       warn-dirty = false;
+      trusted-users = ["@wheel"];
       log-lines = 50;
       http-connections = 50;
     };

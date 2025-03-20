@@ -12,7 +12,7 @@ alias ko pkill
 alias ls eza
 alias du dust
 alias ns nsxiv
-alias nv emacs
+alias nv 'emacsclient -c'
 alias pm pulsemixer
 alias cat 'bat -p -P'
 alias up "nh os switch"
@@ -25,6 +25,7 @@ alias df 'duf -hide special -style ascii'
 alias f 'free -h'
 alias fd 'fd -p -i --hyperlink'
 alias s 'sudo systemctl'
+alias fzf 'fzf --color=16'
 alias im 'timg -p s'
 alias eza 'eza --icons always --git --hyperlink --no-quotes'
 alias la 'eza -a'
@@ -47,6 +48,7 @@ set -gx NIXPKGS_ALLOW_UNFREE 1
 set -gx MANPAGER "less -R --use-color -Dd+m -Du+b -DP+g -DE+c -DW+y"
 set -gx MANROFFOPT "-P -c"
 set -gx LESS "-R --use-color"
+set -gx BAT_THEME "base16-256"
 set -gx EDITOR "emacsclient -c"
 
 end
