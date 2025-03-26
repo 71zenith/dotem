@@ -17,6 +17,7 @@ alias pm pulsemixer
 alias cat 'bat -p -P'
 alias up "nh os switch"
 alias ss "nh search"
+alias rg "rg -S"
 alias cp 'xcp -vr'
 alias rm 'rm -Ivr'
 alias mkdir 'mkdir -pv'

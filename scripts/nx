@@ -1,18 +1,20 @@
 #!/bin/sh
-
-case $1 in
-  ls | list) shift
-    nvd list $* ;;
-  dl | delete) shift
-    nh clean all $* ;;
-  up | update) shift
-    cd $FLAKE
-    nix flake update $* ;;
-  sw | switch) shift
-    nh os switch $* ;;
-  ss | search) shift
-    nh search $* ;;
-  bt | boot) shift
-    nh os boot $*;;
-  sr | source) ;;
+mode=$1 && shift
+params=$*
+case $mode in
+  ls | list)
+    nvd list $params ;;
+  dl | delete)
+    nh clean all $params ;;
+  up | update)
+    cd $FLAKE; nix flake update $params ;;
+  sw | switch)
+    nh os switch $params ;;
+  ss | search)
+    nh search $params ;;
+  bt | boot)
+    nh os boot $params ;;
+  sr | source)
+    ;;
+  *) exit 1 ;;
 esac

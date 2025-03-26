@@ -1,8 +1,18 @@
-{pkgs, inputs, ...}: {
+{pkgs, inputs, ...}: let
+  yuzu = pkgs.callPackage ./yuzu.nix {};
+in {
   nixpkgs.overlays = [
     (self: super: {
       mpv = super.mpv.override {
         scripts = with self.mpvScripts; [ mpris uosc ];
+      };
+      hyprmag = super.hyprpicker.overrideAttrs {
+        src = super.fetchFromGitHub {
+          owner = "SIMULATAN";
+          repo = "hyprmag";
+          rev = "a7ca558d357e2a0d34373620f89d2daf210744dc";
+          hash = "sha256-Ntb+lvscDzOAGOJo+xOtjRrjdIDW6HpAtehlh5VipV8=";
+        };
       };
     })
   ];
@@ -16,6 +26,7 @@
     foot
     waybar
     (rofi-wayland.override {plugins = [pkgs.rofi-calc];})
+    hyprmag
     zathura
     mpv
     blueman
@@ -65,6 +76,7 @@
 
     microfetch
     nurl
+    nvd
     sops
 
     zip
@@ -82,6 +94,7 @@
 
     heroic
     prismlauncher
+    yuzu
     protonup-qt
     # yuzu
     # onscripter-en
@@ -95,10 +108,9 @@
     man-pages-posix
 
     python3
-    zig
     clojure
     leiningen
-    zls
+    odin
 
     neovim
     emacs30-pgtk
