@@ -4,6 +4,7 @@ fish_vi_key_bindings
 
 abbr -a ts --set-cursor "nix shell --impure nixpkgs#%"
 abbr -a rs --set-cursor "nix run --impure nixpkgs#%"
+abbr -a np --set-cursor "nix run --impure github:nixos/nixpkgs#%"
 
 alias c clear
 alias g git

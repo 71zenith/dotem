@@ -30,6 +30,8 @@ for i in $query; do
     done
   fi
   links=$(printf "%s\n" "$links" | tr -d ' ')
+  links=$(printf "%s\n" "$links" | sed 's|img.4khd.com|i0.wp.com/yt4.googleusercontent.com|')
+  links=$(printf "%s\n" "$links" | sed 's|l/|I/|g')
   case "$player" in
     debug) printf "%s\n" "$links" ;;
     download) printf "%s\n" "$links" | xargs -n1 -P5 curl -O ;;

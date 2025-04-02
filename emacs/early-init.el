@@ -23,6 +23,7 @@
       file-name-handler-alist nil
       kill-ring-max 100000
       bidi-inhibit-bpa t
+      ring-bell-function #'ignore
       ns-use-proxy-icon nil
       auto-mode-case-fold nil
       frame-title-format nil
@@ -33,19 +34,10 @@
 (setq idle-update-delay 1.0
       load-prefer-newer t)
 
-(setq font-lock-maximum-decoration t
-      font-lock-multiline t
-      font-lock-support-mode 'jit-lock-mode
-      jit-lock-stealth-time 1
-      jit-lock-defer-time 0
-      jit-lock-stealth-nice 0.1
-      jit-lock-chunk-size 100)
-
 (setq-default bidi-display-reordering nil
-	          bidi-paragraph-direction 'left-to-right)
+              bidi-paragraph-direction 'left-to-right)
 
-
-;;; Minimal Frame 
+;;; Minimal Frame
 (push '(vertical-scroll-bars) default-frame-alist)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
@@ -57,10 +49,12 @@
 
 
 ;;; Font Config
-(let ((mono-font "Pragmasevka"))
+(let ((mono-font "Iosevka"))
   (set-face-attribute 'default nil :family mono-font :height 145)
   (set-face-attribute 'fixed-pitch nil :family mono-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family mono-font :height 1.0))
+
+(set-fontset-font "fontset-default" 'han "Kusukusuame")
 
 
 ;;; Pesky Behaviour

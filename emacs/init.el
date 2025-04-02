@@ -2,25 +2,14 @@
 
 ;;; Package Initialization
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")))
 (package-initialize)
 
 (setq package-quickstart t
-      package-quickstart-async t
       package-native-compile t
-      package-install-upgrade-built-in t
-      native-comp-async-report-warnings-errors 'silent
-      native-comp-deferred-compilation t)
+      package-install-upgrade-built-in t)
 
-(setq use-package-verbose nil
-      use-package-expand-minimally t
-      use-package-always-ensure t
-      use-package-compute-statistics t
-      use-package-minimum-reported-time 0.1)
-
-(use-package diminish :ensure t :defer t)
+(use-package minions :ensure t :defer t)
 (use-package no-littering :ensure t :demand t)
 
 ;;; Undo System
@@ -28,7 +17,7 @@
 (use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
 
 ;;; Evil Mode
-(use-package evil :ensure t
+(use-package evil :ensure t :defer 2
   :init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
@@ -36,15 +25,10 @@
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
-(use-package evil-collection :ensure t
-  :diminish evil-collection-unimpaired-mode
+(use-package evil-collection :ensure t :defer 2
   :hook ((after-init . evil-collection-init)))
 
-(use-package evil-surround :ensure t
-  :hook (after-init . global-evil-surround-mode))
-
-(use-package evil-commentary :ensure t
-  :diminish evil-commentary-mode
+(use-package evil-commentary :ensure t :defer 2
   :hook (after-init . evil-commentary-mode))
 
 ;;; General.el
@@ -70,19 +54,6 @@
     "q" '(kill-emacs :which-key "exit")
     "p" '(popper-toggle :which-key "pop")
     "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "open init")
-
-    "b" '(:ignore t :which-key "buffer")
-    "b d" 'kill-current-buffer
-    "b b" 'consult-buffer
-    "b p" 'previous-buffer
-    "b n" 'next-buffer
-
-    "w" '(:ignore t :which-key "window")
-    "w c" 'delete-window
-    "w v" 'evil-window-vsplit
-    "w s" 'evil-window-split
-    "w n" 'evil-window-next
-    "w p" 'evil-window-prev
 
     "h" '(:ignore t :which-key "help")
     "h f" 'helpful-callable
@@ -117,7 +88,6 @@
 
 ;;; Visual Elements
 (use-package which-key :ensure t :defer t
-  :diminish which-key-mode
   :hook (after-init . which-key-mode))
 
 (use-package which-key-posframe :ensure t :defer t
@@ -187,85 +157,38 @@
   (global-set-key [remap project-switch-to-buffer] 'consult-project-buffer)
   (global-set-key [remap isearch-forward] 'consult-line))
 
-(use-package helpful :ensure t :defer t)
+(use-package helpful :ensure t
+  :bind (([remap describe-function] . helpful-callable)
+         ([remap describe-key] . helpful-key)
+         ([remap describe-symbol] . helpful-symbol)))
 
 ;;; VC
 (use-package magit :ensure t :defer t)
 (use-package diff-hl :ensure t
   :defer t
-  :hook (after-init . global-diff-hl-mode)
-  :diminish diff-hl-mode)
+  :hook (after-init . global-diff-hl-mode))
 
 ;;; Lang Support
 (use-package nix-mode :ensure t :defer t)
 (use-package zig-mode :ensure t :defer t :custom (zig-format-on-save nil))
-(use-package glsl-mode :ensure t :defer t)
+(use-package odin-mode :ensure t :defer t
+  :vc (:url "https://github.com/mattt-b/odin-mode" :rev :newest :branch "main"))
 
 (use-package cider :ensure t :defer t
   :hook (clojure-mode . cider-mode))
 
 (use-package paredit :ensure t :defer t
-  :diminish paredit-mode
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (clojure-mode . enable-paredit-mode)))
-
-;;; LSP Support
-(use-package eglot :ensure t :defer t
-  :hook (zig-mode . eglot-ensure)
-  :config
-  (set-face-attribute 'eglot-inlay-hint-face nil :height 1.0)
-  (setq eglot-events-buffer-size 0
-        eglot-send-changes-idle-time 0.1))
-
-(use-package eglot-booster :ensure t :defer t
-  :after eglot
-  :vc (:url "https://github.com/jdtsmith/eglot-booster" :rev :newest :branch "main")
-  :hook (eglot-booster-mode . eglot-ensure))
-
-(use-package yasnippet :ensure t :defer t
-  :diminish yas-minor-mode
-  :hook (prog-mode . yas-minor-mode))
-
-;;; Diagnostics
-(use-package flymake :ensure t :defer t
-  :custom
-  (flymake-indicator-type 'margins)
-  (flymake-margin-indicators-string `((error "X" compilation-error)
-                                      (warning "!" compilation-warning)
-                                      (note "i" compilation-info)))
-  :config
-  (custom-set-faces
-   '(flymake-error   ((t (:underline (:style wave :color "Red")))))
-   '(flymake-warning ((t (:underline (:style wave :color "Orange")))))
-   '(flymake-note    ((t (:underline (:style wave :color "Blue")))))))
-
-(use-package eldoc :ensure t :defer t
-  :hook (prog-mode . eldoc-mode)
-  :diminish eldoc-mode)
-
-(use-package eldoc-box :ensure t :defer t
-  :hook (eldoc-mode . eldoc-box-hover-mode)
-  :diminish eldoc-box-hover-mode
-  :custom (eldoc-idle-delay 0.1))
-
-(use-package copilot-chat :ensure t :defer t
-  :custom
-  (copilot-chat-frontend 'shell-maker))
 
 ;;; Dired
 (use-package dired :ensure nil
   :hook
-  ((dired-mode . dired-hide-details-mode)
-   (dired-mode . hl-line-mode))
+  (dired-mode . dired-hide-details-mode)
   :custom
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
-  (dired-mouse-drag-files t)
-  (delete-by-moving-to-trash t)
-  (dired-dwim-target t))
-
-(use-package async :ensure t :defer t
-  :hook (dired-mode . dired-async-mode))
+  (dired-mouse-drag-files t))
 
 (use-package dired-subtree :ensure t :defer t :after dired
   :bind
@@ -278,9 +201,7 @@
 
 ;;; Terminal
 (use-package eat :ensure t :defer t
-  :diminish eat-eshell-mode
-  :hook ((eshell-mode . eat-eshell-mode)
-         (eshell-mode . eat-eshell-visual-command-mode)))
+  :hook ((eshell-mode . eat-eshell-mode)))
 
 (use-package eshell-syntax-highlighting :ensure t :defer t
   :hook (eshell-mode . eshell-syntax-highlighting-mode))
@@ -384,3 +305,6 @@
 (use-package server
   :ensure nil :defer t
   :config (unless (server-running-p) (server-start)))
+
+; (load-file "~/.config/emacs/themes/oxocarbon-theme.el")
+; (enable-theme 'oxocarbon)

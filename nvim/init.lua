@@ -26,6 +26,7 @@ require("lazy").setup({
         vim.cmd("colorscheme oxocarbon")
       end
     },
+    'nvim-treesitter/nvim-treesitter',
   },
   checker = { enabled = true },
 })
@@ -78,6 +79,7 @@ local opts = {
   wildmode = "longest:full,full",
   winminwidth = 5,
   wrap = false,
+  swapfile = false,
   smoothscroll = true,
   foldmethod = "expr",
   foldtext = ""
@@ -86,40 +88,5 @@ for k, v in pairs(opts) do
   vim.opt[k] = v
 end
 
-local map = vim.keymap.set
-
-map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ "n", "x" }, "<Down>", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-map({ "n", "x" }, "<Up>", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-
-map("n", "<A-j>", "<cmd>execute 'move .+' . v:count1<cr>==")
-map("n", "<A-k>", "<cmd>execute 'move .-' . (v:count1 + 1)<cr>==")
-map("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi")
-map("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi")
-map("v", "<A-j>", ":<C-u>execute \"'<,'>move '>+\" . v:count1<cr>gv=gv")
-map("v", "<A-k>", ":<C-u>execute \"'<,'>move '<-\" . (v:count1 + 1)<cr>gv=gv")
-
-map("n", "<S-h>", "<cmd>bprevious<cr>")
-map("n", "<S-l>", "<cmd>bnext<cr>")
-map("n", "[b", "<cmd>bprevious<cr>")
-map("n", "]b", "<cmd>bnext<cr>")
-
-map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true })
-map("x", "n", "'Nn'[v:searchforward]", { expr = true })
-map("o", "n", "'Nn'[v:searchforward]", { expr = true })
-map("n", "N", "'nN'[v:searchforward].'zv'", { expr = true })
-map("x", "N", "'nN'[v:searchforward]", { expr = true })
-map("o", "N", "'nN'[v:searchforward]", { expr = true })
-
-map("i", ",", ",<c-g>u")
-map("i", ".", ".<c-g>u")
-map("i", ";", ";<c-g>u")
-
-map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>")
-
-map("v", "<", "<gv")
-map("v", ">", ">gv")
-
-map("n", "[q", vim.cmd.cprev)
-map("n", "]q", vim.cmd.cnext)
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")

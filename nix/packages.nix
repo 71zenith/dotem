@@ -6,14 +6,6 @@ in {
       mpv = super.mpv.override {
         scripts = with self.mpvScripts; [ mpris uosc ];
       };
-      hyprmag = super.hyprpicker.overrideAttrs {
-        src = super.fetchFromGitHub {
-          owner = "SIMULATAN";
-          repo = "hyprmag";
-          rev = "a7ca558d357e2a0d34373620f89d2daf210744dc";
-          hash = "sha256-Ntb+lvscDzOAGOJo+xOtjRrjdIDW6HpAtehlh5VipV8=";
-        };
-      };
     })
   ];
   fonts.packages = with pkgs; [
@@ -26,7 +18,6 @@ in {
     foot
     waybar
     (rofi-wayland.override {plugins = [pkgs.rofi-calc];})
-    hyprmag
     zathura
     mpv
     blueman
@@ -96,7 +87,6 @@ in {
     prismlauncher
     yuzu
     protonup-qt
-    # yuzu
     # onscripter-en
     # desmume
     # mgba
@@ -114,6 +104,5 @@ in {
 
     neovim
     emacs30-pgtk
-    emacs-lsp-booster
   ];
 }

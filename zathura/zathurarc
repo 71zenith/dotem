@@ -1,4 +1,5 @@
 set font "M PLUS Code Latin 14"
+set selection-clipboard "clipboard"
 set completion-bg "#262626"
 set completion-highlight-fg "#161616"
 set index-bg "#161616"
