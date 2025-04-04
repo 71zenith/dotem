@@ -2,15 +2,18 @@
 
 ;;; Package Initialization
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("elpa" . "https://elpa.gnu.org/packages/")
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (package-initialize)
 
-(setq package-quickstart t
-      package-native-compile t
+(setq package-native-compile t
       package-install-upgrade-built-in t)
 
-(use-package minions :ensure t :defer t)
 (use-package no-littering :ensure t :demand t)
+(use-package minions :ensure t :demand t
+  :custom (minions-mode-line-lighter "zZ")
+  :hook (after-init . minions-mode))
 
 ;;; Undo System
 (use-package undo-fu :ensure t :defer t)
@@ -31,6 +34,9 @@
 (use-package evil-commentary :ensure t :defer 2
   :hook (after-init . evil-commentary-mode))
 
+(use-package evil-snipe :ensure t :defer 2
+  :hook (after-init . evil-snipe-override-mode))
+
 ;;; General.el
 (use-package general :ensure t
   :demand t
@@ -50,10 +56,23 @@
   (leader-keys
     "x" '(execute-extended-command :which-key "M-x")
     ":" '(eval-expression :which-key "M-:")
-    "r" '(restart-emacs :which-key "restart")
+    "r" '(restart-emacs :which-key "re:")
     "q" '(kill-emacs :which-key "exit")
     "p" '(popper-toggle :which-key "pop")
-    "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "open init")
+    "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "init")
+
+    "b" '(:ignore t :which-key "buffer")
+    "b d" 'kill-current-buffer
+    "b b" 'consult-buffer
+    "b p" 'previous-buffer
+    "b n" 'next-buffer
+
+    "w" '(:ignore t :which-key "window")
+    "w c" 'delete-window
+    "w v" 'evil-window-vsplit
+    "w s" 'evil-window-split
+    "w n" 'evil-window-next
+    "w p" 'evil-window-prev
 
     "h" '(:ignore t :which-key "help")
     "h f" 'helpful-callable
@@ -72,17 +91,7 @@
 
     "e" 'eshell
     "g" '(magit-status :which-key "git")
-    "c" '(copilot-chat-display :which-key "chat")
-
-    "l" '(:ignore t :which-key "lsp")
-    "l f" 'eglot-format-buffer
-    "l r" 'eglot-rename
-    "l a" 'eglot-code-actions
-    "l d" 'eglot-find-declaration
-    "l i" 'eglot-find-implementation
-    "l D" 'eglot-find-typeDefinition
-    "l m" 'consult-flymake
-    "l h" 'eldoc-box-help-at-point))
+    ))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
@@ -90,12 +99,8 @@
 (use-package which-key :ensure t :defer t
   :hook (after-init . which-key-mode))
 
-(use-package which-key-posframe :ensure t :defer t
-  :hook (which-key-mode . which-key-posframe-mode)
-  :custom (which-key-posframe-parameters '((left-fringe . 5) (right-fringe . 5))))
-
-(use-package base16-theme :ensure t :demand t
-  :config (load-theme 'base16-oxocarbon-dark t))
+(use-package anzu :ensure t :defer t
+  :hook (after-init . global-anzu-mode))
 
 (use-package spacious-padding :ensure t :defer t
   :hook (after-init . spacious-padding-mode)
@@ -110,19 +115,22 @@
 
 (use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
 (use-package highlight-numbers :ensure t :defer t :hook (prog-mode . highlight-numbers-mode))
+(use-package highlight-operators :ensure t :defer t
+  :hook (prog-mode . (lambda ()
+                       (unless (derived-mode-p
+                                'lisp-mode 'emacs-lisp-mode 'common-lisp-mode 'clojure-mode)
+                         (highlight-operators-mode 1)))))
+
 
 (use-package popper :ensure t :defer t
   :hook (after-init . popper-mode)
   :custom (popper-reference-buffers '("\\*.*\\*")))
-
 
 ;;; Completion
 (use-package cape :ensure t
   :config
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'cape-emoji)
-  (add-hook 'completion-at-point-functions #'cape-history)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package corfu :ensure t
@@ -139,9 +147,6 @@
 
 ;;; Minibuffer
 (use-package vertico :ensure t :hook (after-init . vertico-mode))
-(use-package vertico-posframe :ensure t
-  :hook (vertico-mode . vertico-posframe-mode)
-  :custom (vertico-posframe-parameters '((left-fringe . 5) (right-fringe . 5))))
 
 (use-package marginalia :ensure t :hook (after-init . marginalia-mode))
 
@@ -306,5 +311,5 @@
   :ensure nil :defer t
   :config (unless (server-running-p) (server-start)))
 
-; (load-file "~/.config/emacs/themes/oxocarbon-theme.el")
-; (enable-theme 'oxocarbon)
+(load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
+(enable-theme 'oxocarbon)

@@ -1,7 +1,16 @@
 add_newline = false
-format = "$directory$git_branch$git_state$git_status$character"
+format = "${custom.start}$directory${custom.end}$git_branch$git_state$git_status$character"
 right_format = "$cmd_duration"
 scan_timeout = 10
+
+[custom.start]
+command = "echo $PWD"
+when = true
+format = "\u001b\\]8;;file://$output\u001b\\\\"
+
+[custom.end]
+when = true
+format = "\u001b\\]8;;\u001b\\\\"
 
 [character]
 error_symbol = "[λ](#ff7eb6)"

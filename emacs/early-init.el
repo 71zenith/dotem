@@ -49,7 +49,7 @@
 
 
 ;;; Font Config
-(let ((mono-font "Iosevka"))
+(let ((mono-font "M PLUS Code Latin"))
   (set-face-attribute 'default nil :family mono-font :height 145)
   (set-face-attribute 'fixed-pitch nil :family mono-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family mono-font :height 1.0))

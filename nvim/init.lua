@@ -28,7 +28,6 @@ require("lazy").setup({
     },
     'nvim-treesitter/nvim-treesitter',
   },
-  checker = { enabled = true },
 })
 
 local opts = {

@@ -9,13 +9,13 @@ abbr -a np --set-cursor "nix run --impure github:nixos/nixpkgs#%"
 alias c clear
 alias g git
 alias d sudo
-alias ko pkill
 alias ls eza
 alias du dust
 alias ns nsxiv
 alias nv 'emacsclient -c'
 alias pm pulsemixer
 alias cat 'bat -p -P'
+alias ko "pkill -9"
 alias up "nh os switch"
 alias ss "nh search"
 alias rg "rg -S"
