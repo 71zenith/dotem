@@ -12,12 +12,14 @@
 
 (use-package no-littering :ensure t :demand t)
 (use-package minions :ensure t :demand t
-  :custom (minions-mode-line-lighter "zZ")
+  :custom (minions-mode-line-lighter "::")
   :hook (after-init . minions-mode))
+
 
 ;;; Undo System
 (use-package undo-fu :ensure t :defer t)
 (use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
+
 
 ;;; Evil Mode
 (use-package evil :ensure t :defer 2
@@ -42,8 +44,7 @@
          (clojure-mode . enable-paredit-mode)))
 
 ;;; General.el
-(use-package general :ensure t
-  :demand t
+(use-package general :ensure t :demand t
   :config
   (general-evil-setup)
   (general-def
@@ -68,8 +69,6 @@
     "b" '(:ignore t :which-key "buffer")
     "b d" 'kill-current-buffer
     "b b" 'consult-buffer
-    "b p" 'previous-buffer
-    "b n" 'next-buffer
 
     "w" '(:ignore t :which-key "window")
     "w c" 'delete-window
@@ -79,9 +78,9 @@
     "w p" 'evil-window-prev
 
     "h" '(:ignore t :which-key "help")
-    "h f" 'helpful-callable
-    "h k" 'helpful-key
-    "h o" 'helpful-symbol
+    "h f" 'describe-face
+    "h k" 'describe-key
+    "h o" 'describe-symbol
 
     "f" '(:ignore t :which-key "file")
     "f s" 'save-buffer
@@ -95,10 +94,10 @@
 
     "a" '(embark-act :which-key "act")
     "e" 'eshell
-    "g" '(magit-status :which-key "git")
-    ))
+    "g" '(magit-status :which-key "git")))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
+
 
 ;;; Visual Elements
 (use-package which-key :ensure t :defer t
@@ -126,18 +125,19 @@
                        (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
                          (highlight-numbers-mode)))))
 
-;; only for non-lispy/non-ts langs
+;; only for non-lispy langs
 (use-package highlight-operators :ensure t :defer t
   :hook (prog-mode . (lambda ()
                        (unless (derived-mode-p
-                                'emacs-lisp-mode 'clojure-mode 'odin-ts-mode)
-                         (highlight-operators-mode 1)))))
+                                'emacs-lisp-mode 'clojure-mode)
+                         (highlight-operators-mode)))))
 
 
 (use-package popper :ensure t :defer t
   :hook (after-init . popper-mode)
   :custom
   (popper-reference-buffers '("\\*.*\\*")))
+
 
 ;;; Completion
 (use-package cape :ensure t
@@ -175,7 +175,11 @@
   (global-set-key [remap project-switch-to-buffer] 'consult-project-buffer)
   (global-set-key [remap isearch-forward] 'consult-line))
 
-(use-package embark :ensure t :defer t
+(use-package embark-consult :ensure t :defer t)
+
+(use-package embark :ensure t
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-collect))
   :config
   (defun embark-which-key-indicator ()
     (lambda (&optional keymap targets prefix)
@@ -241,6 +245,7 @@
 (use-package cider :ensure t :defer t
   :hook (clojure-mode . cider-mode))
 
+
 ;;; Dired
 (use-package dired :ensure nil
   :hook
@@ -259,6 +264,7 @@
         ("S-TAB" . dired-subtree-remove))
   :custom (dired-subtree-use-backgrounds nil))
 
+
 ;;; Terminal
 (use-package eat :ensure t :defer t
   :hook ((eshell-mode . eat-eshell-mode)))
@@ -275,6 +281,7 @@
                              (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-prompt)
                              (propertize " λ " 'face 'eshell-prompt)))))
 
+
 ;;; Global Modes
 (dolist (mode '(global-hl-line-mode
                 global-auto-revert-mode
@@ -288,13 +295,14 @@
                 savehist-mode
                 save-place-mode
                 delete-selection-mode))
-  (funcall mode 1))
+  (funcall mode 1)) 
 
 (add-hook 'prog-mode-hook
           (lambda ()
             (setq display-line-numbers 'relative)
             (when (> (buffer-size) 100000)
               (display-line-numbers-mode -1))))
+
 
 ;;; Defaults
 (setq-default
@@ -335,13 +343,13 @@
  scroll-margin 3
  scroll-conservatively 100000
  scroll-preserve-screen-position t
- auto-window-vscroll nil)
+ auto-window-vscroll nil
 
-;;; Personal Info
-(setq user-full-name "Mori Zen"
-      user-mail-address "71zenith@proton.me"
-      default-input-method "japanese"
-      display-time-format "%a %d %b %H:%M")
+ ;; Personal Info
+ user-full-name "Mori Zen"
+ user-mail-address "71zenith@proton.me"
+ default-input-method "japanese"
+ display-time-format "%a %d %b %H:%M")
 
 (use-package server
   :ensure nil :defer 2

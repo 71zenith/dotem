@@ -133,6 +133,10 @@
    `(anzu-mode-line ((,class (:foreground ,func))))
 
 
+   ;;; eshell
+   `(eshell-prompt ((,class (:foreground ,func))))
+
+
    ;;; ansi-color-*
    `(ansi-color-black ((,class (:foreground ,base00 :background ,base00))))
    `(ansi-color-red ((,class (:foreground ,base0A :background ,base0A))))
@@ -148,6 +152,7 @@
    `(diff-hl-insert ((,class (:foreground ,base07 :background ,bg2 :extend t))))
    `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2 :extend t))))
    `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
+
 
    ;;; dired
    `(dired-directory ((,class (:foreground ,base08))))
@@ -222,12 +227,12 @@
 
    ;;; rainbow-delimiters-*
    `(rainbow-delimiters-unmatched-face ((,class :foreground ,warning)))
-   `(rainbow-delimiters-depth-1-face ((,class :foreground ,comment)))
+   `(rainbow-delimiters-depth-1-face ((,class :foreground ,const)))
    `(rainbow-delimiters-depth-2-face ((,class :foreground ,type)))
    `(rainbow-delimiters-depth-3-face ((,class :foreground ,func)))
-   `(rainbow-delimiters-depth-4-face ((,class :foreground ,const)))
+   `(rainbow-delimiters-depth-4-face ((,class :foreground ,comment)))
    `(rainbow-delimiters-depth-5-face ((,class :foreground ,keyword)))
-   `(rainbow-delimiters-depth-6-face ((,class :foreground ,comment)))
+   `(rainbow-delimiters-depth-6-face ((,class :foreground ,const)))
    `(rainbow-delimiters-depth-7-face ((,class :foreground ,type)))
    `(rainbow-delimiters-depth-8-face ((,class :foreground ,func)))
 

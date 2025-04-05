@@ -44,10 +44,11 @@
 
 
 ;;; Font Config
-(let ((mono-font "Pragmasevka"))
+(let ((mono-font "Pragmasevka")
+      (sans-font "Kollektif"))
   (set-face-attribute 'default nil :family mono-font :height 155)
-  (set-face-attribute 'fixed-pitch nil :family mono-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family mono-font :height 1.0))
+  (set-face-attribute 'fixed-pitch nil :family sans-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family sans-font :height 1.0))
 
 (set-fontset-font "fontset-default" 'han "Kusukusuame")
 
@@ -63,6 +64,7 @@
 ;;; Native Comp
 (when (featurep 'native-compile)
   (setq native-comp-async-report-warnings-errors nil))
+
 
 ;;; UTF-8
 (set-language-environment "UTF-8")
@@ -84,7 +86,7 @@
             (zen/display-startup-time)
             (set-frame-parameter nil 'alpha-background 95)
             (add-to-list 'default-frame-alist '(alpha-background . 95)))
-          (setq gc-cons-threshold (* 16 1024 1024)
+          (setq gc-cons-threshold 16777216
                 gc-cons-percentage 0.1
                 vc-handled-backends vc-handled-backends-original
                 file-name-handler-alist file-name-handler-alist-original))
