@@ -50,11 +50,11 @@
        (bg1 base00)
        (bg2 base01)
        (bg3 base02)
-       (bg4 base04)
+       (bg4 base03)
        (builtin base09)
        (number  base0F)
        (keyword base09)
-       (const   base07)
+       (const   base09)
        (comment base03)
        (func    base0C)
        (str     base0E)
@@ -66,16 +66,17 @@
        (unspec   (when (>= emacs-major-version 29) 'unspecified)))
   (custom-theme-set-faces
    'oxocarbon
+   ;;; emacs
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
    `(region ((,class (:background ,selection))))
    `(highlight ((,class (:foreground ,fg3 :background ,bg3))))
    `(hl-line ((,class (:background ,bg2))))
    `(fringe ((,class (:background ,bg2 :foreground ,fg3))))
    `(cursor ((,class (:background ,fg3))))
-   `(isearch ((,class (:weight bold :foreground ,warning :background ,bg2))))
-   `(isearch-fail ((,class (:weight bold :foreground ,warning2 :background ,bg3))))
+   `(isearch ((,class (:weight bold :background ,warning :foreground ,fg2))))
+   `(isearch-fail ((,class (:weight bold :foreground ,warning :background ,bg3))))
    `(minibuffer-prompt ((,class (:foreground ,keyword))))
-   `(tooltip ((,class (:background ,bg1)))l)
+   `(tooltip ((,class (:background ,bg1))))
    `(match ((,class (:foreground ,base0F))))
    `(italic ((,class (:italic t))))
    `(bold ((,class (:weight bold))))
@@ -84,8 +85,11 @@
    `(error ((,class (:foreground ,base0A))))
    `(success ((,class (:foreground ,base0D))))
    `(warning ((,class (:foreground ,base0C))))
+   `(lazy-highlight ((,class (:foreground ,bg1 :background ,base08))))
+   `(trailing-whitespace ((,class :foreground ,unspec :background ,warning)))
 
-    ;;; font-lock-* faces
+
+    ;;; font-lock-*
    `(font-lock-builtin-face ((,class (:foreground ,builtin))))
    `(font-lock-comment-face ((,class (:foreground ,comment))))
    `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
@@ -102,7 +106,11 @@
    `(font-lock-reference-face ((,class (:foreground ,const))))
    `(font-lock-string-face ((,class (:foreground ,str))))
 
-    ;;; mode-line-* faces
+   ;;; highlight-*
+   `(highlight-numbers-number ((,class (:foreground ,number))))
+   `(highlight-operators-face ((,class (:foreground ,base0B))))
+
+    ;;; mode-line-*
    `(mode-line ((,class (:box (:line-width 1 :color nil) :weight bold :foreground ,fg3 :background ,bg2))))
    `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,bg4 :background ,bg1))))
    `(mode-line-emphasis ((,class (:foreground ,fg1))))
@@ -110,6 +118,8 @@
    `(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
    `(anzu-mode-line ((,class (:foreground ,func))))
 
+
+   ;;; ansi-color-*
    `(ansi-color-black ((,class (:foreground ,base00 :background ,base00))))
    `(ansi-color-red ((,class (:foreground ,base0A :background ,base0A))))
    `(ansi-color-green ((,class (:foreground ,base0D :background ,base0D))))
@@ -119,24 +129,24 @@
    `(ansi-color-cyan ((,class (:foreground ,base0F :background ,base0F))))
    `(ansi-color-white ((,class (:foreground ,base06 :background ,base06))))
 
-   `(corfu-default ((,class (:background ,base00))))
+   ;;; diff-hl
+   `(diff-hl-insert ((,class (:foreground ,base0D :background ,bg2 :extend t))))
+   `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2 :extend t))))
+   `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
 
-   `(diff-hl-insert ((,class (:foreground ,base0D :background ,base0D))))
-   `(diff-hl-delete ((,class (:foreground ,base0A :background ,base0C))))
-   `(diff-hl-change ((,class (:foreground ,base09 :background ,base09))))
-
+   ;;; dired
    `(dired-directory ((,class (:foreground ,base08))))
    `(dired-marked ((,class (:foreground ,base0E))))
    `(dired-broken-symlink ((,class (:foreground ,base0A))))
    `(dired-warning ((,class (:foreground ,base0C))))
    `(dired-symlink ((,class (:foreground ,base0B))))
 
-    ;;; compilation mode
+    ;;; compilation
    `(compilation-column-number ((,class (:foreground ,base03))))
    `(compilation-line-number ((,class (:foreground ,base03))))
    `(compilation-error ((,class (:foreground ,warning))))
-   `(compilation-warning ((,class (:foreground ,base0B))))
-   `(compilation-info ((,class (:foreground ,base0D))))
+   `(compilation-warning ((,class (:foreground ,base0D))))
+   `(compilation-info ((,class (:foreground ,base0B))))
    `(compilation-mode-line-exit ((,class (:foreground ,base0D))))
    `(compilation-mode-line-fail ((,class (:foreground ,warning))))
 
@@ -144,27 +154,41 @@
    `(evil-ex-info ((,class (:foreground ,warning))))
    `(evil-ex-substitute-matches ((,class (:foreground ,base0B))))
    `(evil-ex-substitute-replacement ((,class (:foreground ,base0C))))
+   `(evil-ex-lazy-highlight ((,class (:background ,base08 :foreground ,bg1))))
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
 
+   ;;; magit
+   `(magit-header-line ((,class (:foreground ,base0E :weight bold))))
+   `(magit-section-heading ((,class (:foreground ,base0B :weight bold))))
+   `(magit-branch-remote ((,class (:foreground ,base09))))
+   `(magit-branch-local ((,class (:foreground ,base0C))))
+   `(magit-hash ((,class (:foreground ,bg4))))
+   `(magit-diff-file-heading ((,class (:foreground ,base07))))
+   `(magit-filename ((,class (:foreground ,fg1))))
+   `(magit-diff-removed ((,class (:foreground ,base0A))))
+   `(magit-diff-removed-highlight ((,class (:foreground ,base0A :background ,bg2))))
+   `(magit-diff-added ((,class (:foreground ,base0E))))
+   `(magit-diff-added-highlight ((,class (:foreground ,base0E :background ,bg2))))
 
-   `(magit-header-line ((,class (:foreground ,base0E))))
-   `(magit-tag ((,class (:foreground ,base09))))
-   `(magit-head ((,class (:foreground ,base0C))))
 
    ;;; flymake
    `(flymake-warning ((,class (:underline (:color ,warning2 :style wave)))))
    `(flymake-info ((,class (:underline (:color ,base0D :style wave)))))
    `(flymake-note ((,class (:underline (:color ,base0B :style wave)))))
 
+
+   ;;; vertico/marginalia/corfu/consult
    `(vertico-current ((,class (:background ,bg2 :underline nil))))
    `(marginalia-documentation ((,class (:underline nil :foreground ,bg3))))
+   `(corfu-default ((,class (:background ,bg2))))
 
-   `(highlight-numbers-number ((,class (:foreground ,number))))
-   `(highlight-operators-face ((,class (:foreground ,func))))
-   `(term-color-oxocarbon ((,class (:foreground ,fg2 :background ,unspec))))
 
-   `(trailing-whitespace ((,class :foreground ,unspec :background ,warning)))
+   ;;; paren
+   `(show-paren-match ((,class (:inverse-video t))))
+   `(show-paren-mismatch ((,class (:inverse-video t))))
 
+
+   ;;; rainbow-delimiters-*
    `(rainbow-delimiters-unmatched-face ((,class :foreground ,warning)))
    `(rainbow-delimiters-depth-1-face ((,class :foreground ,comment)))
    `(rainbow-delimiters-depth-2-face ((,class :foreground ,type)))
@@ -175,8 +199,8 @@
    `(rainbow-delimiters-depth-7-face ((,class :foreground ,type)))
    `(rainbow-delimiters-depth-8-face ((,class :foreground ,func)))
 
-   `(lazy-highlight ((,class (:foreground ,fg2 :background ,bg3))))
 
+   ;;; term-color-*
    `(term ((,class (:foreground ,fg1 :background ,bg1))))
    `(term-color-black ((,class (:foreground ,base00 :background ,base00))))
    `(term-color-red ((,class (:foreground ,base0A :background ,base0A))))
