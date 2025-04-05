@@ -21,7 +21,7 @@
 
 ;; This file is not part of Emacs.
 
-;;; Commentary:
+;;; Commentary: theme by shaunsingh
 ;;; oxocarbon theme created by zen in 2025
 
 ;;; Code:
@@ -91,30 +91,41 @@
 
     ;;; font-lock-*
    `(font-lock-builtin-face ((,class (:foreground ,builtin))))
-   `(font-lock-comment-face ((,class (:foreground ,comment))))
-   `(font-lock-comment-delimiter-face ((,class (:foreground ,comment))))
+   `(font-lock-comment-face ((,class (:foreground ,comment :slant italic))))
+   `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :slant italic))))
    `(font-lock-doc-face ((,class (:foreground ,comment))))
    `(font-lock-constant-face ((,class (:foreground ,const))))
    `(font-lock-function-name-face ((,class (:foreground ,func :weight bold))))
+   `(font-lock-function-call-face ((,class (:foreground ,func :weight bold))))
    `(font-lock-keyword-face ((,class :foreground ,keyword)))
    `(font-lock-type-face ((,class (:foreground ,type))))
    `(font-lock-variable-name-face ((,class (:foreground ,var))))
+   `(font-lock-variable-call-face ((,class (:foreground ,var))))
    `(font-lock-number-face ((,class (:foreground ,number))))
+   `(font-lock-operator-face ((,class (:foreground ,base0B))))
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
+   `(font-lock-escape-face ((,class (:foreground ,number))))
    `(font-lock-negation-char-face ((,class (:foreground ,const))))
    `(font-lock-preprocessor-face ((,class :foreground ,const)))
    `(font-lock-reference-face ((,class (:foreground ,const))))
    `(font-lock-string-face ((,class (:foreground ,str))))
 
-   ;;; highlight-*
+
+   ;;; highlight-* (non ts-mode)
    `(highlight-numbers-number ((,class (:foreground ,number))))
    `(highlight-operators-face ((,class (:foreground ,base0B))))
+
+
+   ;;; sh-mode
+   `(sh-quoted-exec ((,class (:foreground ,unspec))))
+   `(sh-heredoc ((,class (:foreground ,base0E))))
+
 
     ;;; mode-line-*
    `(mode-line ((,class (:box (:line-width 1 :color nil) :weight bold :foreground ,fg3 :background ,bg2))))
    `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,bg4 :background ,bg1))))
    `(mode-line-emphasis ((,class (:foreground ,fg1))))
-   `(mode-line-buffer-id ((,class (:foreground ,func))))
+   `(mode-line-buffer-id ((,class (:foreground ,func :slant italic))))
    `(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
    `(anzu-mode-line ((,class (:foreground ,func))))
 
@@ -129,8 +140,9 @@
    `(ansi-color-cyan ((,class (:foreground ,base0F :background ,base0F))))
    `(ansi-color-white ((,class (:foreground ,base06 :background ,base06))))
 
+
    ;;; diff-hl
-   `(diff-hl-insert ((,class (:foreground ,base0D :background ,bg2 :extend t))))
+   `(diff-hl-insert ((,class (:foreground ,base07 :background ,bg2 :extend t))))
    `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2 :extend t))))
    `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
 
@@ -139,7 +151,8 @@
    `(dired-marked ((,class (:foreground ,base0E))))
    `(dired-broken-symlink ((,class (:foreground ,base0A))))
    `(dired-warning ((,class (:foreground ,base0C))))
-   `(dired-symlink ((,class (:foreground ,base0B))))
+   `(dired-symlink ((,class (:foreground ,fg1 :slant italic))))
+
 
     ;;; compilation
    `(compilation-column-number ((,class (:foreground ,base03))))
@@ -150,6 +163,7 @@
    `(compilation-mode-line-exit ((,class (:foreground ,base0D))))
    `(compilation-mode-line-fail ((,class (:foreground ,warning))))
 
+
    ;;; evil
    `(evil-ex-info ((,class (:foreground ,warning))))
    `(evil-ex-substitute-matches ((,class (:foreground ,base0B))))
@@ -157,18 +171,21 @@
    `(evil-ex-lazy-highlight ((,class (:background ,base08 :foreground ,bg1))))
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
 
+
    ;;; magit
    `(magit-header-line ((,class (:foreground ,base0E :weight bold))))
-   `(magit-section-heading ((,class (:foreground ,base0B :weight bold))))
+   `(magit-section-heading ((,class (:foreground ,base0B :slant italic))))
    `(magit-branch-remote ((,class (:foreground ,base09))))
    `(magit-branch-local ((,class (:foreground ,base0C))))
    `(magit-hash ((,class (:foreground ,bg4))))
-   `(magit-diff-file-heading ((,class (:foreground ,base07))))
-   `(magit-filename ((,class (:foreground ,fg1))))
+   `(magit-diff-file-heading ((,class (:foreground ,fg1))))
    `(magit-diff-removed ((,class (:foreground ,base0A))))
+   `(magit-diffstat-removed ((,class (:foreground ,base0A))))
    `(magit-diff-removed-highlight ((,class (:foreground ,base0A :background ,bg2))))
    `(magit-diff-added ((,class (:foreground ,base0E))))
+   `(magit-diffstat-added ((,class (:foreground ,base0E))))
    `(magit-diff-added-highlight ((,class (:foreground ,base0E :background ,bg2))))
+   `(magit-log-author ((,class (:foreground ,fg1))))
 
 
    ;;; flymake
@@ -177,11 +194,16 @@
    `(flymake-note ((,class (:underline (:color ,base0B :style wave)))))
 
 
-   ;;; vertico/marginalia/corfu/consult
+   ;;; vertico/marginalia/corfu/orderless
    `(vertico-current ((,class (:background ,bg2 :underline nil))))
    `(marginalia-documentation ((,class (:underline nil :foreground ,bg3))))
-   `(corfu-default ((,class (:background ,bg2))))
-
+   `(corfu-default ((,class (:background ,bg1))))
+   `(corfu-current ((,class (:background ,bg2))))
+   `(corfu-annotations ((,class (:foreground ,func))))
+   `(orderless-match-face-0 ((,class (:foreground ,base0B :weight bold))))
+   `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
+   `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
+   `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
 
    ;;; paren
    `(show-paren-match ((,class (:inverse-video t))))
@@ -211,26 +233,27 @@
    `(term-color-cyan ((,class (:foreground ,base0F :background ,base0F))))
    `(term-color-white ((,class (:foreground ,base06 :background ,base06)))))
 
-  ;; Legacy
+
+  ;;; Legacy
+  ;; emacs >= 27.1
+  (when (>= emacs-major-version 27)
+    (custom-theme-set-faces
+     'oxocarbon
+     `(tab-line              ((,class (:background ,bg1 :foreground ,fg1))))
+     `(tab-line-tab          ((,class (:inherit tab-line))))
+     `(tab-line-tab-inactive ((,class (:background ,bg1 :foreground ,bg4))))
+     `(tab-line-tab-current  ((,class (:background ,bg1 :foreground ,fg3 :weight bold))))
+     `(tab-line-highlight    ((,class (:background ,bg1 :foreground ,fg1))))))
   ;; emacs >= 28
   (when (>= emacs-major-version 28)
     (custom-theme-set-faces
      'oxocarbon
      `(line-number ((t (:inherit fringe :foreground ,comment))))
      `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))))
-  ;; emacs >= 27.1
-  (when (>= emacs-major-version 27)
-    (custom-theme-set-faces
-     'oxocarbon
-     `(tab-line              ((,class (:background ,bg2 :foreground ,fg3))))
-     `(tab-line-tab          ((,class (:inherit tab-line))))
-     `(tab-line-tab-inactive ((,class (:background ,bg2 :foreground ,fg3))))
-     `(tab-line-tab-current  ((,class (:background ,bg1 :foreground ,fg1))))
-     `(tab-line-highlight    ((,class (:background ,bg1 :foreground ,fg2))))))
   (when (>= emacs-major-version 28)
     (custom-theme-set-faces
      'oxocarbon
-     `(tab-line-tab-modified ((,class (:foreground ,warning2 :weight bold))))))
+     `(tab-line-tab-modified ((,class (:foreground ,warning))))))
   (when (boundp 'font-lock-regexp-face)
     (custom-theme-set-faces
      'oxocarbon

@@ -37,6 +37,10 @@
 (use-package evil-snipe :ensure t :defer 2
   :hook (after-init . evil-snipe-override-mode))
 
+(use-package paredit :ensure t :defer t
+  :hook ((emacs-lisp-mode . enable-paredit-mode)
+         (clojure-mode . enable-paredit-mode)))
+
 ;;; General.el
 (use-package general :ensure t
   :demand t
@@ -114,12 +118,8 @@
      :right-divider-width 10)))
 
 (use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
-(use-package highlight-numbers :ensure t :defer t :hook (prog-mode . highlight-numbers-mode))
-(use-package highlight-operators :ensure t :defer t
-  :hook (prog-mode . (lambda ()
-                       (unless (derived-mode-p
-                                'lisp-mode 'emacs-lisp-mode 'common-lisp-mode 'clojure-mode)
-                         (highlight-operators-mode 1)))))
+;; (use-package highlight-numbers :ensure t :defer t :hook (prog-mode . highlight-numbers-mode))
+;; (use-package highlight-operators :ensure t :defer t :hook (prog-mode . highlight-operators-mode))
 
 
 (use-package popper :ensure t :defer t
@@ -174,17 +174,23 @@
   :hook (after-init . global-diff-hl-mode))
 
 ;;; Lang Support
-(use-package nix-mode :ensure t :defer t)
-(use-package zig-mode :ensure t :defer t :custom (zig-format-on-save nil))
-(use-package odin-mode :ensure t :defer t
-  :vc (:url "https://github.com/mattt-b/odin-mode" :rev :newest :branch "main"))
+(use-package nix-ts-mode :ensure t :defer t
+  :mode "\\.nix\\'")
+
+(use-package odin-ts-mode :ensure t :defer t
+  :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
+  :mode "\\.odin\\'")
+
+(use-package treesit-auto :ensure t :defer t
+  :hook (after-init . global-treesit-auto-mode)
+  :config
+  (setq treesit-auto-install t
+        treesit-language-source-alist '((odin . ("https://github.com/tree-sitter-grammars/tree-sitter-odin"))
+                                        (nix . ("https://github.com/nix-community/tree-sitter-nix"))))
+  (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package cider :ensure t :defer t
   :hook (clojure-mode . cider-mode))
-
-(use-package paredit :ensure t :defer t
-  :hook ((emacs-lisp-mode . enable-paredit-mode)
-         (clojure-mode . enable-paredit-mode)))
 
 ;;; Dired
 (use-package dired :ensure nil
@@ -215,14 +221,10 @@
   :hook (eshell-mode . (lambda () (eshell/alias "c" "clear-scrollback")))
   :custom
   (eshell-banner-message "")
-  (eshell-prompt-function (lambda nil
-                            (let ((dir-color (face-attribute 'font-lock-keyword-face :foreground))
-                                  (prompt-color (face-attribute 'font-lock-builtin-face :foreground)))
-                              (concat
-                               (propertize (abbreviate-file-name (eshell/pwd)) 'face `(:foreground ,dir-color))
-                               (propertize " λ" 'face `(:foreground ,prompt-color))
-                               (propertize " "))))
-                          ))
+  (eshell-prompt-function (lambda ()
+                            (concat
+                             (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-directory)
+                             (propertize " λ " 'face 'eshell-syntax)))))
 
 ;;; Global Modes
 (dolist (mode '(global-hl-line-mode
@@ -255,8 +257,6 @@
  ;; Editing behavior
  indent-tabs-mode nil
  tab-width 4
- require-final-newline nil
- backward-delete-char-untabify-method 'hungry
  truncate-lines t
  word-wrap t
  line-move-visual nil
@@ -267,9 +267,7 @@
  fringe-indicator-alist nil
  indicate-buffer-boundaries nil
  indicate-empty-lines nil
- line-spacing 0.08
- cursor-type 'bar
- cursor-in-non-selected-windows nil
+ cursor-in-non-selected-windows t
 
  ;; File handling
  create-lockfiles nil
@@ -281,12 +279,6 @@
  vc-follow-symlinks t
  find-file-visit-truename nil
 
- ;; Auto-revert settings
- auto-revert-verbose nil
- auto-revert-interval 1
- auto-save-no-message t
- global-auto-revert-non-file-buffers t
-
  ;; Completion settings
  completion-ignore-case t
 
@@ -294,21 +286,16 @@
  scroll-margin 3
  scroll-conservatively 100000
  scroll-preserve-screen-position t
- scroll-step 5
- auto-window-vscroll nil
-
- ;; Miscellaneous
- ad-redefinition-action 'accept)
+ auto-window-vscroll nil)
 
 ;;; Personal Info
 (setq user-full-name "Mori Zen"
       user-mail-address "71zenith@proton.me"
       default-input-method "japanese"
-      display-time-format "%a %d %b %H:%M"
-      calendar-week-start-day 1)
+      display-time-format "%a %d %b %H:%M")
 
 (use-package server
-  :ensure nil :defer t
+  :ensure nil :defer 2
   :config (unless (server-running-p) (server-start)))
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
