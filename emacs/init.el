@@ -93,6 +93,7 @@
     "f P" 'project-switch-project
     "f d" 'dired
 
+    "a" '(embark-act :which-key "act")
     "e" 'eshell
     "g" '(magit-status :which-key "git")
     ))
@@ -118,13 +119,25 @@
      :right-divider-width 10)))
 
 (use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
-;; (use-package highlight-numbers :ensure t :defer t :hook (prog-mode . highlight-numbers-mode))
-;; (use-package highlight-operators :ensure t :defer t :hook (prog-mode . highlight-operators-mode))
+
+;; only for non-ts langs
+(use-package highlight-numbers :ensure t :defer t
+  :hook (prog-mode . (lambda ()
+                       (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
+                         (highlight-numbers-mode)))))
+
+;; only for non-lispy/non-ts langs
+(use-package highlight-operators :ensure t :defer t
+  :hook (prog-mode . (lambda ()
+                       (unless (derived-mode-p
+                                'emacs-lisp-mode 'clojure-mode 'odin-ts-mode)
+                         (highlight-operators-mode 1)))))
 
 
 (use-package popper :ensure t :defer t
   :hook (after-init . popper-mode)
-  :custom (popper-reference-buffers '("\\*.*\\*")))
+  :custom
+  (popper-reference-buffers '("\\*.*\\*")))
 
 ;;; Completion
 (use-package cape :ensure t
@@ -155,14 +168,50 @@
   (completion-styles '(orderless substring))
   (completion-category-overrides '((file (styles partial-completion)))))
 
-(use-package consult :ensure t
+(use-package consult :ensure t :defer t
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   (global-set-key [remap project-switch-to-buffer] 'consult-project-buffer)
   (global-set-key [remap isearch-forward] 'consult-line))
 
-(use-package helpful :ensure t
+(use-package embark :ensure t :defer t
+  :config
+  (defun embark-which-key-indicator ()
+    (lambda (&optional keymap targets prefix)
+      (if (null keymap)
+          (which-key--hide-popup-ignore-command)
+        (which-key--show-keymap
+         (if (eq (plist-get (car targets) :type) 'embark-become)
+             "Become"
+           (format "Act on %s '%s'%s"
+                   (plist-get (car targets) :type)
+                   (embark--truncate-target (plist-get (car targets) :target))
+                   (if (cdr targets) "…" "")))
+         (if prefix
+             (pcase (lookup-key keymap prefix 'accept-default)
+               ((and (pred keymapp) km) km)
+               (_ (key-binding prefix 'accept-default)))
+           keymap)
+         nil nil t (lambda (binding)
+                     (not (string-suffix-p "-argument" (cdr binding))))))))
+
+  (setq embark-indicators
+        '(embark-which-key-indicator
+          embark-highlight-indicator
+          embark-isearch-highlight-indicator))
+
+  (defun embark-hide-which-key-indicator (fn &rest args)
+    (which-key--hide-popup-ignore-command)
+    (let ((embark-indicators
+           (remq #'embark-which-key-indicator embark-indicators)))
+      (apply fn args)))
+
+  (advice-add #'embark-completing-read-prompter
+              :around #'embark-hide-which-key-indicator))
+
+
+(use-package helpful :ensure t :defer t
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-key] . helpful-key)
          ([remap describe-symbol] . helpful-symbol)))
@@ -223,8 +272,8 @@
   (eshell-banner-message "")
   (eshell-prompt-function (lambda ()
                             (concat
-                             (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-directory)
-                             (propertize " λ " 'face 'eshell-syntax)))))
+                             (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-prompt)
+                             (propertize " λ " 'face 'eshell-prompt)))))
 
 ;;; Global Modes
 (dolist (mode '(global-hl-line-mode

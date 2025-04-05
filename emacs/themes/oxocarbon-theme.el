@@ -54,7 +54,8 @@
        (builtin base09)
        (number  base0F)
        (keyword base09)
-       (const   base09)
+       (const   base07)
+       (pre     base09)
        (comment base03)
        (func    base0C)
        (str     base0E)
@@ -106,7 +107,9 @@
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
    `(font-lock-escape-face ((,class (:foreground ,number))))
    `(font-lock-negation-char-face ((,class (:foreground ,const))))
-   `(font-lock-preprocessor-face ((,class :foreground ,const)))
+   `(font-lock-preprocessor-face ((,class :foreground ,pre)))
+   `(font-lock-property-use-face ((,class :foreground ,warning)))
+   `(font-lock-property-name-face ((,class :foreground ,warning)))
    `(font-lock-reference-face ((,class (:foreground ,const))))
    `(font-lock-string-face ((,class (:foreground ,str))))
 
@@ -124,7 +127,7 @@
     ;;; mode-line-*
    `(mode-line ((,class (:box (:line-width 1 :color nil) :weight bold :foreground ,fg3 :background ,bg2))))
    `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,bg4 :background ,bg1))))
-   `(mode-line-emphasis ((,class (:foreground ,fg1))))
+   `(mode-line-emphasis ((,class (:foreground ,base0C :slant italic))))
    `(mode-line-buffer-id ((,class (:foreground ,func :slant italic))))
    `(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
    `(anzu-mode-line ((,class (:foreground ,func))))
@@ -170,6 +173,13 @@
    `(evil-ex-substitute-replacement ((,class (:foreground ,base0C))))
    `(evil-ex-lazy-highlight ((,class (:background ,base08 :foreground ,bg1))))
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
+
+
+   ;;; which-key
+   `(which-key-key-face ((,class (:foreground ,base08))))
+   `(which-key-command-description-face ((,class (:foreground ,fg1))))
+   `(which-key-local-map-description-face ((,class (:foreground ,fg1))))
+   `(which-key-group-description-face ((,class (:foreground ,base0B))))
 
 
    ;;; magit
@@ -258,6 +268,7 @@
     (custom-theme-set-faces
      'oxocarbon
      `(font-lock-regexp-face ((,class (:inherit font-lock-string-face :underline t)))))))
+
 
 ;;;###autoload
 (when load-file-name
