@@ -149,9 +149,21 @@
 
 
    ;;; diff-hl
-   `(diff-hl-insert ((,class (:foreground ,base07 :background ,bg2 :extend t))))
+   `(diff-hl-insert ((,class (:foreground ,base0E :background ,bg2 :extend t))))
    `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2 :extend t))))
    `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
+
+
+   ;;; diff
+   `(diff-changed ((,class (:foreground ,base09 :background ,bg2))))
+   `(diff-added ((,class (:foreground ,base0E :background ,bg2))))
+   `(diff-removed ((,class (:foreground ,base0A :background ,bg2))))
+   `(diff-indicator-changed ((,class (:foreground ,base09))))
+   `(diff-indicator-added ((,class (:foreground ,base0E))))
+   `(diff-indicator-removed ((,class (:foreground ,base0A))))
+   `(diff-header ((,class (:foreground ,fg1))))
+   `(diff-file-header ((,class (:foreground ,fg1))))
+   `(diff-hunk-header ((,class (:foreground ,base0D))))
 
 
    ;;; dired
@@ -162,7 +174,7 @@
    `(dired-symlink ((,class (:foreground ,fg1 :slant italic))))
 
 
-    ;;; compilation
+   ;;; compilation
    `(compilation-column-number ((,class (:foreground ,base03))))
    `(compilation-line-number ((,class (:foreground ,base03))))
    `(compilation-error ((,class (:foreground ,warning))))
@@ -193,6 +205,7 @@
    `(magit-branch-remote ((,class (:foreground ,base09))))
    `(magit-branch-local ((,class (:foreground ,base0C))))
    `(magit-hash ((,class (:foreground ,bg4))))
+   `(magit-log-author ((,class (:foreground ,fg1))))
    `(magit-diff-file-heading ((,class (:foreground ,fg1))))
    `(magit-diff-removed ((,class (:foreground ,base0A))))
    `(magit-diffstat-removed ((,class (:foreground ,base0A))))
@@ -200,7 +213,16 @@
    `(magit-diff-added ((,class (:foreground ,base0E))))
    `(magit-diffstat-added ((,class (:foreground ,base0E))))
    `(magit-diff-added-highlight ((,class (:foreground ,base0E :background ,bg2))))
-   `(magit-log-author ((,class (:foreground ,fg1))))
+   `(magit-diff-hunk-heading ((,class (:background ,bg2))))
+   `(magit-diff-hunk-heading-highlight ((,class (:background ,bg3 :foreground ,base0D))))
+
+
+   ;;; transient
+   `(transient-key-stay ((,class (:foreground ,base0B))))
+   `(transient-key-stack ((,class (:foreground ,base0B))))
+   `(transient-inactive-argument ((,class (:foreground ,bg3 :slant italic))))
+   `(transient-argument ((,class (:foreground ,fg3 :slant italic))))
+   `(transient-key-exit ((,class (:foreground ,base0B))))
 
 
    ;;; flymake
@@ -219,6 +241,7 @@
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
    `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
+
 
    ;;; paren
    `(show-paren-match ((,class (:inverse-video t))))

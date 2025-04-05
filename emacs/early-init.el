@@ -4,11 +4,11 @@
 (defvar file-name-handler-alist-original file-name-handler-alist)
 (defvar vc-handled-backends-original vc-handled-backends)
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6
+      gc-cons-percentage 0.5
       vc-handled-backends nil
       file-name-handler-alist nil)
 
-(setq package-enable-at-startup nil)
+(setq package-enable-at-startup t)
 
 ;;; Performance
 (setq site-run-file nil
@@ -20,10 +20,10 @@
       inhibit-compacting-font-caches t
       x-underline-at-descent-line t
       redisplay-skip-fontification-on-input t
-      frame-inhibit-implied-resize t
       kill-ring-max 500
       ring-bell-function #'ignore
       frame-resize-pixelwise t
+      frame-inhibit-implied-resize t
       fast-but-imprecise-scrolling t
       bidi-inhibit-bpa t
       bidi-display-reordering nil
@@ -55,6 +55,7 @@
 
 ;;; Pesky Behaviour
 (setq inhibit-startup-buffer-menu t
+      inhibit-x-resources t
       initial-major-mode 'fundamental-mode
       inhibit-startup-screen t
       inhibit-default-init t
@@ -63,7 +64,8 @@
 
 ;;; Native Comp
 (when (featurep 'native-compile)
-  (setq native-comp-async-report-warnings-errors nil))
+  (setq native-compile-prune-cache t
+        native-comp-async-report-warnings-errors nil))
 
 
 ;;; UTF-8
@@ -84,12 +86,14 @@
 (add-hook 'emacs-startup-hook
           (lambda ()
             (zen/display-startup-time)
-            (set-frame-parameter nil 'alpha-background 95)
-            (add-to-list 'default-frame-alist '(alpha-background . 95)))
+            (set-frame-parameter nil 'alpha-background 90)
+            (add-to-list 'default-frame-alist '(alpha-background . 90)))
           (setq gc-cons-threshold 16777216
                 gc-cons-percentage 0.1
                 vc-handled-backends vc-handled-backends-original
                 file-name-handler-alist file-name-handler-alist-original))
+
+(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 
 (setq custom-file (locate-user-emacs-file "var/custom.el"))
 (load custom-file :no-error-if-missing)

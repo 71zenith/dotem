@@ -68,6 +68,7 @@
 
     "b" '(:ignore t :which-key "buffer")
     "b d" 'kill-current-buffer
+    "b r" 'resize-window
     "b b" 'consult-buffer
 
     "w" '(:ignore t :which-key "window")
@@ -91,6 +92,9 @@
     "f p" 'project-find-file
     "f P" 'project-switch-project
     "f d" 'dired
+
+    "l" '(:ignore t :which-key "code")
+    "l i" 'consult-imenu
 
     "a" '(embark-act :which-key "act")
     "e" 'eshell
@@ -158,14 +162,17 @@
   (corfu-cycle t)
   (corfu-popupinfo-delay '(0.5 . 0.25)))
 
+
 ;;; Minibuffer
-(use-package vertico :ensure t :hook (after-init . vertico-mode))
+(use-package vertico :ensure t :hook ((after-init . vertico-reverse-mode)
+                                      (after-init . vertico-mode)))
 
 (use-package marginalia :ensure t :hook (after-init . marginalia-mode))
 
 (use-package orderless :ensure t
   :custom
-  (completion-styles '(orderless substring))
+  (completion-styles '(substring orderless))
+  (completion-ignore-case t)
   (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package consult :ensure t :defer t
@@ -221,10 +228,16 @@
          ([remap describe-symbol] . helpful-symbol)))
 
 ;;; VC
-(use-package magit :ensure t :defer t)
+(use-package magit :ensure t :defer t
+  :custom
+  (magit-section-visibility-indicator '("⮧"))
+  (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
+
+
 (use-package diff-hl :ensure t
   :defer t
   :hook (after-init . global-diff-hl-mode))
+
 
 ;;; Lang Support
 (use-package nix-ts-mode :ensure t :defer t
@@ -335,9 +348,6 @@
  vc-make-backup-files nil
  vc-follow-symlinks t
  find-file-visit-truename nil
-
- ;; Completion settings
- completion-ignore-case t
 
  ;; Scrolling behavior
  scroll-margin 3
