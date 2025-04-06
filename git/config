@@ -1,6 +1,7 @@
 [user]
   email = "71zenith@proton.me"
   name = "zen"
+	signingkey = /home/zen/.ssh/id_ed25519.pub
 
 [branch]
   autoSetupMerge = true
@@ -51,3 +52,7 @@
 
 [url "ssh://git@github.com/"]
   pushInsteadOf = "github:"
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
