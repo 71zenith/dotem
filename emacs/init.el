@@ -211,10 +211,6 @@
          ("C-;" . embark-collect))
   :config
   (defun embark-which-key-indicator ()
-    "An `embark' indicator that displays keymaps using `which-key'.
-The which-key help message will show the type and value of the
-current target followed by an ellipsis if there are further
-targets."
     (lambda (&optional keymap targets prefix)
       (if (null keymap)
           (which-key--hide-popup-ignore-command)
@@ -239,7 +235,6 @@ targets."
           embark-isearch-highlight-indicator))
 
   (defun embark-hide-which-key-indicator (fn &rest args)
-    "Hide the `which-key' indicator immediately when using the completing-read prompter."
     (which-key--hide-popup-ignore-command)
     (let ((embark-indicators
            (remq #'embark-which-key-indicator embark-indicators)))
