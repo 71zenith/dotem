@@ -55,11 +55,11 @@ fg = "Red"
 modifiers = ["Italic"]
 
 [themes.palette]
-black = "#161616"
+black = "#121212"
 bright_black = "#262626"
-blue = "#33b1ff"
-foreground = "#525252"
-bright_cyan = "#82cfff"
-cyan = "#3ddbd9"
-red = "#ff7eb6"
-white = "#dde1e6"
+blue = "#5fafff"
+foreground = "#4e4e4e"
+bright_cyan = "#87d7ff"
+cyan = "#5fd7d7"
+red = "#ff87af"
+white = "#e4e4e4"

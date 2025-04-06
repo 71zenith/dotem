@@ -44,13 +44,14 @@
 
 
 ;;; Font Config
-(let ((mono-font "Pragmasevka")
-      (sans-font "Kollektif"))
-  (set-face-attribute 'default nil :family mono-font :height 155)
+(let ((mono-font "Aporetic Serif Mono")
+      (sans-font "Aporetic Sans"))
+  (set-face-attribute 'default nil :family mono-font :height 165)
   (set-face-attribute 'fixed-pitch nil :family sans-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family sans-font :height 1.0))
 
-(set-fontset-font "fontset-default" 'han "Kusukusuame")
+;; changes other symbols // needs to be evaluated
+(set-fontset-font "fontset-default" 'japanese-jisx0208 "Natsume")
 
 
 ;;; Pesky Behaviour
@@ -85,10 +86,10 @@
 ;;; Hooks
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (zen/display-startup-time)
-            (set-frame-parameter nil 'alpha-background 90)
-            (add-to-list 'default-frame-alist '(alpha-background . 90)))
-          (setq gc-cons-threshold 16777216
+            (set-frame-parameter nil 'alpha-background 95)
+            (add-to-list 'default-frame-alist '(alpha-background . 95))
+            (zen/display-startup-time))
+          (setq gc-cons-threshold (* 8 1024 1024)
                 gc-cons-percentage 0.1
                 vc-handled-backends vc-handled-backends-original
                 file-name-handler-alist file-name-handler-alist-original))

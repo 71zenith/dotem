@@ -9,6 +9,7 @@ in {
     })
   ];
   fonts.packages = with pkgs; [
+    aporetic
     nerd-fonts.symbols-only
     noto-fonts-emoji
   ];

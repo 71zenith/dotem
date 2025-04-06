@@ -28,22 +28,22 @@
 
 (deftheme oxocarbon)
 (let* ((class '((class color) (min-colors 89)))
-       (base00 "#161616")
+       (base00 "#121212")
        (base01 "#262626")
-       (base02 "#393939")
-       (base03 "#525252")
-       (base04 "#dde1e6")
-       (base05 "#f2f4f8")
+       (base02 "#3a3a3a")
+       (base03 "#4e4e4e")
+       (base04 "#e4e4e4")
+       (base05 "#eeeeee")
        (base06 "#ffffff")
-       (base07 "#08bdba")
-       (base08 "#3ddbd9")
-       (base09 "#78a9ff")
-       (base0A "#ee5396")
-       (base0B "#33b1ff")
-       (base0C "#ff7eb6")
-       (base0D "#42be65")
-       (base0E "#be95ff")
-       (base0F "#82cfff")
+       (base07 "#00afaf")
+       (base08 "#5fd7d7")
+       (base09 "#87afff")
+       (base0A "#ff5f87")
+       (base0B "#5fafff")
+       (base0C "#ff87af")
+       (base0D "#5faf5f")
+       (base0E "#af87ff")
+       (base0F "#87d7ff")
        (fg1 base04)
        (fg2 base05)
        (fg3 base06)
@@ -67,7 +67,7 @@
        (unspec   (when (>= emacs-major-version 29) 'unspecified)))
   (custom-theme-set-faces
    'oxocarbon
-   ;;; emacs
+   ;;; emacs <built-in>
    `(default ((,class (:background ,bg1 :foreground ,fg1))))
    `(region ((,class (:background ,selection))))
    `(highlight ((,class (:foreground ,fg3 :background ,bg3))))
@@ -88,9 +88,11 @@
    `(warning ((,class (:foreground ,base0C))))
    `(lazy-highlight ((,class (:foreground ,bg1 :background ,base08))))
    `(trailing-whitespace ((,class :foreground ,unspec :background ,warning)))
+   `(line-number ((t (:inherit fringe :foreground ,comment))))
+   `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))
 
 
-    ;;; font-lock-*
+    ;;; font-lock-* <built-in>
    `(font-lock-builtin-face ((,class (:foreground ,builtin))))
    `(font-lock-comment-face ((,class (:foreground ,comment :slant italic))))
    `(font-lock-comment-delimiter-face ((,class (:foreground ,comment :slant italic))))
@@ -100,8 +102,8 @@
    `(font-lock-function-call-face ((,class (:foreground ,func :weight bold))))
    `(font-lock-keyword-face ((,class :foreground ,keyword)))
    `(font-lock-type-face ((,class (:foreground ,type))))
-   `(font-lock-variable-name-face ((,class (:foreground ,var))))
-   `(font-lock-variable-call-face ((,class (:foreground ,var))))
+   `(font-lock-variable-name-face ((,class (:foreground ,var :slant italic))))
+   `(font-lock-variable-call-face ((,class (:foreground ,var :slant italic))))
    `(font-lock-number-face ((,class (:foreground ,number))))
    `(font-lock-operator-face ((,class (:foreground ,base0B))))
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
@@ -112,6 +114,7 @@
    `(font-lock-property-name-face ((,class :foreground ,warning)))
    `(font-lock-reference-face ((,class (:foreground ,const))))
    `(font-lock-string-face ((,class (:foreground ,str))))
+   `(font-lock-regexp-face ((,class (:foreground ,str :underline t))))
 
 
    ;;; highlight-* (non ts-mode)
@@ -119,25 +122,51 @@
    `(highlight-operators-face ((,class (:foreground ,base0B))))
 
 
-   ;;; sh-mode
+   ;;; sh-mode <built-in>
    `(sh-quoted-exec ((,class (:foreground ,unspec))))
    `(sh-heredoc ((,class (:foreground ,base0E))))
 
 
-    ;;; mode-line-*
+    ;;; mode-line-* <built-in>
    `(mode-line ((,class (:box (:line-width 1 :color nil) :weight bold :foreground ,fg3 :background ,bg2))))
    `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,bg4 :background ,bg1))))
-   `(mode-line-emphasis ((,class (:foreground ,base0C :slant italic))))
+   `(mode-line-emphasis ((,class (:foreground ,func :slant italic))))
    `(mode-line-buffer-id ((,class (:foreground ,func :slant italic))))
    `(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
    `(anzu-mode-line ((,class (:foreground ,func))))
 
 
-   ;;; eshell
+   ;;; eshell <built-in>
    `(eshell-prompt ((,class (:foreground ,func))))
 
 
-   ;;; ansi-color-*
+   ;;; eldoc <built-in>
+   `(eldoc-highlight-function-argument ((,class (:foreground ,base0C :slant italic))))
+
+
+   ;;; outline-mode <built-in>
+   `(outline-1 ((,class (:foreground ,base0C :weight bold :extend t))))
+   `(outline-2 ((,class (:foreground ,base0B :weight bold :extend t))))
+   `(outline-3 ((,class (:foreground ,base08 :weight bold :extend t))))
+   `(outline-4 ((,class (:foreground ,base0D :weight bold :extend t))))
+   `(outline-5 ((,class (:foreground ,base09 :weight bold :extend t))))
+   `(outline-6 ((,class (:foreground ,base0F :weight bold :extend t))))
+
+
+   ;;; org-mode <built-in>
+   `(org-block-begin-line ((,class (:foreground ,base0F :background ,bg2))))
+   `(org-block-end-line ((,class (:foreground ,base0F :background ,bg2))))
+   `(org-code ((,class (:foreground ,base0B :background ,bg2))))
+   `(org-verbatim ((,class (:foreground ,base0F))))
+   `(org-checkbox ((,class (:foreground ,fg1 :weight bold))))
+   `(org-todo ((,class (:foreground ,base0A))))
+   `(org-date ((,class (:foreground ,base07))))
+   `(org-special-keyword ((,class (:foreground ,bg4))))
+   `(org-document-info-keyword ((,class (:foreground ,bg4))))
+   `(org-document-info ((,class (:foreground ,base0A))))
+   `(org-document-title ((,class (:foreground ,base0A :weight bold))))
+
+   ;;; ansi-color-* <built-in>
    `(ansi-color-black ((,class (:foreground ,base00 :background ,base00))))
    `(ansi-color-red ((,class (:foreground ,base0A :background ,base0A))))
    `(ansi-color-green ((,class (:foreground ,base0D :background ,base0D))))
@@ -154,7 +183,7 @@
    `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
 
 
-   ;;; diff
+   ;;; diff <built-in>
    `(diff-changed ((,class (:foreground ,base09 :background ,bg2))))
    `(diff-added ((,class (:foreground ,base0E :background ,bg2))))
    `(diff-removed ((,class (:foreground ,base0A :background ,bg2))))
@@ -166,7 +195,22 @@
    `(diff-hunk-header ((,class (:foreground ,base0D))))
 
 
-   ;;; dired
+   ;;; ediff <built-in>
+   `(ediff-fine-diff-A ((,class (:foreground ,base0A))))
+   `(ediff-fine-diff-B ((,class (:foreground ,base0E))))
+   `(ediff-fine-diff-C ((,class (:foreground ,base09))))
+   `(ediff-current-diff-A ((,class (:inherit ediff-fine-diff-A))))
+   `(ediff-current-diff-B ((,class (:inherit ediff-fine-diff-B))))
+   `(ediff-current-diff-C ((,class (:inherit ediff-fine-diff-C))))
+   `(ediff-even-diff-A ((,class (:inherit ediff-fine-diff-A))))
+   `(ediff-even-diff-B ((,class (:inherit ediff-fine-diff-B))))
+   `(ediff-even-diff-C ((,class (:inherit ediff-fine-diff-C))))
+   `(ediff-odd-diff-A ((,class (:inherit ediff-fine-diff-A))))
+   `(ediff-odd-diff-B ((,class (:inherit ediff-fine-diff-B))))
+   `(ediff-odd-diff-C ((,class (:inherit ediff-fine-diff-C))))
+
+
+   ;;; dired <built-in>
    `(dired-directory ((,class (:foreground ,base08))))
    `(dired-marked ((,class (:foreground ,base0E))))
    `(dired-broken-symlink ((,class (:foreground ,base0A))))
@@ -174,7 +218,7 @@
    `(dired-symlink ((,class (:foreground ,fg1 :slant italic))))
 
 
-   ;;; compilation
+   ;;; compilation <built-in>
    `(compilation-column-number ((,class (:foreground ,base03))))
    `(compilation-line-number ((,class (:foreground ,base03))))
    `(compilation-error ((,class (:foreground ,warning))))
@@ -192,7 +236,7 @@
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
 
 
-   ;;; which-key
+   ;;; which-key <built-in>
    `(which-key-key-face ((,class (:foreground ,base08))))
    `(which-key-command-description-face ((,class (:foreground ,fg1))))
    `(which-key-local-map-description-face ((,class (:foreground ,fg1))))
@@ -210,7 +254,7 @@
    `(magit-diff-removed ((,class (:foreground ,base0A))))
    `(magit-diffstat-removed ((,class (:foreground ,base0A))))
    `(magit-diff-removed-highlight ((,class (:foreground ,base0A :background ,bg2))))
-   `(magit-diff-added ((,class (:foreground ,base0E))))
+   `(magit-diff-added ((,class (:foregrou:nd ,base0E))))
    `(magit-diffstat-added ((,class (:foreground ,base0E))))
    `(magit-diff-added-highlight ((,class (:foreground ,base0E :background ,bg2))))
    `(magit-diff-hunk-heading ((,class (:background ,bg2))))
@@ -225,25 +269,33 @@
    `(transient-key-exit ((,class (:foreground ,base0B))))
 
 
-   ;;; flymake
+   ;;; flymake <built-in>
    `(flymake-warning ((,class (:underline (:color ,warning2 :style wave)))))
    `(flymake-info ((,class (:underline (:color ,base0D :style wave)))))
    `(flymake-note ((,class (:underline (:color ,base0B :style wave)))))
 
 
+   ;;; flycheck
+   `(flycheck-warning ((,class (:underline (:color ,warning2 :style wave)))))
+   `(flycheck-info ((,class (:underline (:color ,base0D :style wave)))))
+   `(flycheck-note ((,class (:underline (:color ,base0B :style wave)))))
+
+
    ;;; vertico/marginalia/corfu/orderless
    `(vertico-current ((,class (:background ,bg2 :underline nil))))
    `(marginalia-documentation ((,class (:underline nil :foreground ,bg3))))
-   `(corfu-default ((,class (:background ,bg1))))
-   `(corfu-current ((,class (:background ,bg2))))
+   `(corfu-default ((,class (:background ,bg1 :foreground ,bg4))))
+   `(corfu-popupinfo ((,class (:background ,bg1 :foreground ,fg1))))
+   `(corfu-current ((,class (:background ,bg2 :foreground ,fg3 :weight bold))))
    `(corfu-annotations ((,class (:foreground ,func))))
    `(orderless-match-face-0 ((,class (:foreground ,base0B :weight bold))))
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
    `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
+   `(completions-common-part ((,class (:foreground ,fg3 :weight bold))))
 
 
-   ;;; paren
+   ;;; paren <built-in>
    `(show-paren-match ((,class (:inverse-video t))))
    `(show-paren-mismatch ((,class (:inverse-video t))))
 
@@ -260,7 +312,7 @@
    `(rainbow-delimiters-depth-8-face ((,class :foreground ,func)))
 
 
-   ;;; term-color-*
+   ;;; term-color-* <built-in>
    `(term ((,class (:foreground ,fg1 :background ,bg1))))
    `(term-color-black ((,class (:foreground ,base00 :background ,base00))))
    `(term-color-red ((,class (:foreground ,base0A :background ,base0A))))
@@ -269,33 +321,17 @@
    `(term-color-blue ((,class (:foreground ,base0B :background ,base0B))))
    `(term-color-magenta ((,class (:foreground ,base09 :background ,base09))))
    `(term-color-cyan ((,class (:foreground ,base0F :background ,base0F))))
-   `(term-color-white ((,class (:foreground ,base06 :background ,base06)))))
+   `(term-color-white ((,class (:foreground ,base06 :background ,base06))))
 
 
-  ;;; Legacy
-  ;; emacs >= 27.1
-  (when (>= emacs-major-version 27)
-    (custom-theme-set-faces
-     'oxocarbon
-     `(tab-line              ((,class (:background ,bg1 :foreground ,fg1))))
-     `(tab-line-tab          ((,class (:inherit tab-line))))
-     `(tab-line-tab-inactive ((,class (:background ,bg1 :foreground ,bg4))))
-     `(tab-line-tab-current  ((,class (:background ,bg1 :foreground ,fg3 :weight bold))))
-     `(tab-line-highlight    ((,class (:background ,bg1 :foreground ,fg1))))))
-  ;; emacs >= 28
-  (when (>= emacs-major-version 28)
-    (custom-theme-set-faces
-     'oxocarbon
-     `(line-number ((t (:inherit fringe :foreground ,comment))))
-     `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))))
-  (when (>= emacs-major-version 28)
-    (custom-theme-set-faces
-     'oxocarbon
-     `(tab-line-tab-modified ((,class (:foreground ,warning))))))
-  (when (boundp 'font-lock-regexp-face)
-    (custom-theme-set-faces
-     'oxocarbon
-     `(font-lock-regexp-face ((,class (:inherit font-lock-string-face :underline t)))))))
+   ;;; tab-line-* <built-in>
+   `(tab-line              ((,class (:background ,bg1 :foreground ,fg1))))
+   `(tab-line-tab          ((,class (:inherit tab-line))))
+   `(tab-line-tab-inactive ((,class (:background ,bg1 :foreground ,bg4))))
+   `(tab-line-tab-current  ((,class (:background ,bg1 :foreground ,fg3 :weight bold))))
+   `(tab-line-highlight    ((,class (:background ,bg1 :foreground ,fg1))))
+   `(tab-line-tab-modified ((,class (:foreground ,warning))))))
+
 
 
 ;;;###autoload

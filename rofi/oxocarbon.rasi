@@ -1,11 +1,11 @@
 * {
     font: "Kollektif 12";
-    active: #33b1ff;
-    background: rgba(22, 22, 22, 0.9);
+    active: #5fafff;
+    background: rgba(18, 18, 18, 0.95);
     background-alt: #262626;
     border-radius: 0px;
     foreground: #ffffff;
-    selected: #ff7eb6;
+    selected: #ff87af;
 }
 
 window {

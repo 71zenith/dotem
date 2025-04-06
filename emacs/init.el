@@ -1,6 +1,6 @@
 ;; init.el -*- lexical-binding: t -*-
 
-;;; Package Initialization
+;;; Package.el
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")
@@ -16,17 +16,18 @@
   :hook (after-init . minions-mode))
 
 
-;;; Undo System
+;;; Undo
 (use-package undo-fu :ensure t :defer t)
 (use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
 
 
-;;; Evil Mode
+;;; Evil
 (use-package evil :ensure t :defer 2
   :init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
         evil-want-C-i-jump t
+        evil-echo-state nil
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
@@ -43,7 +44,7 @@
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (clojure-mode . enable-paredit-mode)))
 
-;;; General.el
+;;; General
 (use-package general :ensure t :demand t
   :config
   (general-evil-setup)
@@ -57,6 +58,20 @@
     :keymaps 'override
     :prefix "SPC"
     :global-prefix "C-SPC")
+
+  (general-define-key
+   :states '(normal visual emacs)
+   "[d" 'diff-hl-previous-hunk
+   "]d" 'diff-hl-next-hunk
+   "[w" 'evil-window-prev
+   "]w" 'evil-window-next)
+
+  (general-define-key
+   :keymaps 'dired-mode-map
+   "<tab>" 'dired-subtree-toggle
+   "TAB" 'dired-subtree-toggle
+   "<backtab>" 'dired-subtree-remove
+   "S-TAB" 'dired-subtree-remove)
 
   (leader-keys
     "x" '(execute-extended-command :which-key "M-x")
@@ -75,8 +90,12 @@
     "w c" 'delete-window
     "w v" 'evil-window-vsplit
     "w s" 'evil-window-split
-    "w n" 'evil-window-next
-    "w p" 'evil-window-prev
+
+    "g" '(:ignore t :which-key "git")
+    "g g "'(magit-status :which-key "magit")
+    "g r" '(diff-hl-revert-hunk :which-key "re:")
+    "g s" '(diff-hl-show-hunk :which-key "show")
+    "g o" '(diff-hl-stage-some :which-key "stage")
 
     "h" '(:ignore t :which-key "help")
     "h f" 'describe-face
@@ -97,13 +116,12 @@
     "l i" 'consult-imenu
 
     "a" '(embark-act :which-key "act")
-    "e" 'eshell
-    "g" '(magit-status :which-key "git")))
+    "e" 'eshell))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
 
-;;; Visual Elements
+;;; Visual
 (use-package which-key :ensure t :defer t
   :hook (after-init . which-key-mode))
 
@@ -121,6 +139,8 @@
      :fringe-width 6
      :right-divider-width 10)))
 
+(use-package resize-window :ensure t :defer t)
+
 (use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; only for non-ts langs
@@ -133,7 +153,7 @@
 (use-package highlight-operators :ensure t :defer t
   :hook (prog-mode . (lambda ()
                        (unless (derived-mode-p
-                                'emacs-lisp-mode 'clojure-mode)
+                                'emacs-lisp-mode 'clojure-mode 'common-lisp-mode)
                          (highlight-operators-mode)))))
 
 
@@ -141,7 +161,6 @@
   :hook (after-init . popper-mode)
   :custom
   (popper-reference-buffers '("\\*.*\\*")))
-
 
 ;;; Completion
 (use-package cape :ensure t
@@ -164,13 +183,16 @@
 
 
 ;;; Minibuffer
-(use-package vertico :ensure t :hook ((after-init . vertico-reverse-mode)
-                                      (after-init . vertico-mode)))
+(use-package vertico :ensure t
+  :hook ((after-init . vertico-reverse-mode)
+         (after-init . vertico-mode)))
 
-(use-package marginalia :ensure t :hook (after-init . marginalia-mode))
+(use-package marginalia :ensure t
+  :hook (after-init . marginalia-mode))
 
 (use-package orderless :ensure t
   :custom
+  (orderless-matching-styles '(orderless-prefixes orderless-regexp))
   (completion-styles '(substring orderless))
   (completion-ignore-case t)
   (completion-category-overrides '((file (styles partial-completion)))))
@@ -189,6 +211,10 @@
          ("C-;" . embark-collect))
   :config
   (defun embark-which-key-indicator ()
+    "An `embark' indicator that displays keymaps using `which-key'.
+The which-key help message will show the type and value of the
+current target followed by an ellipsis if there are further
+targets."
     (lambda (&optional keymap targets prefix)
       (if (null keymap)
           (which-key--hide-popup-ignore-command)
@@ -213,6 +239,7 @@
           embark-isearch-highlight-indicator))
 
   (defun embark-hide-which-key-indicator (fn &rest args)
+    "Hide the `which-key' indicator immediately when using the completing-read prompter."
     (which-key--hide-popup-ignore-command)
     (let ((embark-indicators
            (remq #'embark-which-key-indicator embark-indicators)))
@@ -222,26 +249,34 @@
               :around #'embark-hide-which-key-indicator))
 
 
-(use-package helpful :ensure t :defer t
+(use-package helpful :ensure t :defer 2
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-key] . helpful-key)
          ([remap describe-symbol] . helpful-symbol)))
 
-;;; VC
-(use-package magit :ensure t :defer t
+;;; Git
+(use-package magit :ensure t :defer 2
   :custom
+  (ispell-check-comments nil)
   (magit-section-visibility-indicator '("⮧"))
   (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
+(use-package ediff :ensure nil
+  :custom
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-window-setup-function 'ediff-setup-windows-plain))
 
 (use-package diff-hl :ensure t
   :defer t
   :hook (after-init . global-diff-hl-mode))
 
 
-;;; Lang Support
+;;; Langs 
 (use-package nix-ts-mode :ensure t :defer t
   :mode "\\.nix\\'")
+
+(use-package clojure-ts-mode :ensure t :defer t
+  :mode "\\.clj\\'")
 
 (use-package odin-ts-mode :ensure t :defer t
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
@@ -259,6 +294,14 @@
   :hook (clojure-mode . cider-mode))
 
 
+;;; Eglot
+(use-package eglot :ensure nil
+  :commands (eglot)
+  :custom
+  (eglot-sync-connect nil)
+  (eglot-autoshutdown t))
+
+
 ;;; Dired
 (use-package dired :ensure nil
   :hook
@@ -266,36 +309,27 @@
   :custom
   (dired-recursive-copies 'always)
   (dired-recursive-deletes 'always)
-  (dired-mouse-drag-files t))
-
-(use-package dired-subtree :ensure t :defer t :after dired
-  :bind
-  (:map dired-mode-map
-        ("<tab>" . dired-subtree-toggle)
-        ("TAB" . dired-subtree-toggle)
-        ("<backtab>" . dired-subtree-remove)
-        ("S-TAB" . dired-subtree-remove))
-  :custom (dired-subtree-use-backgrounds nil))
+  (dired-mouse-drag-files t)
+  :config
+  (use-package dired-subtree :ensure t :defer t :after dired
+    :custom (dired-subtree-use-backgrounds nil)))
 
 
 ;;; Terminal
 (use-package eat :ensure t :defer t
   :hook ((eshell-mode . eat-eshell-mode)))
 
-(use-package eshell-syntax-highlighting :ensure t :defer t
-  :hook (eshell-mode . eshell-syntax-highlighting-mode))
-
-(use-package eshell :ensure nil
+(use-package eshell :ensure t :defer t
   :hook (eshell-mode . (lambda () (eshell/alias "c" "clear-scrollback")))
   :custom
   (eshell-banner-message "")
-  (eshell-prompt-function (lambda ()
-                            (concat
-                             (propertize (abbreviate-file-name (eshell/pwd)) 'face 'eshell-prompt)
-                             (propertize " λ " 'face 'eshell-prompt)))))
+  (eshell-prompt-function (lambda () (propertize (concat (abbreviate-file-name (eshell/pwd)) " λ ") 'face 'eshell-prompt)))
+  :config
+  (use-package eshell-syntax-highlighting :ensure t :defer t
+    :hook (eshell-mode . eshell-syntax-highlighting-mode)))
 
 
-;;; Global Modes
+;;; Modes
 (dolist (mode '(global-hl-line-mode
                 global-auto-revert-mode
                 global-so-long-mode
@@ -308,7 +342,7 @@
                 savehist-mode
                 save-place-mode
                 delete-selection-mode))
-  (funcall mode 1)) 
+  (funcall mode 1))
 
 (add-hook 'prog-mode-hook
           (lambda ()
@@ -323,6 +357,7 @@
  confirm-kill-emacs nil
  confirm-kill-processes nil
  use-short-answers t
+ enable-recursive-minibuffers t
 
  ;; Editing behavior
  indent-tabs-mode nil
@@ -338,8 +373,10 @@
  indicate-buffer-boundaries nil
  indicate-empty-lines nil
  cursor-in-non-selected-windows t
+ mode-line-end-spaces " "
+ mode-line-front-space " "
 
- ;; File handling
+ ;; Inferior files
  create-lockfiles nil
  delete-by-moving-to-trash t
  make-backup-files nil
@@ -348,6 +385,7 @@
  vc-make-backup-files nil
  vc-follow-symlinks t
  find-file-visit-truename nil
+ recentf-max-saved-items 50
 
  ;; Scrolling behavior
  scroll-margin 3

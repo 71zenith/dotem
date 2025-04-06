@@ -13,14 +13,14 @@ window#waybar {
   padding: 0 5px;
 }
 
-#workspaces button.empty { color: #393939; }
+#workspaces button.empty { color: #3a3a3a; }
 
 #workspaces button.active {
-  border-bottom: 2.5px solid #33b1ff;
+  border-bottom: 2.5px solid #5fafff;
 }
 
 #custom-separator {
-  color: #393939;
+  color: #3a3a3a;
 }
 
 #clock,
@@ -37,8 +37,8 @@ window#waybar {
 }
 
 tooltip, .modules-right, .modules-left, .modules-center {
-  color: #f2f4f8;
-  background-color: #161616;
+  color: #eeeeee;
+  background-color: #121212;
   border: 2px solid #262626;
   margin: 5px 5px 0px 5px;
 }

@@ -12,7 +12,7 @@ alias d sudo
 alias ls eza
 alias du dust
 alias ns nsxiv
-alias nv 'emacsclient -c'
+alias nv 'emacsclient -nw'
 alias pm pulsemixer
 alias cat 'bat -p -P'
 alias ko "pkill -9"
@@ -51,6 +51,6 @@ set -gx MANPAGER "less -R --use-color -Dd+m -Du+b -DP+g -DE+c -DW+y"
 set -gx MANROFFOPT "-P -c"
 set -gx LESS "-R --use-color"
 set -gx BAT_THEME "base16-256"
-set -gx EDITOR "emacsclient -c"
+set -gx EDITOR "emacsclient -nw"
 
 end

@@ -13,23 +13,23 @@ when = true
 format = "\u001b\\]8;;\u001b\\\\"
 
 [character]
-error_symbol = "[λ](#ff7eb6)"
-success_symbol = "[λ](#ee5396)"
-vimcmd_symbol = "[Λ](#ee5396)"
-vimcmd_replace_one_symbol = "[Λ](#82cfff)"
-vimcmd_visual_symbol = "[Λ](#42be65)"
+error_symbol = "[λ](#ff87af)"
+success_symbol = "[λ](#ff5f87)"
+vimcmd_symbol = "[Λ](#ff5f87)"
+vimcmd_replace_one_symbol = "[Λ](#87d7ff)"
+vimcmd_visual_symbol = "[Λ](#5faf5f)"
 
 [cmd_duration]
-style = "#3ddbd9"
+style = "#5fd7d7"
 
 [directory]
-style = "#33b1ff"
+style = "#5fafff"
 
 [git_branch]
-style = "#ee5396"
+style = "#ff5f87"
 
 [git_state]
-style = "#42be65"
+style = "#5faf5f"
 
 [git_status]
-style = "#33b1ff"
+style = "#5fafff"
