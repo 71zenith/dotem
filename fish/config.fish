@@ -52,5 +52,6 @@ set -gx MANROFFOPT "-P -c"
 set -gx LESS "-R --use-color"
 set -gx BAT_THEME "base16-256"
 set -gx EDITOR "emacsclient -nw"
+set -gx ALTERNATE_EDITOR
 
 end

@@ -26,15 +26,6 @@ require("lazy").setup({
         vim.cmd("colorscheme oxocarbon")
       end
     },
-{
-  "NeogitOrg/neogit",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "sindrets/diffview.nvim",
-    "nvim-telescope/telescope.nvim", -- optional
-  },
-  config = true
-},
     'nvim-treesitter/nvim-treesitter',
   },
 })

@@ -254,7 +254,7 @@
    `(magit-diff-removed ((,class (:foreground ,base0A))))
    `(magit-diffstat-removed ((,class (:foreground ,base0A))))
    `(magit-diff-removed-highlight ((,class (:foreground ,base0A :background ,bg2))))
-   `(magit-diff-added ((,class (:foregrou:nd ,base0E))))
+   `(magit-diff-added ((,class (:foreground ,base0E))))
    `(magit-diffstat-added ((,class (:foreground ,base0E))))
    `(magit-diff-added-highlight ((,class (:foreground ,base0E :background ,bg2))))
    `(magit-diff-hunk-heading ((,class (:background ,bg2))))
@@ -270,15 +270,15 @@
 
 
    ;;; flymake <built-in>
-   `(flymake-warning ((,class (:underline (:color ,warning2 :style wave)))))
-   `(flymake-info ((,class (:underline (:color ,base0D :style wave)))))
    `(flymake-note ((,class (:underline (:color ,base0B :style wave)))))
+   `(flymake-error ((,class (:underline (:color ,base0C :style wave)))))
+   `(flymake-info ((,class (:underline (:color ,base0D :style wave)))))
 
 
    ;;; flycheck
-   `(flycheck-warning ((,class (:underline (:color ,warning2 :style wave)))))
-   `(flycheck-info ((,class (:underline (:color ,base0D :style wave)))))
    `(flycheck-note ((,class (:underline (:color ,base0B :style wave)))))
+   `(flycheck-error ((,class (:underline (:color ,base0C :style wave)))))
+   `(flycheck-info ((,class (:underline (:color ,base0D :style wave)))))
 
 
    ;;; vertico/marginalia/corfu/orderless

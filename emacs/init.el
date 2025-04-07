@@ -92,10 +92,10 @@
     "w s" 'evil-window-split
 
     "g" '(:ignore t :which-key "git")
-    "g g "'(magit-status :which-key "magit")
-    "g r" '(diff-hl-revert-hunk :which-key "re:")
-    "g s" '(diff-hl-show-hunk :which-key "show")
-    "g o" '(diff-hl-stage-some :which-key "stage")
+    "g g "'magit-status
+    "g r" 'diff-hl-revert-hunk
+    "g s" 'diff-hl-show-hunk
+    "g o" 'diff-hl-stage-some
 
     "h" '(:ignore t :which-key "help")
     "h f" 'describe-face
@@ -112,8 +112,9 @@
     "f P" 'project-switch-project
     "f d" 'dired
 
-    "l" '(:ignore t :which-key "code")
-    "l i" 'consult-imenu
+    "c" '(:ignore t :which-key "code")
+    "c i" 'consult-imenu
+    "c f" 'consult-flymake
 
     "a" '(embark-act :which-key "act")
     "e" 'eshell))
@@ -192,7 +193,6 @@
 
 (use-package orderless :ensure t
   :custom
-  (orderless-matching-styles '(orderless-prefixes orderless-regexp))
   (completion-styles '(substring orderless))
   (completion-ignore-case t)
   (completion-category-overrides '((file (styles partial-completion)))))
@@ -291,10 +291,22 @@
 
 ;;; Eglot
 (use-package eglot :ensure nil
-  :commands (eglot)
+  :hook (odin-ts-mode . eglot-ensure)
   :custom
+  (eglot-report-progress nil)
+  (eglot-events-buffer-config '(:size 0))
+  (eglot-send-changes-idle-time 0.05)
   (eglot-sync-connect nil)
   (eglot-autoshutdown t))
+
+(use-package eglot-booster :ensure t
+  :after eglot
+  :vc (:url "https://github.com/jdtsmith/eglot-booster" :rev :newest :branch "main")
+  :config (eglot-booster-mode))
+
+(use-package flymake :ensure t
+  :custom
+  (flymake-indicator-type 'margins))
 
 
 ;;; Dired
