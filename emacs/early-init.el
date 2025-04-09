@@ -87,8 +87,8 @@
 ;;; Hooks
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (set-frame-parameter nil 'alpha-background 95)
-            (add-to-list 'default-frame-alist '(alpha-background . 95))
+            ;; (set-frame-parameter nil 'alpha-background 95)
+            ;; (add-to-list 'default-frame-alist '(alpha-background . 95))
             (zen/display-startup-time))
           (setq gc-cons-threshold (* 8 1024 1024)
                 gc-cons-percentage 0.1

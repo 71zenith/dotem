@@ -104,6 +104,7 @@ in {
     odin
 
     neovim
-    emacs30-pgtk
+    emacs-pgtk
+    emacs-lsp-booster
   ];
 }

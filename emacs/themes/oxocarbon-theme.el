@@ -82,7 +82,8 @@
    `(match ((,class (:foreground ,base0F))))
    `(italic ((,class (:italic t))))
    `(bold ((,class (:weight bold))))
-   `(vertical-border ((,class (:background ,bg3))))
+   `(window-divider ((,class (:inherit vertical-border))))
+   `(vertical-border ((,class (:background ,bg3 :foreground ,bg3))))
    `(link ((,class (:foreground ,const :underline t))))
    `(error ((,class (:foreground ,base0A))))
    `(success ((,class (:foreground ,base0D))))
@@ -145,6 +146,13 @@
    `(eldoc-highlight-function-argument ((,class (:foreground ,base0C :slant italic))))
 
 
+   ;;; cider
+   `(cider-error-overlay-face ((,class (:background ,base0C))))
+   `(cider-result-overlay-face ((,class (:box (:line-width 1 :color ,bg3)) :backgrond ,bg2)))
+   `(cider-warning-highlight-face ((,class (:underline (:color ,base0B :style wave)))))
+   `(cider-error-highlight-face ((,class (:underline (:color ,base0C :style wave)))))
+
+
    ;;; outline-mode <built-in>
    `(outline-1 ((,class (:foreground ,base0C :weight bold :extend t))))
    `(outline-2 ((,class (:foreground ,base0B :weight bold :extend t))))
@@ -166,6 +174,7 @@
    `(org-document-info-keyword ((,class (:foreground ,bg4))))
    `(org-document-info ((,class (:foreground ,base0A))))
    `(org-document-title ((,class (:foreground ,base0A :weight bold))))
+
 
    ;;; ansi-color-* <built-in>
    `(ansi-color-black ((,class (:foreground ,base00 :background ,base00))))
@@ -285,15 +294,15 @@
    ;;; vertico/marginalia/corfu/orderless
    `(vertico-current ((,class (:background ,bg2 :underline nil))))
    `(marginalia-documentation ((,class (:underline nil :foreground ,bg3))))
-   `(corfu-default ((,class (:background ,bg1 :foreground ,bg4))))
+   `(corfu-default ((,class (:background ,bg1 :foreground ,fg1))))
    `(corfu-popupinfo ((,class (:background ,bg1 :foreground ,fg1))))
    `(corfu-current ((,class (:background ,bg2 :foreground ,fg3 :weight bold))))
    `(corfu-annotations ((,class (:foreground ,func))))
-   `(orderless-match-face-0 ((,class (:foreground ,base0B :weight bold))))
+   `(orderless-match-face-0 ((,class (:foreground ,base08 :weight bold))))
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
    `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
-   `(completions-common-part ((,class (:foreground ,fg3 :weight bold :background ,bg3))))
+   `(completions-common-part ((,class (:foreground ,fg3 :weight bold))))
 
 
    ;;; paren <built-in>

@@ -12,7 +12,10 @@
 
 (use-package no-littering :ensure t :demand t)
 (use-package minions :ensure t :demand t
-  :custom (minions-mode-line-lighter "⮧")
+  :custom
+  (minions-prominent-modes '(flymake-mode))
+  (minions-mode-line-face 'match)
+  (minions-mode-line-lighter "⮧")
   :hook (after-init . minions-mode))
 
 
@@ -63,6 +66,8 @@
    :states '(normal visual emacs)
    "[d" 'diff-hl-previous-hunk
    "]d" 'diff-hl-next-hunk
+   "[f" 'flymake-goto-prev-error
+   "]f" 'flymake-goto-next-error
    "[w" 'evil-window-prev
    "]w" 'evil-window-next)
 
@@ -78,7 +83,6 @@
     ":" '(eval-expression :which-key "M-:")
     "r" '(restart-emacs :which-key "re:")
     "q" '(kill-emacs :which-key "exit")
-    "p" '(popper-toggle :which-key "pop")
     "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "init")
 
     "b" '(:ignore t :which-key "buffer")
@@ -105,16 +109,18 @@
     "f" '(:ignore t :which-key "file")
     "f s" 'save-buffer
     "f f" 'find-file
+    "f d" 'dired
+    "f r" 'consult-recent-file
     "f g" 'consult-find
     "f G" 'consult-ripgrep
-    "f r" 'consult-recent-file
-    "f p" 'project-find-file
     "f P" 'project-switch-project
-    "f d" 'dired
+    "f p" 'project-find-file
 
     "c" '(:ignore t :which-key "code")
     "c i" 'consult-imenu
     "c f" 'consult-flymake
+    "c h" 'display-local-help
+    "c c" 'project-compile
 
     "a" '(embark-act :which-key "act")
     "e" 'eshell))
@@ -140,7 +146,9 @@
      :fringe-width 6
      :right-divider-width 10)))
 
-(use-package resize-window :ensure t :defer t)
+(use-package resize-window :ensure t :defer t
+  :custom
+  (resize-window-coarse-argument 10))
 
 
 (use-package popper :ensure t :defer t
@@ -203,17 +211,16 @@
   (completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package consult :ensure t :defer t
+  :bind ("C-." . consult-history)
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
-  (global-set-key [remap project-switch-to-buffer] 'consult-project-buffer)
   (global-set-key [remap isearch-forward] 'consult-line))
 
 (use-package embark-consult :ensure t :defer t)
 
 (use-package embark :ensure t
-  :bind (("C-." . embark-act)
-         ("C-;" . embark-collect))
+  :bind ("C-;" . embark-act)
   :config
   (defun embark-which-key-indicator ()
     (lambda (&optional keymap targets prefix)
@@ -271,7 +278,7 @@
   :hook (after-init . global-diff-hl-mode))
 
 
-;;; Langs 
+;;; Langs
 (use-package nix-ts-mode :ensure t :defer t
   :mode "\\.nix\\'")
 
@@ -291,6 +298,9 @@
   (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package cider :ensure t :defer t
+  :custom
+  (cider-use-fringe-indicators nil)
+  (cider-repl-display-help-banner nil)
   :hook (clojure-mode . cider-mode))
 
 
@@ -310,8 +320,13 @@
   :config (eglot-booster-mode))
 
 (use-package flymake :ensure t :defer t
+  :hook (emacs-lisp-mode . flymake-mode)
   :custom
+  (flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
   (flymake-indicator-type 'margins))
+
+(use-package eldoc :ensure t :defer t
+  :custom (eldoc-idle-delay 0.25))
 
 
 ;;; Dired
@@ -329,7 +344,7 @@
 
 ;;; Terminal
 (use-package eat :ensure t :defer t
-  :hook ((eshell-mode . eat-eshell-mode)))
+  :hook (eshell-mode . eat-eshell-mode))
 
 (use-package eshell :ensure t :defer t
   :hook (eshell-mode . (lambda () (eshell/alias "c" "clear-scrollback")))
@@ -415,6 +430,6 @@
   :ensure nil :defer 2
   :config (unless (server-running-p) (server-start)))
 
-
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
 (enable-theme 'oxocarbon)
+
