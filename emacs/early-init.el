@@ -46,7 +46,7 @@
 ;;; Font Config
 (let ((mono-font "Aporetic Serif Mono")
       (sans-font "Aporetic Sans"))
-  (set-face-attribute 'default nil :family mono-font :height 165)
+  (set-face-attribute 'default nil :family mono-font :height 155)
   (set-face-attribute 'fixed-pitch nil :family sans-font :height 1.0)
   (set-face-attribute 'fixed-pitch-serif nil :family sans-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family sans-font :height 1.0))

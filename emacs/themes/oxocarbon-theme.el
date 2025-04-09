@@ -44,13 +44,13 @@
        (base0D "#5faf5f")
        (base0E "#af87ff")
        (base0F "#87d7ff")
-       (fg1 base04)
-       (fg2 base05)
-       (fg3 base06)
        (bg1 base00)
        (bg2 base01)
        (bg3 base02)
        (bg4 base03)
+       (fg1 base04)
+       (fg2 base05)
+       (fg3 base06)
        (builtin base09)
        (number  base0F)
        (keyword base09)
@@ -61,6 +61,7 @@
        (str     base0E)
        (type    base09)
        (var     base04)
+       (oper    base0B)
        (selection base02)
        (warning   base0A)
        (warning2  base0D)
@@ -105,7 +106,7 @@
    `(font-lock-variable-name-face ((,class (:foreground ,var :slant italic))))
    `(font-lock-variable-call-face ((,class (:foreground ,var :slant italic))))
    `(font-lock-number-face ((,class (:foreground ,number))))
-   `(font-lock-operator-face ((,class (:foreground ,base0B))))
+   `(font-lock-operator-face ((,class (:foreground ,oper))))
    `(font-lock-warning-face ((,class (:foreground ,warning :background ,bg2))))
    `(font-lock-escape-face ((,class (:foreground ,number))))
    `(font-lock-negation-char-face ((,class (:foreground ,const))))
@@ -119,7 +120,7 @@
 
    ;;; highlight-* (non ts-mode)
    `(highlight-numbers-number ((,class (:foreground ,number))))
-   `(highlight-operators-face ((,class (:foreground ,base0B))))
+   `(highlight-operators-face ((,class (:foreground ,oper))))
 
 
    ;;; sh-mode <built-in>
@@ -221,9 +222,9 @@
    ;;; compilation <built-in>
    `(compilation-column-number ((,class (:foreground ,base03))))
    `(compilation-line-number ((,class (:foreground ,base03))))
-   `(compilation-error ((,class (:foreground ,warning))))
-   `(compilation-warning ((,class (:foreground ,base0D))))
-   `(compilation-info ((,class (:foreground ,base0B))))
+   `(compilation-error ((,class (:foreground ,base0C))))
+   `(compilation-warning ((,class (:foreground ,base0B))))
+   `(compilation-info ((,class (:foreground ,base0D))))
    `(compilation-mode-line-exit ((,class (:foreground ,base0D))))
    `(compilation-mode-line-fail ((,class (:foreground ,warning))))
 
@@ -270,15 +271,15 @@
 
 
    ;;; flymake <built-in>
-   `(flymake-note ((,class (:underline (:color ,base0B :style wave)))))
+   `(flymake-warning ((,class (:underline (:color ,base0B :style wave)))))
    `(flymake-error ((,class (:underline (:color ,base0C :style wave)))))
-   `(flymake-info ((,class (:underline (:color ,base0D :style wave)))))
+   `(flymake-note ((,class (:underline (:color ,base0D :style wave)))))
 
 
    ;;; flycheck
-   `(flycheck-note ((,class (:underline (:color ,base0B :style wave)))))
+   `(flycheck-warning ((,class (:underline (:color ,base0B :style wave)))))
    `(flycheck-error ((,class (:underline (:color ,base0C :style wave)))))
-   `(flycheck-info ((,class (:underline (:color ,base0D :style wave)))))
+   `(flycheck-note ((,class (:underline (:color ,base0D :style wave)))))
 
 
    ;;; vertico/marginalia/corfu/orderless
@@ -292,7 +293,7 @@
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
    `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
-   `(completions-common-part ((,class (:foreground ,fg3 :weight bold))))
+   `(completions-common-part ((,class (:foreground ,fg3 :weight bold :background ,bg3))))
 
 
    ;;; paren <built-in>

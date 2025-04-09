@@ -12,7 +12,7 @@
 
 (use-package no-littering :ensure t :demand t)
 (use-package minions :ensure t :demand t
-  :custom (minions-mode-line-lighter "::")
+  :custom (minions-mode-line-lighter "⮧")
   :hook (after-init . minions-mode))
 
 
@@ -40,7 +40,7 @@
 (use-package evil-snipe :ensure t :defer 2
   :hook (after-init . evil-snipe-override-mode))
 
-(use-package paredit :ensure t :defer t
+(use-package paredit :ensure t :defer 2
   :hook ((emacs-lisp-mode . enable-paredit-mode)
          (clojure-mode . enable-paredit-mode)))
 
@@ -142,26 +142,31 @@
 
 (use-package resize-window :ensure t :defer t)
 
+
+(use-package popper :ensure t :defer t
+  :hook (after-init . popper-mode)
+  :custom
+  (popper-reference-buffers '("\\*.*\\*")))
+
+
+;;; Highlight
 (use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
 
-;; only for non-ts langs
+(use-package rainbow-mode :ensure t :defer t
+  :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
+                                    (rainbow-mode)))))
+
 (use-package highlight-numbers :ensure t :defer t
   :hook (prog-mode . (lambda ()
                        (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
                          (highlight-numbers-mode)))))
 
-;; only for non-lispy langs
 (use-package highlight-operators :ensure t :defer t
   :hook (prog-mode . (lambda ()
                        (unless (derived-mode-p
                                 'emacs-lisp-mode 'clojure-mode 'common-lisp-mode)
                          (highlight-operators-mode)))))
 
-
-(use-package popper :ensure t :defer t
-  :hook (after-init . popper-mode)
-  :custom
-  (popper-reference-buffers '("\\*.*\\*")))
 
 ;;; Completion
 (use-package cape :ensure t
@@ -244,13 +249,13 @@
               :around #'embark-hide-which-key-indicator))
 
 
-(use-package helpful :ensure t :defer 2
+(use-package helpful :ensure t :defer t
   :bind (([remap describe-function] . helpful-callable)
          ([remap describe-key] . helpful-key)
          ([remap describe-symbol] . helpful-symbol)))
 
 ;;; Git
-(use-package magit :ensure t :defer 2
+(use-package magit :ensure t :defer t
   :custom
   (ispell-check-comments nil)
   (magit-section-visibility-indicator '("⮧"))
@@ -290,7 +295,7 @@
 
 
 ;;; Eglot
-(use-package eglot :ensure nil
+(use-package eglot :ensure nil :defer t
   :hook (odin-ts-mode . eglot-ensure)
   :custom
   (eglot-report-progress nil)
@@ -299,12 +304,12 @@
   (eglot-sync-connect nil)
   (eglot-autoshutdown t))
 
-(use-package eglot-booster :ensure t
+(use-package eglot-booster :ensure t :defer t
   :after eglot
   :vc (:url "https://github.com/jdtsmith/eglot-booster" :rev :newest :branch "main")
   :config (eglot-booster-mode))
 
-(use-package flymake :ensure t
+(use-package flymake :ensure t :defer t
   :custom
   (flymake-indicator-type 'margins))
 
@@ -409,6 +414,7 @@
 (use-package server
   :ensure nil :defer 2
   :config (unless (server-running-p) (server-start)))
+
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
 (enable-theme 'oxocarbon)
