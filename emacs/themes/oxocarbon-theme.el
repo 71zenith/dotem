@@ -1,4 +1,4 @@
-;;; oxocarbon-theme.el --- Theme
+;;; oxocarbon-theme.el --- Theme  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2025 , zen
 
@@ -203,6 +203,9 @@
    `(diff-header ((,class (:foreground ,fg1))))
    `(diff-file-header ((,class (:foreground ,fg1))))
    `(diff-hunk-header ((,class (:foreground ,base0D))))
+   `(diff-refine-added ((,class (:background ,base0E :foreground ,fg2))))
+   `(diff-refine-removed ((,class (:background ,base0A :foreground ,fg2))))
+   `(diff-refine-changed ((,class (:background ,base09 :foreground ,fg2))))
 
 
    ;;; ediff <built-in>
@@ -251,6 +254,11 @@
    `(which-key-command-description-face ((,class (:foreground ,fg1))))
    `(which-key-local-map-description-face ((,class (:foreground ,fg1))))
    `(which-key-group-description-face ((,class (:foreground ,base0B))))
+
+
+   ;;; vc-mode <built-in>
+   `(vc-state-base ((,class (:foreground ,base0F))))
+   `(vc-edited-state ((,class (:foreground ,base07))))
 
 
    ;;; magit

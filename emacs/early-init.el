@@ -8,8 +8,6 @@
       vc-handled-backends nil
       file-name-handler-alist nil)
 
-(setq package-enable-at-startup t)
-
 ;;; Performance
 (setq site-run-file nil
       use-dialog-box nil
@@ -35,8 +33,7 @@
 
 ;;; Minimal Frame
 (push '(vertical-scroll-bars) default-frame-alist)
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
+(push '(menu-bar-lines . 1) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(internal-border-width . 0) default-frame-alist)
 
@@ -87,8 +84,6 @@
 ;;; Hooks
 (add-hook 'emacs-startup-hook
           (lambda ()
-            ;; (set-frame-parameter nil 'alpha-background 95)
-            ;; (add-to-list 'default-frame-alist '(alpha-background . 95))
             (zen/display-startup-time))
           (setq gc-cons-threshold (* 8 1024 1024)
                 gc-cons-percentage 0.1

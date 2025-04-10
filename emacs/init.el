@@ -21,6 +21,7 @@
 
 ;;; Undo
 (use-package undo-fu :ensure t :defer t)
+
 (use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
 
 
@@ -35,7 +36,7 @@
   :hook (after-init . evil-mode))
 
 (use-package evil-collection :ensure t :defer 2
-  :hook ((after-init . evil-collection-init)))
+  :hook (after-init . evil-collection-init))
 
 (use-package evil-commentary :ensure t :defer 2
   :hook (after-init . evil-commentary-mode))
@@ -44,8 +45,7 @@
   :hook (after-init . evil-snipe-override-mode))
 
 (use-package paredit :ensure t :defer 2
-  :hook ((emacs-lisp-mode . enable-paredit-mode)
-         (clojure-mode . enable-paredit-mode)))
+  :hook ((emacs-lisp-mode clojure-mode lisp-mode scheme-mode) . enable-paredit-mode))
 
 ;;; General
 (use-package general :ensure t :demand t
@@ -148,8 +148,7 @@
 
 (use-package resize-window :ensure t :defer t
   :custom
-  (resize-window-coarse-argument 10))
-
+  (resize-window-coarse-argument 15))
 
 (use-package popper :ensure t :defer t
   :hook (after-init . popper-mode)
@@ -162,7 +161,7 @@
 
 (use-package rainbow-mode :ensure t :defer t
   :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
-                                    (rainbow-mode)))))
+                                   (rainbow-mode)))))
 
 (use-package highlight-numbers :ensure t :defer t
   :hook (prog-mode . (lambda ()
@@ -193,7 +192,8 @@
   (corfu-min-width 4)
   (corfu-auto t)
   (corfu-cycle t)
-  (corfu-popupinfo-delay '(0.5 . 0.25)))
+  (corfu-popupinfo-delay '(0.5 . 0.25))
+  (text-mode-ispell-word-completion nil))
 
 
 ;;; Minibuffer
@@ -289,6 +289,9 @@
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
   :mode "\\.odin\\'")
 
+(use-package css-ts-mode :ensure nil :defer t
+  :mode "\\.rasi\\'")
+
 (use-package treesit-auto :ensure t :defer t
   :hook (after-init . global-treesit-auto-mode)
   :config
@@ -319,13 +322,13 @@
   :vc (:url "https://github.com/jdtsmith/eglot-booster" :rev :newest :branch "main")
   :config (eglot-booster-mode))
 
-(use-package flymake :ensure t :defer t
+(use-package flymake :ensure nil :defer t
   :hook (emacs-lisp-mode . flymake-mode)
   :custom
   (flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
   (flymake-indicator-type 'margins))
 
-(use-package eldoc :ensure t :defer t
+(use-package eldoc :ensure nil :defer t
   :custom (eldoc-idle-delay 0.25))
 
 
@@ -346,7 +349,7 @@
 (use-package eat :ensure t :defer t
   :hook (eshell-mode . eat-eshell-mode))
 
-(use-package eshell :ensure t :defer t
+(use-package eshell :ensure nil :defer t
   :hook (eshell-mode . (lambda () (eshell/alias "c" "clear-scrollback")))
   :custom
   (eshell-banner-message "")
@@ -416,7 +419,7 @@
 
  ;; Scrolling behavior
  scroll-margin 3
- scroll-conservatively 100000
+ scroll-conservatively 10000
  scroll-preserve-screen-position t
  auto-window-vscroll nil
 
@@ -432,4 +435,3 @@
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
 (enable-theme 'oxocarbon)
-
