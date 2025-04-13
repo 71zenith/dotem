@@ -16,6 +16,7 @@
       tooltip-delay 0.1
       read-process-output-max (* 8 1024 1024)
       inhibit-compacting-font-caches t
+      package-enable-at-startup nil
       x-underline-at-descent-line t
       redisplay-skip-fontification-on-input t
       kill-ring-max 500
@@ -42,11 +43,12 @@
 
 ;;; Font Config
 (let ((mono-font "Aporetic Serif Mono")
-      (sans-font "Aporetic Sans"))
+      (serif-font "Aporetic Serif"))
   (set-face-attribute 'default nil :family mono-font :height 155)
-  (set-face-attribute 'fixed-pitch nil :family sans-font :height 1.0)
-  (set-face-attribute 'fixed-pitch-serif nil :family sans-font :height 1.0)
-  (set-face-attribute 'variable-pitch nil :family sans-font :height 1.0))
+  (set-face-attribute 'fixed-pitch nil :family serif-font :height 1.0)
+  (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.0)
+  (set-face-attribute 'variable-pitch nil :family serif-font :height 1.0))
+
 
 ;; changes other symbols // needs to be evaluated
 (set-fontset-font "fontset-default" 'japanese-jisx0208 "Natsume")

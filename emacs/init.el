@@ -1,10 +1,12 @@
-;; init.el -*- lexical-binding: t -*-
+;;; init.el --- Config -*- lexical-binding: t -*-
 
-;;; Package.el
+;;; Commentary:
+;;; Emacs config by mori.zen in 2025
+
+;;; Code:
+
 (require 'package)
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("elpa" . "https://elpa.gnu.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 (setq package-native-compile t
@@ -26,26 +28,28 @@
 
 
 ;;; Evil
-(use-package evil :ensure t :defer 2
+(use-package evil :ensure t :defer t
   :init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
         evil-want-C-i-jump t
         evil-echo-state nil
+        evil-vsplit-window-right t
+        evil-split-window-below t
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
-(use-package evil-collection :ensure t :defer 2
+(use-package evil-collection :ensure t :defer t
   :hook (after-init . evil-collection-init))
 
-(use-package evil-commentary :ensure t :defer 2
+(use-package evil-commentary :ensure t :defer t
   :hook (after-init . evil-commentary-mode))
 
-(use-package evil-snipe :ensure t :defer 2
+(use-package evil-snipe :ensure t :defer t
   :hook (after-init . evil-snipe-override-mode))
 
-(use-package paredit :ensure t :defer 2
-  :hook ((emacs-lisp-mode clojure-mode lisp-mode scheme-mode) . enable-paredit-mode))
+(use-package paredit :ensure t :defer t
+  :hook ((emacs-lisp-mode clojure-mode) . enable-paredit-mode))
 
 ;;; General
 (use-package general :ensure t :demand t
@@ -79,35 +83,37 @@
    "S-TAB" 'dired-subtree-remove)
 
   (leader-keys
-    "x" '(execute-extended-command :which-key "M-x")
-    ":" '(eval-expression :which-key "M-:")
-    "r" '(restart-emacs :which-key "re:")
-    "q" '(kill-emacs :which-key "exit")
-    "i" '((lambda () (interactive) (find-file user-init-file)) :which-key "init")
+    "x" '(execute-extended-command :wk "M-x")
+    ":" '(eval-expression :wk "M-:")
+    "r" '(restart-emacs :wk "re:")
+    "a" '(embark :wk "act")
+    "e" 'eshell
+    "p" '(popper-toggle :wk "pop")
+    "q" '(popper-toggle-type :wk "pop!")
+    "i" '((lambda () (interactive) (find-file user-init-file)) :wk "init")
 
-    "b" '(:ignore t :which-key "buffer")
+    "b" '(:ignore t :wk "buf")
     "b d" 'kill-current-buffer
     "b r" 'resize-window
     "b b" 'consult-buffer
+    "b c" 'delete-window
+    "b v" 'evil-window-vsplit
+    "b s" 'evil-window-split
 
-    "w" '(:ignore t :which-key "window")
-    "w c" 'delete-window
-    "w v" 'evil-window-vsplit
-    "w s" 'evil-window-split
-
-    "g" '(:ignore t :which-key "git")
+    "g" '(:ignore t :wk "git")
     "g g "'magit-status
     "g r" 'diff-hl-revert-hunk
     "g s" 'diff-hl-show-hunk
-    "g o" 'diff-hl-stage-some
+    "g a" 'diff-hl-stage-some
 
-    "h" '(:ignore t :which-key "help")
+    "h" '(:ignore t :wk "help")
     "h f" 'describe-face
-    "h k" 'describe-key
-    "h o" 'describe-symbol
+    "h v" 'helpful-variable
+    "h c" 'helpful-callable
+    "h o" 'helpful-symbol
+    "h p" 'helpful-at-point
 
-    "f" '(:ignore t :which-key "file")
-    "f s" 'save-buffer
+    "f" '(:ignore t :wk "file")
     "f f" 'find-file
     "f d" 'dired
     "f r" 'consult-recent-file
@@ -116,14 +122,15 @@
     "f P" 'project-switch-project
     "f p" 'project-find-file
 
-    "c" '(:ignore t :which-key "code")
+    "c" '(:ignore t :wk "code")
     "c i" 'consult-imenu
-    "c f" 'consult-flymake
+    "c l" 'consult-flymake
+    "c f" 'format-all-region-or-buffer
     "c h" 'display-local-help
-    "c c" 'project-compile
-
-    "a" '(embark-act :which-key "act")
-    "e" 'eshell))
+    "c j" 'cider-jack-in-clj
+    "c d" 'cider-eval-dwim
+    "c e" 'cider-eval-last-sexp
+    "c c" 'cider-repl-clear-buffer))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
@@ -133,6 +140,9 @@
   :hook (after-init . which-key-mode))
 
 (use-package anzu :ensure t :defer t
+  :config
+  (global-set-key [remap query-replace] 'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
   :hook (after-init . global-anzu-mode))
 
 (use-package spacious-padding :ensure t :defer t
@@ -147,13 +157,11 @@
      :right-divider-width 10)))
 
 (use-package resize-window :ensure t :defer t
-  :custom
-  (resize-window-coarse-argument 15))
+  :custom (resize-window-fine-argument 5))
 
-(use-package popper :ensure t :defer t
+(use-package popper :ensure t
   :hook (after-init . popper-mode)
-  :custom
-  (popper-reference-buffers '("\\*.*\\*")))
+  :custom (popper-reference-buffers '("\\*.*\\*")))
 
 
 ;;; Highlight
@@ -171,9 +179,11 @@
 (use-package highlight-operators :ensure t :defer t
   :hook (prog-mode . (lambda ()
                        (unless (derived-mode-p
-                                'emacs-lisp-mode 'clojure-mode 'common-lisp-mode)
+                                'emacs-lisp-mode 'clojure-mode)
                          (highlight-operators-mode)))))
 
+(font-lock-add-keywords 'emacs-lisp-mode
+                        '(("\\_<\\(nil\\|t\\)\\_>" . font-lock-constant-face)))
 
 ;;; Completion
 (use-package cape :ensure t
@@ -184,16 +194,13 @@
 
 (use-package corfu :ensure t
   :hook ((after-init . global-corfu-mode)
-         (after-init . corfu-history-mode)
          (after-init . corfu-popupinfo-mode))
   :custom
-  (tab-always-indent 'complete)
   (corfu-preview-current nil)
   (corfu-min-width 4)
   (corfu-auto t)
   (corfu-cycle t)
-  (corfu-popupinfo-delay '(0.5 . 0.25))
-  (text-mode-ispell-word-completion nil))
+  (corfu-popupinfo-delay '(0.5 . 0.25)))
 
 
 ;;; Minibuffer
@@ -206,21 +213,18 @@
 
 (use-package orderless :ensure t
   :custom
-  (completion-styles '(substring orderless))
-  (completion-ignore-case t)
-  (completion-category-overrides '((file (styles partial-completion)))))
+  (completion-styles '(substring orderless partial-completion))
+  (completion-ignore-case t))
 
 (use-package consult :ensure t :defer t
-  :bind ("C-." . consult-history)
+  :bind ("C-;" . consult-history)
   :config
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   (global-set-key [remap isearch-forward] 'consult-line))
 
-(use-package embark-consult :ensure t :defer t)
-
 (use-package embark :ensure t
-  :bind ("C-;" . embark-act)
+  :bind ("C-." . embark-act)
   :config
   (defun embark-which-key-indicator ()
     (lambda (&optional keymap targets prefix)
@@ -255,16 +259,13 @@
   (advice-add #'embark-completing-read-prompter
               :around #'embark-hide-which-key-indicator))
 
+(use-package embark-consult :ensure t :defer t)
 
-(use-package helpful :ensure t :defer t
-  :bind (([remap describe-function] . helpful-callable)
-         ([remap describe-key] . helpful-key)
-         ([remap describe-symbol] . helpful-symbol)))
+(use-package helpful :ensure t :defer t)
 
 ;;; Git
 (use-package magit :ensure t :defer t
   :custom
-  (ispell-check-comments nil)
   (magit-section-visibility-indicator '("⮧"))
   (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
@@ -285,6 +286,9 @@
 (use-package clojure-ts-mode :ensure t :defer t
   :mode "\\.clj\\'")
 
+(use-package zig-ts-mode :ensure t :defer t
+  :mode "\\.zig\\'")
+
 (use-package odin-ts-mode :ensure t :defer t
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
   :mode "\\.odin\\'")
@@ -299,6 +303,8 @@
         treesit-language-source-alist '((odin . ("https://github.com/tree-sitter-grammars/tree-sitter-odin"))
                                         (nix . ("https://github.com/nix-community/tree-sitter-nix"))))
   (treesit-auto-add-to-auto-mode-alist 'all))
+
+(use-package format-all :ensure t :defer t)
 
 (use-package cider :ensure t :defer t
   :custom
@@ -334,15 +340,12 @@
 
 ;;; Dired
 (use-package dired :ensure nil
-  :hook
-  (dired-mode . dired-hide-details-mode)
-  :custom
-  (dired-recursive-copies 'always)
-  (dired-recursive-deletes 'always)
-  (dired-mouse-drag-files t)
-  :config
-  (use-package dired-subtree :ensure t :defer t :after dired
-    :custom (dired-subtree-use-backgrounds nil)))
+  :hook (dired-mode . dired-hide-details-mode))
+
+(use-package dired-open :ensure t :defer t :after dired)
+
+(use-package dired-subtree :ensure t :defer t :after dired
+  :custom (dired-subtree-use-backgrounds nil))
 
 
 ;;; Terminal
@@ -371,7 +374,7 @@
                 pixel-scroll-precision-mode
                 savehist-mode
                 save-place-mode
-                delete-selection-mode))
+                winner-mode))
   (funcall mode 1))
 
 (add-hook 'prog-mode-hook
@@ -387,7 +390,9 @@
  confirm-kill-emacs nil
  confirm-kill-processes nil
  use-short-answers t
+ tab-always-indent 'complete
  enable-recursive-minibuffers t
+ text-mode-ispell-word-completion nil
 
  ;; Editing behavior
  indent-tabs-mode nil
@@ -395,6 +400,7 @@
  truncate-lines t
  word-wrap t
  line-move-visual nil
+ require-final-newline t
 
  ;; Display settings
  display-time-default-load-average nil
@@ -412,16 +418,16 @@
  make-backup-files nil
  auto-save-default nil
  version-control nil
- vc-make-backup-files nil
  vc-follow-symlinks t
  find-file-visit-truename nil
- recentf-max-saved-items 50
+ recentf-max-saved-items 80
 
  ;; Scrolling behavior
  scroll-margin 3
  scroll-conservatively 10000
  scroll-preserve-screen-position t
  auto-window-vscroll nil
+ mouse-wheel-progressive-speed nil
 
  ;; Personal Info
  user-full-name "Mori Zen"
@@ -430,8 +436,12 @@
  display-time-format "%a %d %b %H:%M")
 
 (use-package server
-  :ensure nil :defer 2
+  :ensure nil :defer t
   :config (unless (server-running-p) (server-start)))
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
 (enable-theme 'oxocarbon)
+
+(provide 'init)
+
+;;; init.el ends here

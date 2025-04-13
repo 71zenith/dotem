@@ -77,19 +77,19 @@
    `(cursor ((,class (:background ,fg3))))
    `(isearch ((,class (:weight bold :background ,warning :foreground ,fg2))))
    `(isearch-fail ((,class (:weight bold :foreground ,warning :background ,bg3))))
-   `(minibuffer-prompt ((,class (:foreground ,keyword))))
+   `(minibuffer-prompt ((,class (:foreground ,keyword :inherit fixed-pitch-serif))))
    `(tooltip ((,class (:background ,bg1))))
    `(match ((,class (:foreground ,base0F))))
    `(italic ((,class (:italic t))))
    `(bold ((,class (:weight bold))))
+   `(vertical-border ((,class (:background ,bg3))))
    `(window-divider ((,class (:inherit vertical-border))))
-   `(vertical-border ((,class (:background ,bg3 :foreground ,bg3))))
    `(link ((,class (:foreground ,const :underline t))))
    `(error ((,class (:foreground ,base0A))))
    `(success ((,class (:foreground ,base0D))))
    `(warning ((,class (:foreground ,base0C))))
    `(lazy-highlight ((,class (:foreground ,bg1 :background ,base08))))
-   `(trailing-whitespace ((,class :foreground ,unspec :background ,warning)))
+   `(trailing-whitespace ((,class :foreground ,bg4)))
    `(line-number ((t (:inherit fringe :foreground ,comment))))
    `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))
 
@@ -130,16 +130,17 @@
 
 
     ;;; mode-line-* <built-in>
-   `(mode-line ((,class (:box (:line-width 1 :color nil) :weight bold :foreground ,fg3 :background ,bg2))))
-   `(mode-line-inactive ((,class (:box (:line-width 1 :color nil :style pressed-button) :foreground ,bg4 :background ,bg1))))
-   `(mode-line-emphasis ((,class (:foreground ,func :slant italic))))
-   `(mode-line-buffer-id ((,class (:foreground ,func :slant italic))))
-   `(mode-line-highlight ((,class (:foreground ,keyword :box nil :weight bold))))
+   `(mode-line ((,class (:box (:line-width 1) :weight bold :foreground ,fg3 :background ,bg2))))
+   `(mode-line-active ((,class (:inherit fixed-pitch-serif))))
+   `(mode-line-inactive ((,class (:foreground ,bg4 :background ,bg1 :inherit fixed-pitch-serif))))
+   `(mode-line-emphasis ((,class (:foreground ,base0C :slant italic))))
+   `(mode-line-buffer-id ((,class (:foreground ,base0C :slant italic))))
+   `(mode-line-highlight ((,class (:foreground ,base09 :box nil :weight bold))))
    `(anzu-mode-line ((,class (:foreground ,func))))
 
 
    ;;; eshell <built-in>
-   `(eshell-prompt ((,class (:foreground ,func))))
+   `(eshell-prompt ((,class (:foreground ,base0C))))
 
 
    ;;; eldoc <built-in>
@@ -147,33 +148,34 @@
 
 
    ;;; cider
-   `(cider-error-overlay-face ((,class (:background ,base0C))))
+   `(cider-error-overlay-face ((,class (:inherit error))))
    `(cider-result-overlay-face ((,class (:box (:line-width 1 :color ,bg3)) :backgrond ,bg2)))
    `(cider-warning-highlight-face ((,class (:underline (:color ,base0B :style wave)))))
    `(cider-error-highlight-face ((,class (:underline (:color ,base0C :style wave)))))
 
 
    ;;; outline-mode <built-in>
-   `(outline-1 ((,class (:foreground ,base0C :weight bold :extend t))))
-   `(outline-2 ((,class (:foreground ,base0B :weight bold :extend t))))
-   `(outline-3 ((,class (:foreground ,base08 :weight bold :extend t))))
-   `(outline-4 ((,class (:foreground ,base0D :weight bold :extend t))))
-   `(outline-5 ((,class (:foreground ,base09 :weight bold :extend t))))
-   `(outline-6 ((,class (:foreground ,base0F :weight bold :extend t))))
+   `(outline-1 ((,class (:foreground ,base0C :weight bold))))
+   `(outline-2 ((,class (:foreground ,base0B :weight bold))))
+   `(outline-3 ((,class (:foreground ,base08 :weight bold))))
+   `(outline-4 ((,class (:foreground ,base0D :weight bold))))
+   `(outline-5 ((,class (:foreground ,base09 :weight bold))))
+   `(outline-6 ((,class (:foreground ,base0F :weight bold))))
 
 
    ;;; org-mode <built-in>
-   `(org-block-begin-line ((,class (:foreground ,base0F :background ,bg2))))
-   `(org-block-end-line ((,class (:foreground ,base0F :background ,bg2))))
-   `(org-code ((,class (:foreground ,base0B :background ,bg2))))
-   `(org-verbatim ((,class (:foreground ,base0F))))
-   `(org-checkbox ((,class (:foreground ,fg1 :weight bold))))
-   `(org-todo ((,class (:foreground ,base0A))))
-   `(org-date ((,class (:foreground ,base07))))
    `(org-special-keyword ((,class (:foreground ,bg4))))
    `(org-document-info-keyword ((,class (:foreground ,bg4))))
    `(org-document-info ((,class (:foreground ,base0A))))
    `(org-document-title ((,class (:foreground ,base0A :weight bold))))
+   `(org-block-begin-line ((,class (:foreground ,base0F :background ,bg2))))
+   `(org-block-end-line ((,class (:foreground ,base0F :background ,bg2))))
+   `(org-code ((,class (:foreground ,base0B :background ,bg2))))
+   `(org-todo ((,class (:foreground ,base0A))))
+   `(org-done ((,class (:foreground ,base0D))))
+   `(org-date ((,class (:foreground ,base07))))
+   `(org-verbatim ((,class (:foreground ,base0F))))
+   `(org-checkbox ((,class (:foreground ,fg1 :weight bold))))
 
 
    ;;; ansi-color-* <built-in>
@@ -188,9 +190,9 @@
 
 
    ;;; diff-hl
-   `(diff-hl-insert ((,class (:foreground ,base0E :background ,bg2 :extend t))))
-   `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2 :extend t))))
-   `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2 :extend t))))
+   `(diff-hl-insert ((,class (:foreground ,base0E :background ,bg2))))
+   `(diff-hl-delete ((,class (:foreground ,base0A :background ,bg2))))
+   `(diff-hl-change ((,class (:foreground ,base09 :background ,bg2))))
 
 
    ;;; diff <built-in>
@@ -243,13 +245,20 @@
 
    ;;; evil
    `(evil-ex-info ((,class (:foreground ,warning))))
-   `(evil-ex-substitute-matches ((,class (:foreground ,base0B))))
-   `(evil-ex-substitute-replacement ((,class (:foreground ,base0C))))
+   `(evil-ex-substitute-matches ((,class (:foreground ,bg1 :background ,base0B))))
+   `(evil-ex-substitute-replacement ((,class (:foreground ,bg1 :background ,base0C))))
    `(evil-ex-lazy-highlight ((,class (:background ,base08 :foreground ,bg1))))
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
 
+   ;;; anzu
+   `(anzu-match-1 ((,class (:foreground ,base0B))))
+   `(anzu-match-2 ((,class (:foreground ,base0E))))
+   `(anzu-match-3 ((,class (:foreground ,base0F))))
+   `(anzu-replace-highlight ((,class (:background ,base0B :foreground ,bg1))))
+   `(anzu-replace-to ((,class (:foreground ,bg1 :background ,base0C))))
 
-   ;;; which-key <built-in>
+
+;;; which-key <built-in>
    `(which-key-key-face ((,class (:foreground ,base08))))
    `(which-key-command-description-face ((,class (:foreground ,fg1))))
    `(which-key-local-map-description-face ((,class (:foreground ,fg1))))
@@ -263,7 +272,7 @@
 
    ;;; magit
    `(magit-header-line ((,class (:foreground ,base0E :weight bold))))
-   `(magit-section-heading ((,class (:foreground ,base0B :slant italic))))
+   `(magit-section-heading ((,class (:foreground ,base0B :slant italic :inherit fixed-pitch-serif))))
    `(magit-branch-remote ((,class (:foreground ,base09))))
    `(magit-branch-local ((,class (:foreground ,base0C))))
    `(magit-hash ((,class (:foreground ,bg4))))
@@ -280,11 +289,12 @@
 
 
    ;;; transient
-   `(transient-key-stay ((,class (:foreground ,base0B))))
-   `(transient-key-stack ((,class (:foreground ,base0B))))
    `(transient-inactive-argument ((,class (:foreground ,bg3 :slant italic))))
    `(transient-argument ((,class (:foreground ,fg3 :slant italic))))
    `(transient-key-exit ((,class (:foreground ,base0B))))
+   `(transient-key-stay ((,class (:foreground ,base0B))))
+   `(transient-key-stack ((,class (:foreground ,base0B))))
+   `(transient-heading ((,class (:foreground ,base0B :inherit fixed-pitch-serif))))
 
 
    ;;; flymake <built-in>
@@ -303,9 +313,9 @@
    `(vertico-current ((,class (:background ,bg2 :underline nil))))
    `(marginalia-documentation ((,class (:underline nil :foreground ,bg3))))
    `(corfu-default ((,class (:background ,bg1 :foreground ,fg1))))
-   `(corfu-popupinfo ((,class (:background ,bg1 :foreground ,fg1))))
+   `(corfu-popupinfo ((,class (:background ,bg1 :foreground ,fg1 :inherit fixed-pitch-serif))))
    `(corfu-current ((,class (:background ,bg2 :foreground ,fg3 :weight bold))))
-   `(corfu-annotations ((,class (:foreground ,func))))
+   `(corfu-annotations ((,class (:foreground ,func :inherit fixed-pitch-serif))))
    `(orderless-match-face-0 ((,class (:foreground ,base08 :weight bold))))
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
@@ -343,7 +353,7 @@
 
 
    ;;; tab-line-* <built-in>
-   `(tab-line              ((,class (:background ,bg1 :foreground ,fg1))))
+   `(tab-line              ((,class (:background ,bg1 :foreground ,fg1 :inherit fixed-pitch-serif))))
    `(tab-line-tab          ((,class (:inherit tab-line))))
    `(tab-line-tab-inactive ((,class (:background ,bg1 :foreground ,bg4))))
    `(tab-line-tab-current  ((,class (:background ,bg1 :foreground ,fg3 :weight bold))))

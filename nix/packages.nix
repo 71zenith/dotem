@@ -103,7 +103,6 @@ in {
     leiningen
     odin
 
-    neovim
     emacs-pgtk
     emacs-lsp-booster
   ];
