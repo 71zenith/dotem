@@ -70,7 +70,7 @@
    `(success ((,class (:foreground ,base0D))))
    `(warning ((,class (:foreground ,base0C))))
    `(lazy-highlight ((,class (:foreground ,bg1 :background ,base08))))
-   `(trailing-whitespace ((,class :foreground ,bg4)))
+   `(trailing-whitespace ((,class :background ,bg4)))
    `(line-number ((t (:inherit fringe :foreground ,comment))))
    `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))
 

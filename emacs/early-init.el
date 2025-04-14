@@ -39,7 +39,7 @@
 
 ;;; Minimal Frame
 (push '(vertical-scroll-bars) default-frame-alist)
-(push '(menu-bar-lines . 0) default-frame-alist)
+(push '(menu-bar-lines . 1) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(internal-border-width . 0) default-frame-alist)
 
@@ -98,9 +98,7 @@
                 vc-handled-backends vc-handled-backends-original
                 file-name-handler-alist file-name-handler-alist-original))
 
-(add-hook 'after-init-hook (lambda ()
-                             (set-frame-name "home")
-                             (when (display-graphic-p) (push '(menu-bar-lines . 1) default-frame-alist))))
+(add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 
 (setq custom-file (locate-user-emacs-file "var/custom.el"))
 (load custom-file :no-error-if-missing)

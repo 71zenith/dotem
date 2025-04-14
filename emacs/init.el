@@ -29,7 +29,7 @@
 
 ;;; Evil
 (use-package evil :ensure t :defer t
-  :init
+:init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
         evil-want-C-i-jump t
@@ -56,6 +56,7 @@
   :config
   (general-evil-setup)
   (general-def
+    "C-." 'embark-act
     "C-=" 'text-scale-increase
     "C--" 'text-scale-decrease
     "C-0" (lambda () (interactive) (text-scale-set 0)))
@@ -142,9 +143,8 @@
   :hook (after-init . which-key-mode))
 
 (use-package anzu :ensure t :defer t
-  :config
-  (global-set-key [remap query-replace] 'anzu-query-replace)
-  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :hook (after-init . global-anzu-mode))
 
 (use-package spacious-padding :ensure t :defer t
@@ -161,9 +161,16 @@
 (use-package resize-window :ensure t :defer t
   :custom (resize-window-fine-argument 5))
 
-(use-package popper :ensure t
+(use-package popper :ensure t :demand t
   :hook (after-init . popper-mode)
   :custom (popper-reference-buffers '("\\*.*\\*")))
+
+(use-package repeat :ensure nil :defer t
+  :hook (after-init . repeat-mode)
+  :custom
+  (repeat-exit-timeout 3)
+  (repeat-echo-function 'ignore)
+  (repeat-exit-key "<escape>"))
 
 
 ;;; Highlight
@@ -171,18 +178,15 @@
 
 (use-package rainbow-mode :ensure t :defer t
   :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
-                                        (rainbow-mode)))))
+                                   (rainbow-mode)))))
 
 (use-package highlight-numbers :ensure t :defer t
-  :hook (prog-mode . (lambda ()
-                       (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
-                         (highlight-numbers-mode)))))
+  :hook (prog-mode . (lambda () (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
+                             (highlight-numbers-mode)))))
 
 (use-package highlight-operators :ensure t :defer t
-  :hook (prog-mode . (lambda ()
-                       (unless (derived-mode-p
-                                'emacs-lisp-mode 'clojure-mode)
-                         (highlight-operators-mode)))))
+  :hook (prog-mode . (lambda () (unless (derived-mode-p 'emacs-lisp-mode 'clojure-mode)
+                             (highlight-operators-mode)))))
 
 (font-lock-add-keywords 'emacs-lisp-mode
                         '(("\\_<\\(nil\\|t\\)\\_>" . font-lock-constant-face)))
@@ -202,7 +206,7 @@
   (corfu-min-width 4)
   (corfu-auto t)
   (corfu-cycle t)
-  (corfu-popupinfo-delay '(0.5 . 0.25)))
+  (corfu-popupinfo-delay '(0.4 . 0.20)))
 
 
 ;;; Minibuffer
@@ -218,15 +222,15 @@
   (completion-styles '(substring orderless partial-completion))
   (completion-ignore-case t))
 
-(use-package consult :ensure t :defer t
-  :bind ("C-;" . consult-history)
+(use-package consult :ensure t
+  :bind (("C-;" . consult-history)
+         ([remap isearch-forward] . consult-line))
   :config
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
-  (global-set-key [remap isearch-forward] 'consult-line))
+        xref-show-definitions-function #'consult-xref
+        consult-buffer-sources (seq-remove (lambda (source) (string-match-p "file" (symbol-name source))) consult-buffer-sources)))
 
 (use-package embark :ensure t
-  :bind ("C-." . embark-act)
   :config
   (defun embark-which-key-indicator ()
     (lambda (&optional keymap targets prefix)
@@ -247,10 +251,9 @@
          nil nil t (lambda (binding)
                      (not (string-suffix-p "-argument" (cdr binding))))))))
 
-  (setq embark-indicators
-        '(embark-which-key-indicator
-          embark-highlight-indicator
-          embark-isearch-highlight-indicator))
+  (setq embark-indicators '(embark-which-key-indicator
+                            embark-highlight-indicator
+                            embark-isearch-highlight-indicator))
 
   (defun embark-hide-which-key-indicator (fn &rest args)
     (which-key--hide-popup-ignore-command)
@@ -264,6 +267,7 @@
 (use-package embark-consult :ensure t :defer t)
 
 (use-package helpful :ensure t :defer t)
+
 
 ;;; Git
 (use-package magit :ensure t :defer t
@@ -297,13 +301,13 @@
   :config
   (setq treesit-auto-install t
         treesit-language-source-alist '((odin . ("https://github.com/tree-sitter-grammars/tree-sitter-odin"))
-                                        (nix . ("https://github.com/nix-community/tree-sitter-nix"))))
+                                        (nix  . ("https://github.com/nix-community/tree-sitter-nix"))))
   (treesit-auto-add-to-auto-mode-alist 'all))
 
 (use-package format-all :ensure t :defer t)
 
 (use-package cider :ensure t :defer t
-  :custom
+:custom
   (cider-use-fringe-indicators nil)
   (cider-repl-display-help-banner nil)
   :hook (clojure-mode . cider-mode))
@@ -336,6 +340,10 @@
 
 
 ;;; Dired
+(use-package async :ensure t :demand t
+  :hook ((after-init . dired-async-mode)
+         (after-init . async-bytecomp-package-mode)))
+
 (use-package dired :ensure nil
   :hook (dired-mode . dired-hide-details-mode))
 
@@ -353,10 +361,10 @@
   :hook (eshell-mode . (lambda () (eshell/alias "c" "clear-scrollback")))
   :custom
   (eshell-banner-message "")
-  (eshell-prompt-function (lambda () (propertize (concat (abbreviate-file-name (eshell/pwd)) " λ ") 'face 'eshell-prompt)))
-  :config
-  (use-package eshell-syntax-highlighting :ensure t :defer t
-    :hook (eshell-mode . eshell-syntax-highlighting-mode)))
+  (eshell-prompt-function (lambda () (propertize (concat (abbreviate-file-name (eshell/pwd)) " λ ") 'face 'eshell-prompt))))
+
+(use-package eshell-syntax-highlighting :ensure t :defer t
+  :hook (eshell-mode . eshell-syntax-highlighting-mode))
 
 
 ;;; Modes
@@ -418,13 +426,15 @@
  vc-follow-symlinks t
  find-file-visit-truename nil
  recentf-max-saved-items 100
+ savehist-additional-variables '(mark-ring global-mark-ring search-ring)
 
  ;; Scrolling behavior
- scroll-margin 5
+ scroll-margin 10
  scroll-conservatively 10000
  scroll-preserve-screen-position t
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil
+
 
  ;; Personal Info
  user-full-name "Mori Zen"
@@ -432,8 +442,8 @@
  default-input-method "japanese"
  display-time-format "%a %d %b %H:%M")
 
-(use-package server
-  :ensure nil :defer t
+
+(use-package server :ensure nil :defer t
   :config (unless (server-running-p) (server-start)))
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
