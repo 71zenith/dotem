@@ -1,7 +1,7 @@
-;;; init.el --- Config -*- lexical-binding: t -*-
+;;; init.el --- -*- lexical-binding: t -*-
 
 ;;; Commentary:
-;;; Emacs config by mori.zen in 2025
+;; Emacs config by mori.zen in 2025
 
 ;;; Code:
 
@@ -87,7 +87,7 @@
     ":" '(eval-expression :wk "M-:")
     "r" '(restart-emacs :wk "re:")
     "a" '(embark :wk "act")
-    "e" 'eshell
+    "e" '(eshell :wk "esh")
     "p" '(popper-toggle :wk "pop")
     "q" '(popper-toggle-type :wk "pop!")
     "i" '((lambda () (interactive) (find-file user-init-file)) :wk "init")
@@ -96,9 +96,11 @@
     "b d" 'kill-current-buffer
     "b r" 'resize-window
     "b b" 'consult-buffer
-    "b c" 'delete-window
-    "b v" 'evil-window-vsplit
-    "b s" 'evil-window-split
+
+    "w" '(:ignore t :wk "win")
+    "w c" 'delete-window
+    "w v" 'evil-window-vsplit
+    "w s" 'evil-window-split
 
     "g" '(:ignore t :wk "git")
     "g g "'magit-status
@@ -169,7 +171,7 @@
 
 (use-package rainbow-mode :ensure t :defer t
   :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
-                                   (rainbow-mode)))))
+                                        (rainbow-mode)))))
 
 (use-package highlight-numbers :ensure t :defer t
   :hook (prog-mode . (lambda ()
@@ -280,14 +282,8 @@
 
 
 ;;; Langs
-(use-package nix-ts-mode :ensure t :defer t
-  :mode "\\.nix\\'")
-
-(use-package clojure-ts-mode :ensure t :defer t
-  :mode "\\.clj\\'")
-
-(use-package zig-ts-mode :ensure t :defer t
-  :mode "\\.zig\\'")
+(dolist (pkg '(nix-ts-mode clojure-ts-mode zig-ts-mode))
+  (eval `(use-package ,pkg :ensure t :defer t)))
 
 (use-package odin-ts-mode :ensure t :defer t
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
@@ -331,6 +327,7 @@
 (use-package flymake :ensure nil :defer t
   :hook (emacs-lisp-mode . flymake-mode)
   :custom
+  (flymake-no-changes-timeout 0.25)
   (flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
   (flymake-indicator-type 'margins))
 
@@ -407,7 +404,7 @@
  fringes-outside-margins nil
  fringe-indicator-alist nil
  indicate-buffer-boundaries nil
- indicate-empty-lines nil
+ indicate-empty-lines t
  cursor-in-non-selected-windows t
  mode-line-end-spaces " "
  mode-line-front-space " "
@@ -420,10 +417,10 @@
  version-control nil
  vc-follow-symlinks t
  find-file-visit-truename nil
- recentf-max-saved-items 80
+ recentf-max-saved-items 100
 
  ;; Scrolling behavior
- scroll-margin 3
+ scroll-margin 5
  scroll-conservatively 10000
  scroll-preserve-screen-position t
  auto-window-vscroll nil
