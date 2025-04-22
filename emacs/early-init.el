@@ -1,4 +1,4 @@
-;;; early-init.el --- -*- lexical-binding: t -*-
+;; early-init.el --- -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Emacs config by mori.zen in 2025
@@ -20,6 +20,7 @@
       x-gtk-use-system-tooltips nil
       tooltip-delay 0.1
       read-process-output-max (* 8 1024 1024)
+      ad-redefinition-action 'accept
       inhibit-compacting-font-caches t
       package-enable-at-startup nil
       x-underline-at-descent-line t
@@ -47,8 +48,8 @@
 
 
 ;;; Font Config
-(let ((mono-font "Aporetic Serif Mono")
-      (serif-font "Aporetic Serif"))
+(let ((mono-font "Pragmasevka")
+      (serif-font "Pragmasevka"))
   (set-face-attribute 'default nil :family mono-font :height 155)
   (set-face-attribute 'fixed-pitch nil :family serif-font :height 1.0)
   (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.0)
@@ -62,15 +63,16 @@
 ;;; Pesky Behaviour
 (setq inhibit-startup-buffer-menu t
       inhibit-x-resources t
-      initial-major-mode 'fundamental-mode
       inhibit-startup-screen t
       inhibit-default-init t
+      initial-major-mode 'fundamental-mode
       initial-scratch-message nil)
 
 
 ;;; Native Comp
 (when (featurep 'native-compile)
   (setq native-compile-prune-cache t
+        native-comp-speed 3
         native-comp-async-report-warnings-errors nil))
 
 

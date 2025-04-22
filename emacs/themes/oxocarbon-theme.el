@@ -63,7 +63,7 @@
    `(match ((,class (:foreground ,base0F))))
    `(italic ((,class (:italic t))))
    `(bold ((,class (:weight bold))))
-   `(vertical-border ((,class (:background ,bg3))))
+   `(vertical-border ((,class (:background ,bg1))))
    `(window-divider ((,class (:inherit vertical-border))))
    `(link ((,class (:foreground ,const :underline t))))
    `(error ((,class (:foreground ,base0A))))
@@ -73,6 +73,7 @@
    `(trailing-whitespace ((,class :background ,bg4)))
    `(line-number ((t (:inherit fringe :foreground ,comment))))
    `(line-number-current-line ((t (:inherit fringe :foreground ,fg3))))
+   `(completions-common-part ((,class (:foreground ,fg3 :weight bold))))
 
 
     ;;; font-lock-* <built-in>
@@ -109,19 +110,35 @@
    `(sh-quoted-exec ((,class (:foreground ,unspec))))
    `(sh-heredoc ((,class (:foreground ,base0E))))
 
+   ;;; tty-menu <built-in>
+   `(tty-menu-enabled-face ((,class (:foreground ,fg1))))
+   `(tty-menu-selected-face ((,class (:foreground ,base0C :background ,bg2))))
+   `(tty-menu-disabled-face ((,class (:foreground ,bg4))))
+   `(menu ((,class (:background ,bg2))))
 
-    ;;; mode-line-* <built-in>
+
+   ;;; mode-line-* <built-in>
    `(mode-line ((,class (:box (:line-width 1) :weight bold :foreground ,fg3 :background ,bg2))))
    `(mode-line-active ((,class (:inherit fixed-pitch-serif))))
    `(mode-line-inactive ((,class (:foreground ,bg4 :background ,bg1 :inherit fixed-pitch-serif))))
    `(mode-line-emphasis ((,class (:foreground ,base0C :slant italic))))
    `(mode-line-buffer-id ((,class (:foreground ,base0C :slant italic))))
    `(mode-line-highlight ((,class (:foreground ,base09 :box nil :weight bold))))
-   `(anzu-mode-line ((,class (:foreground ,func))))
+   `(anzu-mode-line ((,class (:foreground ,base0C))))
 
 
    ;;; eshell <built-in>
    `(eshell-prompt ((,class (:foreground ,base0C))))
+
+
+   ;;; widget <built-in>
+   `(custom-button ((,class (:background ,bg3 :foreground ,fg3 :box (:line-width 2 :color ,bg2)))))
+   `(custom-button-mouse ((,class (:inherit custom-button ))))
+   `(custom-button-pressed ((,class (:inherit custom-button :box (:color ,fg1)))))
+   `(custom-state ((,class (:inherit marginalia-documentation))))
+   `(widget-field ((,class (:background ,bg3 :foreground ,fg3))))
+   `(widget-inactive ((,class (:background ,bg3 :foreground ,bg4))))
+   `(widget-single-line-field ((,class (:inherit widget-field))))
 
 
    ;;; eldoc <built-in>
@@ -168,6 +185,25 @@
    `(ansi-color-magenta ((,class (:foreground ,base09 :background ,base09))))
    `(ansi-color-cyan ((,class (:foreground ,base0F :background ,base0F))))
    `(ansi-color-white ((,class (:foreground ,base06 :background ,base06))))
+
+
+   ;;; eat-color-*
+   `(eat-term-color-0 ((,class (:foreground ,base01 :background ,base01))))
+   `(eat-term-color-1 ((,class (:foreground ,base0A :background ,base0A))))
+   `(eat-term-color-2 ((,class (:foreground ,base0D :background ,base0D))))
+   `(eat-term-color-3 ((,class (:foreground ,base0F :background ,base0F))))
+   `(eat-term-color-4 ((,class (:foreground ,base0B :background ,base0B))))
+   `(eat-term-color-5 ((,class (:foreground ,base0E :background ,base0E))))
+   `(eat-term-color-6 ((,class (:foreground ,base07 :background ,base07))))
+   `(eat-term-color-7 ((,class (:foreground ,base05 :background ,base05))))
+   `(eat-term-color-8 ((,class (:foreground ,base02 :background ,base02))))
+   `(eat-term-color-9 ((,class (:foreground ,base0C :background ,base0C))))
+   `(eat-term-color-10 ((,class (:foreground ,base0D :background ,base0D))))
+   `(eat-term-color-11 ((,class (:foreground ,base0F :background ,base0F))))
+   `(eat-term-color-12 ((,class (:foreground ,base09 :background ,base09))))
+   `(eat-term-color-13 ((,class (:foreground ,base0E :background ,base0E))))
+   `(eat-term-color-14 ((,class (:foreground ,base08 :background ,base08))))
+   `(eat-term-color-15 ((,class (:foreground ,base06 :background ,base06))))
 
 
    ;;; diff-hl
@@ -231,6 +267,7 @@
    `(evil-ex-lazy-highlight ((,class (:background ,base08 :foreground ,bg1))))
    `(evil-snipe-matches-face ((,class (:background ,bg3))))
 
+
    ;;; anzu
    `(anzu-match-1 ((,class (:foreground ,base0B))))
    `(anzu-match-2 ((,class (:foreground ,base0E))))
@@ -239,7 +276,7 @@
    `(anzu-replace-to ((,class (:foreground ,bg1 :background ,base0C))))
 
 
-;;; which-key <built-in>
+   ;;; which-key <built-in>
    `(which-key-key-face ((,class (:foreground ,base08))))
    `(which-key-command-description-face ((,class (:foreground ,fg1))))
    `(which-key-local-map-description-face ((,class (:foreground ,fg1))))
@@ -301,7 +338,6 @@
    `(orderless-match-face-1 ((,class (:foreground ,base0C :weight bold))))
    `(orderless-match-face-2 ((,class (:foreground ,base0D :weight bold))))
    `(orderless-match-face-3 ((,class (:foreground ,base0E :weight bold))))
-   `(completions-common-part ((,class (:foreground ,fg3 :weight bold))))
 
 
    ;;; paren <built-in>

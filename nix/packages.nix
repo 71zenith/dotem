@@ -36,12 +36,14 @@ in {
     fzf
     eza
     bat
+    ani-skip
 
     direnv
     zoxide
     stow
     git
     fd
+    jaq
     ripgrep
     xcp
     fishPlugins.autopair
@@ -103,7 +105,7 @@ in {
     leiningen
     odin
 
-    emacs-pgtk
+    (emacs-pgtk.override {withImageMagick = true;})
     emacs-lsp-booster
   ];
 }

@@ -5,15 +5,23 @@
 
 ;;; Code:
 
+(setq package-native-compile t
+      package-install-upgrade-built-in t)
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-(setq package-native-compile t
-      package-install-upgrade-built-in t)
+(setq use-package-expand-minimally t
+      use-package-always-ensure t
+      use-package-compute-statistics t
+      use-package-enable-imenu-support t)
 
-(use-package no-littering :ensure t :demand t)
-(use-package minions :ensure t :demand t
+(require 'use-package)
+
+(use-package no-littering :demand t)
+
+(use-package minions :demand t
   :custom
   (minions-prominent-modes '(flymake-mode))
   (minions-mode-line-face 'match)
@@ -22,14 +30,17 @@
 
 
 ;;; Undo
-(use-package undo-fu :ensure t :defer t)
+(use-package undo-fu :defer t)
 
-(use-package undo-fu-session :ensure t :defer t :hook (after-init . global-undo-fu-session-mode))
+(use-package undo-fu-session
+  :hook (after-init . global-undo-fu-session-mode))
+
+(use-package 0x0 :defer t)
 
 
 ;;; Evil
-(use-package evil :ensure t :defer t
-:init
+(use-package evil
+  :init
   (setq evil-want-keybinding nil
         evil-want-C-u-scroll t
         evil-want-C-i-jump t
@@ -39,20 +50,20 @@
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
-(use-package evil-collection :ensure t :defer t
+(use-package evil-collection
   :hook (after-init . evil-collection-init))
 
-(use-package evil-commentary :ensure t :defer t
+(use-package evil-commentary
   :hook (after-init . evil-commentary-mode))
 
-(use-package evil-snipe :ensure t :defer t
+(use-package evil-snipe
   :hook (after-init . evil-snipe-override-mode))
 
-(use-package paredit :ensure t :defer t
+(use-package paredit
   :hook ((emacs-lisp-mode clojure-mode) . enable-paredit-mode))
 
 ;;; General
-(use-package general :ensure t :demand t
+(use-package general :demand t
   :config
   (general-evil-setup)
   (general-def
@@ -66,6 +77,26 @@
     :keymaps 'override
     :prefix "SPC"
     :global-prefix "C-SPC")
+
+  (general-define-key
+   :states '(normal insert visual emacs)
+   :keymaps 'emacs-lisp-mode-map
+   :prefix "SPC"
+   :global-prefix "C-SPC"
+   "c d" 'eval-defun
+   "c b" 'elisp-eval-region-or-buffer
+   "c e" 'eval-last-sexp)
+
+  (general-define-key
+   :states '(normal insert visual emacs)
+   :keymaps 'cider-mode-map
+   :prefix "SPC"
+   :global-prefix "C-SPC"
+   "c j" 'cider-jack-in-clj
+   "c d" 'cider-eval-dwim
+   "c e" 'cider-eval-last-sexp
+   "c c" 'cider-repl-clear-buffer)
+
 
   (general-define-key
    :states '(normal visual emacs)
@@ -87,8 +118,9 @@
     "x" '(execute-extended-command :wk "M-x")
     ":" '(eval-expression :wk "M-:")
     "r" '(restart-emacs :wk "re:")
-    "a" '(embark :wk "act")
-    "e" '(eshell :wk "esh")
+    "a" '(embark-act :wk "act")
+    "e" '(eshell :wk "sh!")
+    "s" '(0x0-dwim :wk "0x0")
     "p" '(popper-toggle :wk "pop")
     "q" '(popper-toggle-type :wk "pop!")
     "i" '((lambda () (interactive) (find-file user-init-file)) :wk "init")
@@ -96,6 +128,7 @@
     "b" '(:ignore t :wk "buf")
     "b d" 'kill-current-buffer
     "b r" 'resize-window
+    "b k" 'kill-buffer
     "b b" 'consult-buffer
 
     "w" '(:ignore t :wk "win")
@@ -130,24 +163,23 @@
     "c l" 'consult-flymake
     "c f" 'format-all-region-or-buffer
     "c h" 'display-local-help
-    "c j" 'cider-jack-in-clj
-    "c d" 'cider-eval-dwim
-    "c e" 'cider-eval-last-sexp
-    "c c" 'cider-repl-clear-buffer))
+
+
+
+    ))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
 
 
 ;;; Visual
-(use-package which-key :ensure t :defer t
-  :hook (after-init . which-key-mode))
+(use-package which-key :hook (after-init . which-key-mode))
 
-(use-package anzu :ensure t :defer t
+(use-package anzu
   :bind (([remap query-replace] . anzu-query-replace)
          ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :hook (after-init . global-anzu-mode))
 
-(use-package spacious-padding :ensure t :defer t
+(use-package spacious-padding
   :hook (after-init . spacious-padding-mode)
   :custom
   (spacious-padding-widths
@@ -158,14 +190,13 @@
      :fringe-width 6
      :right-divider-width 10)))
 
-(use-package resize-window :ensure t :defer t
-  :custom (resize-window-fine-argument 5))
+(use-package resize-window :defer t :custom (resize-window-fine-argument 5))
 
-(use-package popper :ensure t :demand t
+(use-package popper :demand t
   :hook (after-init . popper-mode)
   :custom (popper-reference-buffers '("\\*.*\\*")))
 
-(use-package repeat :ensure nil :defer t
+(use-package repeat :ensure nil
   :hook (after-init . repeat-mode)
   :custom
   (repeat-exit-timeout 3)
@@ -174,31 +205,32 @@
 
 
 ;;; Highlight
-(use-package rainbow-delimiters :ensure t :defer t :hook (prog-mode . rainbow-delimiters-mode))
+(use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package rainbow-mode :ensure t :defer t
+(use-package rainbow-mode
   :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
-                                   (rainbow-mode)))))
+                                        (rainbow-mode)))))
 
-(use-package highlight-numbers :ensure t :defer t
+(use-package highlight-numbers
   :hook (prog-mode . (lambda () (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
-                             (highlight-numbers-mode)))))
+                                  (highlight-numbers-mode)))))
 
-(use-package highlight-operators :ensure t :defer t
+(use-package highlight-operators
   :hook (prog-mode . (lambda () (unless (derived-mode-p 'emacs-lisp-mode 'clojure-mode)
-                             (highlight-operators-mode)))))
+                                  (highlight-operators-mode)))))
 
 (font-lock-add-keywords 'emacs-lisp-mode
                         '(("\\_<\\(nil\\|t\\)\\_>" . font-lock-constant-face)))
 
 ;;; Completion
-(use-package cape :ensure t
+(use-package cape
   :config
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
-(use-package corfu :ensure t
+(use-package corfu
+  :if (display-graphic-p)
   :hook ((after-init . global-corfu-mode)
          (after-init . corfu-popupinfo-mode))
   :custom
@@ -210,19 +242,18 @@
 
 
 ;;; Minibuffer
-(use-package vertico :ensure t
+(use-package vertico
   :hook ((after-init . vertico-reverse-mode)
          (after-init . vertico-mode)))
 
-(use-package marginalia :ensure t
-  :hook (after-init . marginalia-mode))
+(use-package marginalia :hook (after-init . marginalia-mode))
 
-(use-package orderless :ensure t
+(use-package orderless
   :custom
   (completion-styles '(substring orderless partial-completion))
   (completion-ignore-case t))
 
-(use-package consult :ensure t
+(use-package consult :defer t
   :bind (("C-;" . consult-history)
          ([remap isearch-forward] . consult-line))
   :config
@@ -230,7 +261,7 @@
         xref-show-definitions-function #'consult-xref
         consult-buffer-sources (seq-remove (lambda (source) (string-match-p "file" (symbol-name source))) consult-buffer-sources)))
 
-(use-package embark :ensure t
+(use-package embark :defer t
   :config
   (defun embark-which-key-indicator ()
     (lambda (&optional keymap targets prefix)
@@ -264,13 +295,13 @@
   (advice-add #'embark-completing-read-prompter
               :around #'embark-hide-which-key-indicator))
 
-(use-package embark-consult :ensure t :defer t)
+(use-package embark-consult :defer t)
 
-(use-package helpful :ensure t :defer t)
+(use-package helpful :defer t)
 
 
 ;;; Git
-(use-package magit :ensure t :defer t
+(use-package magit :defer t
   :custom
   (magit-section-visibility-indicator '("⮧"))
   (magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
@@ -280,41 +311,40 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-window-setup-function 'ediff-setup-windows-plain))
 
-(use-package diff-hl :ensure t
-  :defer t
+(use-package diff-hl
   :hook (after-init . global-diff-hl-mode))
 
 
 ;;; Langs
 (dolist (pkg '(nix-ts-mode clojure-ts-mode zig-ts-mode))
-  (eval `(use-package ,pkg :ensure t :defer t)))
+  (eval `(use-package ,pkg :defer t)))
 
-(use-package odin-ts-mode :ensure t :defer t
+(use-package odin-ts-mode
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
   :mode "\\.odin\\'")
 
-(use-package css-ts-mode :ensure nil :defer t
+(use-package css-ts-mode :ensure nil
   :mode "\\.rasi\\'")
 
-(use-package treesit-auto :ensure t :defer t
+(use-package treesit-auto
   :hook (after-init . global-treesit-auto-mode)
   :config
   (setq treesit-auto-install t
         treesit-language-source-alist '((odin . ("https://github.com/tree-sitter-grammars/tree-sitter-odin"))
-                                        (nix  . ("https://github.com/nix-community/tree-sitter-nix"))))
+                                        (nix . ("https://github.com/nix-community/tree-sitter-nix"))))
   (treesit-auto-add-to-auto-mode-alist 'all))
 
-(use-package format-all :ensure t :defer t)
+(use-package format-all :defer t)
 
-(use-package cider :ensure t :defer t
-:custom
+(use-package cider
+  :custom
   (cider-use-fringe-indicators nil)
   (cider-repl-display-help-banner nil)
   :hook (clojure-mode . cider-mode))
 
 
 ;;; Eglot
-(use-package eglot :ensure nil :defer t
+(use-package eglot :ensure nil
   :hook (odin-ts-mode . eglot-ensure)
   :custom
   (eglot-report-progress nil)
@@ -323,12 +353,13 @@
   (eglot-sync-connect nil)
   (eglot-autoshutdown t))
 
-(use-package eglot-booster :ensure t :defer t
-  :after eglot
+(use-package eglot-booster
+  :if (executable-find "emacs-lsp-booster")
   :vc (:url "https://github.com/jdtsmith/eglot-booster" :rev :newest :branch "main")
-  :config (eglot-booster-mode))
+  :after eglot
+  :init (eglot-booster-mode))
 
-(use-package flymake :ensure nil :defer t
+(use-package flymake :ensure nil
   :hook (emacs-lisp-mode . flymake-mode)
   :custom
   (flymake-no-changes-timeout 0.25)
@@ -340,21 +371,25 @@
 
 
 ;;; Dired
-(use-package async :ensure t :demand t
+(use-package async :demand t
   :hook ((after-init . dired-async-mode)
          (after-init . async-bytecomp-package-mode)))
 
 (use-package dired :ensure nil
   :hook (dired-mode . dired-hide-details-mode))
 
-(use-package dired-open :ensure t :defer t :after dired)
+(use-package dired-open :defer t :after dired)
 
-(use-package dired-subtree :ensure t :defer t :after dired
+(use-package dired-subtree :defer t :after dired
   :custom (dired-subtree-use-backgrounds nil))
+
+(use-package envrc :defer t)
+
+(use-package nov :defer t)
 
 
 ;;; Terminal
-(use-package eat :ensure t :defer t
+(use-package eat
   :hook (eshell-mode . eat-eshell-mode))
 
 (use-package eshell :ensure nil :defer t
@@ -363,9 +398,8 @@
   (eshell-banner-message "")
   (eshell-prompt-function (lambda () (propertize (concat (abbreviate-file-name (eshell/pwd)) " λ ") 'face 'eshell-prompt))))
 
-(use-package eshell-syntax-highlighting :ensure t :defer t
+(use-package eshell-syntax-highlighting :defer t
   :hook (eshell-mode . eshell-syntax-highlighting-mode))
-
 
 ;;; Modes
 (dolist (mode '(global-hl-line-mode
@@ -377,7 +411,9 @@
                 size-indication-mode
                 column-number-mode
                 pixel-scroll-precision-mode
+                xterm-mouse-mode
                 savehist-mode
+                url-handler-mode
                 save-place-mode
                 winner-mode))
   (funcall mode 1))
@@ -426,12 +462,12 @@
  vc-follow-symlinks t
  find-file-visit-truename nil
  recentf-max-saved-items 100
- savehist-additional-variables '(mark-ring global-mark-ring search-ring)
 
  ;; Scrolling behavior
  scroll-margin 10
  scroll-conservatively 10000
  scroll-preserve-screen-position t
+ hscroll-margin 10
  auto-window-vscroll nil
  mouse-wheel-progressive-speed nil
 
@@ -443,7 +479,7 @@
  display-time-format "%a %d %b %H:%M")
 
 
-(use-package server :ensure nil :defer t
+(use-package server :ensure nil :defer 2
   :config (unless (server-running-p) (server-start)))
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
