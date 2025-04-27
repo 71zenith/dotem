@@ -104,6 +104,8 @@ in {
     clojure
     leiningen
     odin
+    shellcheck
+    shfmt
 
     (emacs-pgtk.override {withImageMagick = true;})
     emacs-lsp-booster

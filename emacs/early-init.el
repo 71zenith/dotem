@@ -1,4 +1,4 @@
-;; early-init.el --- -*- lexical-binding: t -*-
+;;; early-init.el --- -*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;; Emacs config by mori.zen in 2025
@@ -6,8 +6,8 @@
 ;;; Code:
 
 ;;; Garbage Collection
-(defvar file-name-handler-alist-original file-name-handler-alist)
-(defvar vc-handled-backends-original vc-handled-backends)
+(defvar file-name-handler-alist--original file-name-handler-alist)
+(defvar vc-handled-backends--original vc-handled-backends)
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5
       vc-handled-backends nil
@@ -48,11 +48,11 @@
 
 
 ;;; Font Config
-(let ((mono-font "Pragmasevka")
-      (serif-font "Pragmasevka"))
+(let ((mono-font "Pragmata Pro")
+      (serif-font "Kollektif"))
   (set-face-attribute 'default nil :family mono-font :height 155)
   (set-face-attribute 'fixed-pitch nil :family serif-font :height 1.0)
-  (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.0)
+  (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.1)
   (set-face-attribute 'variable-pitch nil :family serif-font :height 1.0))
 
 
@@ -97,8 +97,8 @@
             (zen/display-startup-time))
           (setq gc-cons-threshold (* 8 1024 1024)
                 gc-cons-percentage 0.1
-                vc-handled-backends vc-handled-backends-original
-                file-name-handler-alist file-name-handler-alist-original))
+                vc-handled-backends vc-handled-backends--original
+                file-name-handler-alist file-name-handler-alist--original))
 
 (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 

@@ -27,7 +27,6 @@ alias df 'duf -hide special -style ascii'
 alias f 'free -h'
 alias fd 'fd -p -i --hyperlink'
 alias s 'sudo systemctl'
-alias fzf 'fzf --color=16'
 alias im 'timg -p s'
 alias eza 'eza --icons always --git --hyperlink --no-quotes'
 alias la 'eza -a'
@@ -53,5 +52,9 @@ set -gx LESS "-R --use-color"
 set -gx BAT_THEME "base16-256"
 set -gx EDITOR "emacsclient -nw"
 set -gx ALTERNATE_EDITOR
+set -gx FZF_DEFAULT_OPTS "--color 16 --style full --border sharp --list-border sharp --input-border sharp --header-border sharp"
+
+set -gx ANI_CLI_SKIP_INTRO 1
+set -gx ANI_CLI_QUALITY "cc>"
 
 end

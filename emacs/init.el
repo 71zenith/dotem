@@ -13,7 +13,6 @@
 (package-initialize)
 
 (setq use-package-expand-minimally t
-      use-package-always-ensure t
       use-package-compute-statistics t
       use-package-enable-imenu-support t)
 
@@ -25,7 +24,7 @@
   :custom
   (minions-prominent-modes '(flymake-mode))
   (minions-mode-line-face 'match)
-  (minions-mode-line-lighter "⮧")
+  (minions-mode-line-lighter "+")
   :hook (after-init . minions-mode))
 
 
@@ -116,7 +115,6 @@
 
   (leader-keys
     "x" '(execute-extended-command :wk "M-x")
-    ":" '(eval-expression :wk "M-:")
     "r" '(restart-emacs :wk "re:")
     "a" '(embark-act :wk "act")
     "e" '(eshell :wk "sh!")
@@ -124,6 +122,7 @@
     "p" '(popper-toggle :wk "pop")
     "q" '(popper-toggle-type :wk "pop!")
     "i" '((lambda () (interactive) (find-file user-init-file)) :wk "init")
+    ":" '(eval-expression :wk "M-:")
 
     "b" '(:ignore t :wk "buf")
     "b d" 'kill-current-buffer
@@ -163,9 +162,6 @@
     "c l" 'consult-flymake
     "c f" 'format-all-region-or-buffer
     "c h" 'display-local-help
-
-
-
     ))
 
 (global-set-key (kbd "<escape>") 'keyboard-quit)
@@ -208,8 +204,7 @@
 (use-package rainbow-delimiters :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
-  :hook (emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name))
-                                        (rainbow-mode)))))
+  :hook ((emacs-lisp-mode . (lambda () (when (string-suffix-p "-theme.el" (buffer-file-name)) (rainbow-mode))))))
 
 (use-package highlight-numbers
   :hook (prog-mode . (lambda () (unless (string-suffix-p "-ts-mode" (symbol-name major-mode))
@@ -223,7 +218,7 @@
                         '(("\\_<\\(nil\\|t\\)\\_>" . font-lock-constant-face)))
 
 ;;; Completion
-(use-package cape
+(use-package cape :defer 2
   :config
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
@@ -334,7 +329,10 @@
                                         (nix . ("https://github.com/nix-community/tree-sitter-nix"))))
   (treesit-auto-add-to-auto-mode-alist 'all))
 
-(use-package format-all :defer t)
+
+(use-package format-all
+  :hook (sh-mode . format-all-mode)
+  :custom (format-all-formatters '(("Shell" (shfmt "-i" "4" "-ci")))))
 
 (use-package cider
   :custom
@@ -345,6 +343,7 @@
 
 ;;; Eglot
 (use-package eglot :ensure nil
+  :if (executable-find "ols")
   :hook (odin-ts-mode . eglot-ensure)
   :custom
   (eglot-report-progress nil)
@@ -360,11 +359,14 @@
   :init (eglot-booster-mode))
 
 (use-package flymake :ensure nil
-  :hook (emacs-lisp-mode . flymake-mode)
+  :hook ((emacs-lisp-mode sh-mode) . flymake-mode)
   :custom
   (flymake-no-changes-timeout 0.25)
   (flymake-mode-line-format '(" " flymake-mode-line-exception flymake-mode-line-counters))
   (flymake-indicator-type 'margins))
+
+(use-package project :ensure nil
+  :custom (project-switch-commands 'project-find-file))
 
 (use-package eldoc :ensure nil :defer t
   :custom (eldoc-idle-delay 0.25))
@@ -398,8 +400,11 @@
   (eshell-banner-message "")
   (eshell-prompt-function (lambda () (propertize (concat (abbreviate-file-name (eshell/pwd)) " λ ") 'face 'eshell-prompt))))
 
-(use-package eshell-syntax-highlighting :defer t
+(use-package eshell-syntax-highlighting
   :hook (eshell-mode . eshell-syntax-highlighting-mode))
+
+(use-package xclip :hook (after-init . xclip-mode))
+
 
 ;;; Modes
 (dolist (mode '(global-hl-line-mode

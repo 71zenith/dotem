@@ -62,7 +62,7 @@
     },
     "privacy": {
       "icon-size": 16,
-      "icon-spacing": 0,
+      "icon-spacing": 0
     },
     "pulseaudio": {
       "format": "{volume}%",
@@ -71,6 +71,6 @@
       "on-scroll-down": "pulsemixer --change-volume -5",
       "on-scroll-up": "pulsemixer --change-volume +5"
     },
-    "tray": { "spacing": 10 },
+    "tray": { "spacing": 10 }
   }
 ]
