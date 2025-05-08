@@ -27,6 +27,7 @@ in {
     cliphist
     wl-clipboard
     swww
+    mangohud
 
     spotify-player
     btop

@@ -15,6 +15,6 @@ mainbox {
 configuration {
   filebrowser {
     directory: "/home/zen/shr/walls";
-    command: "swww img -t any --transition-fps 75 --transition-duration 2 --fill-color 121212";
+    command: "swww img --resize fit --fill-color 121212 -t any --transition-fps 75 --transition-duration 2";
   }
 }

@@ -91,10 +91,10 @@
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings.LC_TIME = "en_IN";
     inputMethod = {
-      enable = true;
+      enable = false;
       type = "fcitx5";
       fcitx5 = {
-        addons = with pkgs;[fcitx5-mozc fcitx5-fluent];
+        addons = with pkgs; [fcitx5-mozc fcitx5-fluent];
         waylandFrontend = true;
       };
     };

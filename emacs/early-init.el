@@ -49,10 +49,10 @@
 
 ;;; Font Config
 (let ((mono-font "Pragmata Pro")
-      (serif-font "Kollektif"))
+      (serif-font "Pragmata Pro"))
   (set-face-attribute 'default nil :family mono-font :height 155)
   (set-face-attribute 'fixed-pitch nil :family serif-font :height 1.0)
-  (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.1)
+  (set-face-attribute 'fixed-pitch-serif nil :family serif-font :height 1.0)
   (set-face-attribute 'variable-pitch nil :family serif-font :height 1.0))
 
 
@@ -103,7 +103,6 @@
 (add-hook 'after-init-hook (lambda () (set-frame-name "home")))
 
 (setq custom-file (locate-user-emacs-file "var/custom.el"))
-(load custom-file :no-error-if-missing)
 
 (provide 'early-init)
 

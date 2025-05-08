@@ -49,17 +49,13 @@
         evil-undo-system 'undo-fu)
   :hook (after-init . evil-mode))
 
-(use-package evil-collection
-  :hook (after-init . evil-collection-init))
+(use-package evil-collection :hook (after-init . evil-collection-init))
 
-(use-package evil-commentary
-  :hook (after-init . evil-commentary-mode))
+(use-package evil-commentary :hook (after-init . evil-commentary-mode))
 
-(use-package evil-snipe
-  :hook (after-init . evil-snipe-override-mode))
+(use-package evil-snipe :hook (after-init . evil-snipe-override-mode))
 
-(use-package paredit
-  :hook ((emacs-lisp-mode clojure-mode) . enable-paredit-mode))
+(use-package paredit :hook ((emacs-lisp-mode clojure-mode) . enable-paredit-mode))
 
 ;;; General
 (use-package general :demand t
@@ -225,7 +221,6 @@
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 (use-package corfu
-  :if (display-graphic-p)
   :hook ((after-init . global-corfu-mode)
          (after-init . corfu-popupinfo-mode))
   :custom
@@ -306,8 +301,7 @@
   (ediff-split-window-function 'split-window-horizontally)
   (ediff-window-setup-function 'ediff-setup-windows-plain))
 
-(use-package diff-hl
-  :hook (after-init . global-diff-hl-mode))
+(use-package diff-hl :hook (after-init . global-diff-hl-mode))
 
 
 ;;; Langs
@@ -318,8 +312,7 @@
   :vc (:url "https://github.com/Sampie159/odin-ts-mode" :rev :newest :branch "main")
   :mode "\\.odin\\'")
 
-(use-package css-ts-mode :ensure nil
-  :mode "\\.rasi\\'")
+(use-package css-ts-mode :ensure nil :mode "\\.rasi\\'")
 
 (use-package treesit-auto
   :hook (after-init . global-treesit-auto-mode)
@@ -426,7 +419,7 @@
 (add-hook 'prog-mode-hook
           (lambda ()
             (setq display-line-numbers 'relative)
-            (when (> (buffer-size) 100000)
+            (when (> (buffer-size) 1000000)
               (display-line-numbers-mode -1))))
 
 
@@ -489,6 +482,7 @@
 
 (load-file (concat user-emacs-directory "themes/oxocarbon-theme.el"))
 (enable-theme 'oxocarbon)
+
 
 (provide 'init)
 
