@@ -41,7 +41,10 @@
     hostName = "izanagi";
     wireless.enable = false;
     useNetworkd = true;
-
+    firewall = {
+      allowedTCPPorts = [9090];
+      allowedUDPPorts = [54982];
+    };
     stevenBlackHosts.enable = true;
 
     wg-quick.interfaces = {
